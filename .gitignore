@@ -3,7 +3,8 @@
 .env
 .vscode
 /obj
-./Migrations/*
+/Migrations/*
+
 
 # User-specific files
 *.suo

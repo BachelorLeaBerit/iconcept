@@ -1,18 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using iconcept.Models;
 using iconcept.Models.User;
 using iconcept.Models.Term;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
 
-var connection = String.Empty;
+var connection = string.Empty;
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
@@ -29,7 +26,6 @@ builder.Services.AddDbContext<ConceptDbContext>(options =>
 var app = builder.Build();
 
 
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -37,7 +33,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 
 app.UseHttpsRedirection();
@@ -48,13 +43,14 @@ app.UseRouting();
 app.UseAuthorization();
 
 
-
+/*
 app.MapGet("/User", (ConceptDbContext context) =>
 {
     return context.User.ToList();
 })
 .WithName("GetUser")
 .WithOpenApi();
+*/
 
 app.MapPost("/User", (User user, ConceptDbContext context) =>
 {
@@ -80,9 +76,12 @@ public class ConceptDbContext : DbContext
     }
 
     public DbSet<User> User { get; set; }
+    /*
     public DbSet<ConceptTranslation> ConceptTranslations {get; set;}
     public DbSet<Country> Countries {get; set;}
+    public DbSet<Feeling> Feelings {get; set;}
     public DbSet<Region> Regions {get; set;}
     public DbSet<Religion> Religions {get; set;}
     public DbSet<Term> Terms {get; set;}
+    */
 }

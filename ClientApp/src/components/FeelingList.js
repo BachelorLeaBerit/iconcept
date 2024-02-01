@@ -1,41 +1,67 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 export class FeelingList extends Component {
+  static displayName = FeelingList.name;
+
   constructor(props) {
     super(props);
-    this.state = {
-      feelings: [],
-    };
+    this.state = { feelings: [], loading: true };
   }
 
   componentDidMount() {
-    this.fetchFeelings();
+    this.populateFeelingsData();
   }
 
-  async fetchFeelings() {
-    try {
-      const response = await axios.get('/api/feelings');
-      this.setState({
-        feelings: response.data,
-      });
-    } catch (error) {
-      console.error('Error fetching feelings:', error);
-    }
+  static renderFeelingsList(feelings) {
+    return (
+      <table className="table table-striped" aria-labelledby="tableLabel">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {feelings.map(feeling =>
+            <tr key={feeling.id}>
+              <td>{feeling.id}</td>
+              <td>{feeling.name}</td>
+              <td>{feeling.description}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    );
   }
 
   render() {
+    let contents = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : FeelingList.renderFeelingsList(this.state.feelings);
+
     return (
       <div>
-        <h2>Feelings List</h2>
-        <ul>
-          {this.state.feelings.map(feeling => (
-            <li key={feeling.id}>{feeling.feelingName}</li>
-          ))}
-        </ul>
+        <h1 id="tableLabel">Feelings List</h1>
+        <p>This component demonstrates fetching data from the server.</p>
+        {contents}
       </div>
     );
   }
+  async populateFeelingsData() {
+    console.log('Fetching feelings data...');
+    try {
+        const response = await fetch('api/feelings');
+        if (response.ok) {
+            const data = await response.json();
+            this.setState({ feelings: data, loading: false });
+            console.log('Fetched feelings data:', data);
+        } else {
+            console.error('Failed to fetch feelings data, status:', response.status);
+        }
+    } catch (error) {
+        console.error('Error fetching feelings data:', error);
+        this.setState({ loading: false }); // Consider setting an error state as well
+    }
+  }
 }
-
-export default FeelingList;

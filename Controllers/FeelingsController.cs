@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-namespace YourProject.Controllers
+namespace iconcept.Controllers
 {
+    [Route("api/feelings")]
     [ApiController]
-    [Route("api/[controller]")]
+
     public class FeelingsController : ControllerBase
     {
         private readonly ConceptDbContext _context;

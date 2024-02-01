@@ -60,12 +60,17 @@ app.MapPost("/User", (User user, ConceptDbContext context) =>
 })
 .WithOpenApi();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
-
+app.MapControllers();
 app.Run();
 
 

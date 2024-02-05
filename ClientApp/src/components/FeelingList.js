@@ -23,8 +23,8 @@ export class FeelingList extends Component {
         <tbody>
           {feelings.map(feeling =>
             <tr key={feeling.id}>
-              <td>{feeling.id}</td>
-              <td>{feeling.feelingName}</td>
+              <td>{feeling.translation}</td>
+              <td>{feeling.termId}</td>
             </tr>
           )}
         </tbody>

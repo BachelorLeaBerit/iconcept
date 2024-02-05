@@ -1,4 +1,4 @@
-using iconcept.Models.Term;
+using iconcept.Domain.Term;
 
 public class Country {
     public int Id {get; set;}

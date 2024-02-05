@@ -1,29 +1,27 @@
 // FeelingsController.cs
-using iconcept.Models.Term;
+using iconcept.Domain.Term;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MediatR;
 namespace iconcept.Controllers
 {
     [Route("api/feelings")]
     [ApiController]
     public class FeelingsController : ControllerBase
     {
-        private readonly ConceptDbContext _context;
+        private readonly IMediator _mediator;
 
-        public FeelingsController(ConceptDbContext context)
+        public FeelingsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Feeling>>> GetFeelings()
+        public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetFeelings()
         {
-            if (_context.Feelings == null) {
-                return NotFound();
-            }
-            return Ok(await _context.Feelings.ToListAsync());
+            return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsPipeline.Request());
         }
     }
 }

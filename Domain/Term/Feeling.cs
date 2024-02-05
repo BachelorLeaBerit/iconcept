@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace iconcept.Models.Term
+namespace iconcept.Domain.Term
 {
     public class Feeling
     {

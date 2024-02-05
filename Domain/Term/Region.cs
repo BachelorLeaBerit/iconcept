@@ -1,5 +1,5 @@
 
-namespace iconcept.Models.Term;
+namespace iconcept.Domain.Term;
 
 public class Region {
     public int Id {get; set;}

@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using iconcept.Models.User;
-using iconcept.Models.Term;
+using iconcept.Domain.User;
+using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,8 @@ else
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
     options.UseSqlServer(connection));
+
+builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
@@ -93,18 +97,3 @@ app.MapControllers();
 app.Run();
 
 
-public class ConceptDbContext : DbContext
-{
-    public ConceptDbContext(DbContextOptions<ConceptDbContext> options)
-        : base(options)
-    {
-    }
-
-    public DbSet<User> User { get; set; }
-    public DbSet<ConceptTranslation> ConceptTranslations { get; set; }
-    public DbSet<Country> Countries { get; set; }
-    public DbSet<Feeling> Feelings { get; set; }
-    public DbSet<Region> Regions { get; set; }
-    public DbSet<Religion> Religions { get; set; }
-    public DbSet<Term> Terms { get; set; }
-}

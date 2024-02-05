@@ -1,4 +1,4 @@
-namespace iconcept.Models.User;
+namespace iconcept.Domain.User;
 
 public class User
 {

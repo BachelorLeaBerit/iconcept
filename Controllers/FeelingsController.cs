@@ -8,7 +8,6 @@ namespace iconcept.Controllers
 {
     [Route("api/feelings")]
     [ApiController]
-
     public class FeelingsController : ControllerBase
     {
         private readonly ConceptDbContext _context;
@@ -21,7 +20,10 @@ namespace iconcept.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Feeling>>> GetFeelings()
         {
-            return await _context.Feelings.ToListAsync();
+            if (_context.Feelings == null) {
+                return NotFound();
+            }
+            return Ok(await _context.Feelings.ToListAsync());
         }
     }
 }

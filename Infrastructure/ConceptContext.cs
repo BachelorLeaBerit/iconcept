@@ -3,13 +3,12 @@ using iconcept.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-
+namespace iconcept.Infrastructure;
 public class ConceptDbContext :  IdentityDbContext<User>
 {
     public ConceptDbContext(DbContextOptions configuration) : base(configuration)
     {
     }
-
     public DbSet<User> User { get; set; }
     public DbSet<ConceptTranslation> ConceptTranslations { get; set; }
     public DbSet<Country> Countries { get; set; }

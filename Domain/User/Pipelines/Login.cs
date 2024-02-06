@@ -20,10 +20,10 @@ public class LoginUser
 
         public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByNameAsync(request.LoginData.UserName);
+            var user = await _userManager.FindByEmailAsync(request.LoginData.Email);
             var err = new List<string>
                 {
-                    "Username or password is wrong"
+                    "Email or password is wrong"
                 };
             if (user is null)
             {

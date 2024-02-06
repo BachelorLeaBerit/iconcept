@@ -20,7 +20,9 @@ public class RegisterUser
         {
             var user = new User
             {
-                UserName = request.RegisterData.UserName
+                FirstName = request.RegisterData.FirstName,
+                SurName = request.RegisterData.SurName,
+                Email = request.RegisterData.Email,
             };
             var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
             var errList = new List<string>();

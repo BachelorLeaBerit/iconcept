@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using iconcept.Domain.User;
-using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +29,11 @@ else
 {
     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 }
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ConceptDbContext>()
+    .AddDefaultTokenProviders()
+    .AddUserManager<UserManager<User>>();
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
     options.UseSqlServer(connection));
@@ -64,28 +73,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
-
-/*
-app.MapGet("/User", (ConceptDbContext context) =>
-{
-    return context.User.ToList();
-})
-.WithName("GetUser")
-.WithOpenApi();
-*/
-
-// app.MapPost("/User", (User user, ConceptDbContext context) =>
-// {
-//     context.Add(user);
-//     context.SaveChanges();
-// })
-// .WithOpenApi();
-
-// app.UseEndpoints(endpoints =>
-// {
-//     endpoints.MapControllers();
-// });
 
 app.MapControllerRoute(
     name: "default",

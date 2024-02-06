@@ -1,11 +1,12 @@
 using iconcept.Domain.Term;
 using iconcept.Domain.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class ConceptDbContext : DbContext
+
+public class ConceptDbContext :  IdentityDbContext<User>
 {
-    public ConceptDbContext(DbContextOptions<ConceptDbContext> options)
-        : base(options)
+    public ConceptDbContext(DbContextOptions configuration) : base(configuration)
     {
     }
 

@@ -1,3 +1,4 @@
+/*
 using System.Threading.Tasks;
 using iconcept.Domain.User;
 using iconcept.Domain.User.Pipelines;
@@ -32,3 +33,4 @@ namespace iconcept.Controllers.User
         }
     }
 }
+*/

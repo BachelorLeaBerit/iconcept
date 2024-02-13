@@ -1,8 +1,8 @@
 using iconcept.Domain.User;
-using iconcept.Domain.User.Pipelines;
+//using iconcept.Domain.User.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+/*
 namespace iconcept.Controllers.User
 {
     [Route("api/login")]
@@ -31,3 +31,4 @@ namespace iconcept.Controllers.User
         }
     }
 }
+*/

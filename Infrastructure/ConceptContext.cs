@@ -10,7 +10,6 @@ public class ConceptDbContext :  IdentityDbContext<User>
     public ConceptDbContext(DbContextOptions configuration) : base(configuration)
     {
     }
-    public DbSet<User> User { get; set; }
     public DbSet<ConceptTranslation> ConceptTranslations { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Feeling> Feelings { get; set; }
@@ -20,6 +19,8 @@ public class ConceptDbContext :  IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Feeling>().HasData(
             new Feeling { Id=1, FeelingName = "Glad" },
             new Feeling { Id=2, FeelingName = "Trist" },

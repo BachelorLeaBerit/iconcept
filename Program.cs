@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using iconcept.Domain.User;
+using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

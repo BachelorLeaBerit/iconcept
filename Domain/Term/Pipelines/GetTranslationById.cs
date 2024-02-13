@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 using iconcept.Domain.Term;
+using iconcept.Infrastructure;
 
 namespace iconcept.Domain.Term.Pipelines;
 public class GetTranslationByIdPipeline

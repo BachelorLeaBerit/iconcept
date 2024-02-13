@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react';
 
 export class Register extends Component {
@@ -111,3 +112,4 @@ export class Register extends Component {
 }
 
 export default Register;
+*/

@@ -1,7 +1,7 @@
 using iconcept.Domain.User;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-
+/*
 namespace iconcept.Domain.User.Pipelines;
 public class RegisterUser
 {
@@ -34,4 +34,4 @@ public class RegisterUser
             return new UserResponse(result.Succeeded, errList.ToArray());
         }
     }
-}
+}*/

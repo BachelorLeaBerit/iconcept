@@ -2,6 +2,7 @@ import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import { FeelingList } from './components/FeelingList';
+import { Register } from "./components/Register";
 
 
 const AppRoutes = [
@@ -20,6 +21,10 @@ const AppRoutes = [
   {
     path: '/feelings',
     element: <FeelingList />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
   }
 ];
 

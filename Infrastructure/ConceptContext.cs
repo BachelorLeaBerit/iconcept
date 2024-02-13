@@ -2,6 +2,7 @@ using iconcept.Domain.Term;
 using iconcept.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MediatR;
 
 namespace iconcept.Infrastructure;
 public class ConceptDbContext :  IdentityDbContext<User>

@@ -1,26 +1,108 @@
 import React, { Component } from 'react';
+import TermsTable from './Tables/TermsTable';
+import FeelingsTable from './Tables/FeelingsTable';
 
 export class Home extends Component {
   static displayName = Home.name;
 
+  constructor(props) {
+    super(props);
+    this.state = { terms: [], feelings: [], loading: true, showTerms: true, country: '', region: '', religion: '' };
+  }
+
+  componentDidMount() {
+    this.populateConceptsData();
+  }
+
+  handleSearchInputChange = (event) => {
+    this.setState({ searchQuery: event.target.value });
+  };
+
+  toggleShowTerms = () => {
+    this.setState({ showTerms: true });
+  };
+
+  toggleShowFeelings = () => {
+    this.setState({ showTerms: false });
+  };
+
+  handleSearch = () => {
+    const { country, region, religion } = this.state;
+    const queryString = `?country=${country}&region=${region}&religion=${religion}`;
+    // Make the API call with the constructed query string
+    fetch(`api/translations/filtered${queryString}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const { terms, feelings } = data;
+        this.setState({ terms: terms, feelings: feelings });
+      })
+      .catch(error => {
+        console.error('Error fetching translation data:', error);
+      });
+  };
+
   render() {
+    const { terms, feelings, loading, showTerms } = this.state;
+
+    if (loading) {
+      return <p><em>Loading...</em></p>;
+    }
+
     return (
       <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+        <div>
+          <input
+            type="text"
+            placeholder="Country"
+            value={this.state.country}
+            onChange={e => this.setState({ country: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Region"
+            value={this.state.region}
+            onChange={e => this.setState({ region: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Religion"
+            value={this.state.religion}
+            onChange={e => this.setState({ religion: e.target.value })}
+          />
+          <button onClick={this.handleSearch}>Search</button>
+        </div>
+        <div>
+          <button onClick={this.toggleShowTerms} className="btn btn-primary btn-lg active" role="button" aria-pressed="true">Terms</button>
+          <button onClick={this.toggleShowFeelings} className="btn btn-primary btn-lg active" role="button" aria-pressed="true">Feelings</button>
+        </div>
+        {showTerms ? (
+          <TermsTable terms={terms} />
+        ) : (
+          <FeelingsTable feelings={feelings} />
+        )}
       </div>
     );
+  }
+
+  async populateConceptsData() {
+    try {
+      const response = await fetch(`api/translations`);
+      if (response.ok) {
+        const data = await response.json();
+        const { terms, feelings } = data;
+        this.setState({ terms: terms, feelings: feelings, loading: false });
+        console.log('Fetched translation data:', data);
+      } else {
+        console.error('Failed to fetch translation data, status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching translation data:', error);
+      this.setState({ loading: false });
+    }
   }
 }

@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import { FeelingList } from './components/FeelingList';
 import TranslationDetails from './components/TranslationDetails';
 import Translations from "./components/Translations";
+import { Register } from "./components/Register";
 
 
 const AppRoutes = [
@@ -30,6 +31,10 @@ const AppRoutes = [
   {
     path: '/translation/byTermOrReligion/:id/:byTerm',
     element: <Translations />
+  },
+  {
+  path: '/register',
+    element: <Register />,
   }
 ];
 

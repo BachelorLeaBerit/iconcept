@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using iconcept.Domain.Term;
 
 namespace iconcept.Domain.Term.Pipelines;
-public class GetTranslationsPipeline
+public class GetTranslationsByTermIdPipeline
 {
-    public record Request(int Id) : IRequest<List<ConceptTranslation>> { }
+    public record Request(int id) : IRequest<List<ConceptTranslation>> { }
 
     public class Handler : IRequestHandler<Request, List<ConceptTranslation>>
     {
@@ -30,6 +30,8 @@ public class GetTranslationsPipeline
             .Include(c => c.Religions)
             .Include(c => c.Regions)
             .Include(c => c.Countries)
+            .Include(c => c.Feelings)
+            .Where(c => c.TermId == request.id).AsSplitQuery()
             .OrderBy(c => c.Term.TermName)
             .ToListAsync(cancellationToken);
     }

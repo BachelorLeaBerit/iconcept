@@ -5,27 +5,31 @@ export class FeelingList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { feelings: [], loading: true };
+    this.state = { concepts: [], loading: true };
   }
 
   componentDidMount() {
     this.populateFeelingsData();
   }
-  static renderFeelingsList(feelings) {
+  static renderFeelingsList(concepts) {
     return (
       <table className="table table-striped" aria-labelledby="tableLabel">
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Feelings</th>
           </tr>
         </thead>
         <tbody>
-          {feelings.map(feeling =>
-            <tr key={feeling.id}>
-              <td>{feeling.translation}</td>
-              <td>{feeling.termId}</td>
-            </tr>
+          {concepts.map(concept =>
+            concept.religions.map(religion => (
+              <tr key={`${concept.id}-${religion.id}`}>
+                <td>{concept.translation}</td>
+                <td>{concept.term.termName}</td>
+                <td>{religion.religionName}</td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>
@@ -33,10 +37,10 @@ export class FeelingList extends Component {
   }
 
   render() {
-    console.log(this.state.feelings);
+    console.log(this.state.concepts);
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FeelingList.renderFeelingsList(this.state.feelings);
+      : FeelingList.renderFeelingsList(this.state.concepts);
 
     return (
       <div>
@@ -64,6 +68,6 @@ export class FeelingList extends Component {
     // }
     const response = await fetch('api/feelings');
     const data = await response.json();
-    this.setState({ feelings: data, loading: false });
+    this.setState({ concepts: data, loading: false });
   }
 }

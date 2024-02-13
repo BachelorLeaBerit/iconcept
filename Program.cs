@@ -4,6 +4,7 @@ using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
 builder.Services.AddSwaggerGen();
 
 
@@ -19,15 +23,15 @@ var connection = string.Empty;
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
-    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+    // connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
 }
-else
-{
-    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
-}
+// else
+// {
+//     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+// }
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
-    options.UseSqlServer(connection));
+    options.UseSqlite($"Data Source={Path.Combine("Infrastructure","concept.db")}"));
 
 builder.Services.AddMediatR(typeof(Program));
 

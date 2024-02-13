@@ -1,4 +1,4 @@
-
+namespace iconcept.Domain.Term;
 public class Term {
 
     public int Id { get; set; }

@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-/*
+
 namespace iconcept.Domain.User.Pipelines;
 public class LogoutUser
 {
@@ -22,4 +22,3 @@ public class LogoutUser
         }
     }
 }
-*/

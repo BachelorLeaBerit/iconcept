@@ -35,6 +35,10 @@ const AppRoutes = [
   {
   path: '/register',
     element: <Register />,
+  },
+  {
+  path: '/api/register',
+  element: <Register />,
   }
 ];
 

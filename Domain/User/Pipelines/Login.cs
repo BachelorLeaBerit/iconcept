@@ -1,7 +1,7 @@
 using iconcept.Domain.User;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-/*
+
 namespace iconcept.Domain.User.Pipelines;
 public class LoginUser
 {
@@ -20,7 +20,7 @@ public class LoginUser
 
         public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(request.LoginData.Email);
+            var user = await _userManager.FindByEmailAsync(request.LoginData.FirstName);
             var err = new List<string>
                 {
                     "Email or password is wrong"
@@ -40,4 +40,3 @@ public class LoginUser
         }
     }
 }
-*/

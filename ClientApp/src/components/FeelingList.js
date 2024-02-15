@@ -66,7 +66,7 @@ export class FeelingList extends Component {
     //     console.error('Error fetching feelings data:', error);
     //     this.setState({ loading: false }); // Consider setting an error state as well
     // }
-    const response = await fetch('api/feelings');
+    const response = await fetch('/api/feelings');
     const data = await response.json();
     this.setState({ concepts: data, loading: false });
   }

@@ -49,9 +49,10 @@ builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-        policy =>
+        builder =>
         {
-            policy.AllowAnyOrigin().AllowAnyHeader()
+            builder.WithOrigins("http://localhost:44453")
+            .AllowAnyOrigin().AllowAnyHeader()
                                                   .AllowAnyMethod();
         });
 });
@@ -72,6 +73,7 @@ else
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,3 +1,5 @@
+
+/*
 import React, { Component } from "react";
 import axios from "axios";
 
@@ -88,10 +90,9 @@ export class Register extends Component {
 
 export default Register;
 
-/*
- export default Register;
+*/
 
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 
 export class Register extends Component {
   static displayName = Register.name;
@@ -101,10 +102,10 @@ export class Register extends Component {
 
     this.state = {
       formData: {
-        firstname: '',
-        password: '',
+        FirstName:"",
+        Password:"",
       },
-      message: '',
+      message:"",
     };
   }
 
@@ -120,39 +121,38 @@ export class Register extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
     const { formData } = this.state;
-
-
+  
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch('api/register', {
         method: 'POST',
-        body: ({
-          firstname: formData.firstname,
-          password: formData.password,
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
   
+      // Attempt to parse the JSON response regardless of response status
+      // This assumes your server always returns JSON; adjust as needed.
       const data = await response;
+      console.log(data);
   
-      if (response.status === 201) {
-        this.setState({ message: 'Registration successful' });
+      if (!response.ok) {
+        // If the server response is not ok, use the parsed JSON data to display an error message
+        // Adjust depending on the structure of your error response
+        const errorMessage = data.message || 'Registration failed';
+        this.setState({ message: errorMessage });
       } else {
-        // Assuming 'data.errors' exists and is an array; you may need to adjust based on your API.
-        this.setState({ message: 'Registration failed: ' + data.errors.join(', ') });
+        // Handle success
+        console.log(data); // For debugging, you can remove or adjust this
+        this.setState({ message: 'Registration successful' });
       }
     } catch (error) {
-      // Here you handle any error that occurred in the try block
-      // 'data' is not accessible here if the error occurred before 'data' was defined
-      this.setState({ message: 'An error occurred: ' + error.toString() });
-      // Removed the logging of 'data' here since it's not defined in this scope
-    }
-  } // Add a closing curly brace here
-
+      // Handle network errors or errors parsing the response
+      console.error('Registration error:', error);
+      this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
+  };
+  }
   render() {
     console.log(this.state.formData);
     const { formData, message } = this.state;
@@ -164,9 +164,10 @@ export class Register extends Component {
             First Name:
             <input
               type="text"
-              name="firstname"
-              value={formData.firstname}
+              name="FirstName"
+              value={formData.FirstName}
               onChange={this.handleChange}
+              required
             />
           </label>
           <br />
@@ -174,18 +175,20 @@ export class Register extends Component {
             Password:
             <input
               type="password"
-              name="password"
-              value={formData.password}
+              name="Password"
+              value={formData.Password}
               onChange={this.handleChange}
+              required
             />
           </label>
           <br />
-          <button type="submit"
- >Register</button>
+          <button type="submit">Register</button>
         </form>
         {message && <p>{message}</p>}
       </div>
     );
   }
 };
-*/
+
+
+export default Register;

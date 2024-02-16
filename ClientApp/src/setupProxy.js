@@ -10,7 +10,6 @@ const context = [
   "/api/feelings",
   //"/api/login/",
   "/api/register/",
-  "/register",
 ];
 
 const onError = (err, req, resp, target) => {

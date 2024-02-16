@@ -6,4 +6,6 @@ namespace iconcept.Domain.User;
 public class User : IdentityUser
 {
     public string FirstName { get; internal set; }
+
+    public string Password { get; internal set; }
 }

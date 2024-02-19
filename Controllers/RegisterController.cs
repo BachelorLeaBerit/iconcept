@@ -19,14 +19,16 @@ namespace iconcept.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserData registerData)
+        public async Task<IActionResult> Post( UserData registerData)
         {
             var result = await _mediator.Send(new RegisterUser.Request(registerData));
             if (result.IsSuccess)
             {
-                return CreatedAtAction(nameof(Post), new RouteResponse<string>(registerData.FirstName, result.Errors));
+                return Created(nameof(Post), new RouteResponse<string>(registerData.Username, result.Errors));
             }
 
-            return Ok(new RouteResponse<string>(registerData.FirstName, result.Errors));        }
+            return Ok(new RouteResponse<string>(registerData.Username, result.Errors));        }
     }
+
+    
 }

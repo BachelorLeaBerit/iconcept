@@ -5,6 +5,7 @@ import { FeelingList } from './components/FeelingList';
 import TranslationDetails from './components/TranslationDetails';
 import Translations from "./components/Translations";
 import { Register } from "./components/Register";
+import { Login } from "./components/Login";
 
 
 const AppRoutes = [
@@ -36,6 +37,10 @@ const AppRoutes = [
   path: '/register',
     element: <Register />,
   },
+  {
+    path: '/login',
+    element: <Login />,
+  }
 ];
 
 export default AppRoutes;

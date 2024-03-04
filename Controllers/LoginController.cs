@@ -1,8 +1,8 @@
 using iconcept.Domain.User;
-//using iconcept.Domain.User.Pipelines;
+using iconcept.Domain.User.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-/*
+
 namespace iconcept.Controllers.User
 {
     [Route("api/login")]
@@ -24,11 +24,10 @@ namespace iconcept.Controllers.User
             var result = await _mediator.Send(new LoginUser.Request(loginData));
             if (result.IsSuccess)
             {
-                return Ok(new RouteResponse<string>(loginData.Email, result.Errors));
+                return Ok(new RouteResponse<string>(loginData.Username, result.Errors));
             }
 
-            return Unauthorized(new RouteResponse<string>(loginData.Email, result.Errors));
+            return Unauthorized(new RouteResponse<string>(loginData.Username, result.Errors));
         }
     }
 }
-*/

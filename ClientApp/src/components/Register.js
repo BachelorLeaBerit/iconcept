@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export class Register extends Component {
   static displayName = Register.name;
@@ -8,10 +9,10 @@ export class Register extends Component {
 
     this.state = {
       formData: {
-        Username:"",
-        Password:"",
+        Username: "",
+        Password: "",
       },
-      message:"",
+      message: "",
     };
   }
 
@@ -30,37 +31,30 @@ export class Register extends Component {
     const { formData } = this.state;
   
     try {
-      const response = await fetch(`api/register`, {
-        method: 'POST',
+      const response = await axios.post(`api/register`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'cors',
-        body: JSON.stringify(formData),
       });
   
-      // Attempt to parse the JSON response regardless of response status
-      const data = await response.json(); // Ensure you parse the JSON only if the Content-Type indicates JSON
-      console.log("test1", data); // Logs after submission, as part of the response handling
+      const data = response.data;
   
-      if (!response.ok) {
-        // If the server response is not ok, use the parsed JSON data to display an error message
-        const errorMessage = data.message || 'Registration failed';
-        this.setState({ message: errorMessage });
+      if (response.status === 201) {
+        this.setState({ message: `Registration successful for ${data.username}` });
       } else {
-        // Handle success
-        this.setState({ message: 'Registration successful' });
+        const errorMessage = response.data.message || 'Registration failed';
+        this.setState({ message: errorMessage });
       }
     } catch (error) {
-      // Handle network errors or errors parsing the response
       console.error('Registration error:', error);
       this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
-    };
+    }
+
   }
 
   render() {
     const { formData, message } = this.state;
-
+    console.log(formData);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>

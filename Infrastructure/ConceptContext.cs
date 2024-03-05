@@ -19,6 +19,8 @@ public class ConceptDbContext :  IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Term>()
             .HasMany(t => t.ConceptTranslations)
             .WithOne()

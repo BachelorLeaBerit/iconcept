@@ -4,6 +4,8 @@
 .vscode
 /obj
 /Migrations/*
+/Infrastucture/concept.db
+*.json
 
 
 # User-specific files

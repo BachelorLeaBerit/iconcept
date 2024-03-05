@@ -7,11 +7,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using iconcept.Infrastructure;
+using iconcept.Domain.Term.Pipelines.Gets;
 
 using iconcept.Domain.Term;
 using System.Reflection.Metadata.Ecma335;
 
-namespace iconcept.Domain.Term.Pipelines;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
 public class GetTranslationsPipeline
 {
     public record Request(string searchTerm, string searchCountry, string searchRegion) : IRequest<List<ConceptTranslationViewModel>>;

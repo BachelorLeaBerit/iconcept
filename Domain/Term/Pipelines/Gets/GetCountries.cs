@@ -7,8 +7,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using iconcept.Infrastructure;
 
-namespace iconcept.Domain.Term.Pipelines;
+namespace iconcept.Domain.Term.Pipelines.Gets;
 public class GetCountriesPipeline
 {
     public record Request() : IRequest<List<Country>>;

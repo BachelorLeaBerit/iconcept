@@ -7,11 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 using iconcept.Domain.Term;
 using System.IO.Compression;
+using iconcept.Infrastructure;
+using iconcept.Domain.Term.Pipelines.Gets;
 
-namespace iconcept.Domain.Term.Pipelines;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
 public class GetTranslationByIdPipeline
 {
     public record Request(int Id) : IRequest<ConceptTranslationViewModel?> { }

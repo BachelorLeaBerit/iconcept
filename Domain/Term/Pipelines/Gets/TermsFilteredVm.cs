@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace iconcept.Domain.Term.Pipelines
+namespace iconcept.Domain.Term.Pipelines.Gets
 {
     public class TermViewModel
     {

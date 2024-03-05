@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using MediatR;
 using iconcept.Domain.Term.Pipelines.SuggestTranslation;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
+using iconcept.Infrastructure;
+using iconcept.Domain.Term.Pipelines.Gets;
+using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
 
 namespace iconcept.Controllers;
 [Route("api/suggestions")]
@@ -26,7 +29,7 @@ public class SuggestionController : ControllerBase
         var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
         var religions = await _mediator.Send(new Domain.Term.Pipelines.GetReligionsPipeline.Request());
         var regions = await _mediator.Send(new Domain.Term.Pipelines.GetRegionsPipeline.Request());
-        var countries = await _mediator.Send(new Domain.Term.Pipelines.GetCountriesPipeline.Request());
+        var countries = await _mediator.Send(new GetCountriesPipeline.Request());
 
         var data = new { Terms = terms, Feelings = feelings, Religions = religions, Regions = regions, Countries = countries };
 
@@ -71,7 +74,7 @@ public class SuggestionController : ControllerBase
     [HttpGet("translationToEdit/{id:int}")]
     public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetTranslationToEdit(int id)
     {
-        var translation = await _mediator.Send(new Domain.Term.Pipelines.GetTranslationByIdPipeline.Request(id));
+        var translation = await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
 
         return Ok(translation);
     }

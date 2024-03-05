@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using iconcept.Infrastructure;
 
 namespace iconcept.Domain.Term.Pipelines;
 public class GetFeelingsPipeline

@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using iconcept.Domain.Term.Pipelines;
+using iconcept.Infrastructure;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation;
+using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+
 namespace iconcept.Controllers
 {
     [Route("api/translations")]
@@ -24,7 +28,7 @@ namespace iconcept.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTermsFeelings([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry)
         {
-            var translations = await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion));
+            var translations = await _mediator.Send(new GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion));
             return Ok(translations);
         }
 

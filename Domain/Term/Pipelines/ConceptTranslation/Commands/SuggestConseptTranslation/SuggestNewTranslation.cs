@@ -1,6 +1,7 @@
 using System.Collections;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using iconcept.Infrastructure;
 
 namespace iconcept.Domain.Term.Pipelines.SuggestTranslation;
 

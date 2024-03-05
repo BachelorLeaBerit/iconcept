@@ -5,33 +5,37 @@ using Microsoft.Extensions.Options;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+using iconcept.Infrastructure;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
+
+// builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
 
+var IsDevelopment = builder.Environment.IsDevelopment();
 
 var connection = string.Empty;
-if (builder.Environment.IsDevelopment())
-{
-    builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
-    // connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
-}
+
+builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDevelopment ? "Development." : "")}json");
+// connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+
 // else
 // {
 //     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 // }
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
-    options.UseSqlite($"Data Source={Path.Combine("Infrastructure","concept.db")}"));
+    options.UseSqlite($"Data Source={Path.Combine("Infrastructure", "concept.db")}"));
+
+builder.Services.AddScoped<DbContextInitializer>();
 
 builder.Services.AddMediatR(typeof(Program));
 
@@ -59,6 +63,13 @@ else
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var initializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
+        await initializer.SeedAsync();
+    }
+
 }
 
 

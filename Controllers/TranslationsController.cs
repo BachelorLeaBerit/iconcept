@@ -12,45 +12,23 @@ namespace iconcept.Controllers
     public class TranslationsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ConceptDbContext _dbContext;
 
-        public TranslationsController(IMediator mediator)
+        public TranslationsController(IMediator mediator, ConceptDbContext dbContext)
         {
             _mediator = mediator;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> GetTermsFeelings()
+        public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTermsFeelings([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry)
         {
-            var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request("","",""));
-            var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
-            var data = new { Terms = terms, Feelings = feelings };
-
-            return Ok(data);
+            var translations = await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion));
+            return Ok(translations);
         }
-        [HttpGet("filtered")]
-        public async Task<ActionResult<IEnumerable<object>>> GetTermsFeelings(string country, string region, string religion)
-        {
-            var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request(country, region, religion));
-            var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
-            var data = new { Terms = terms, Feelings = feelings };
-
-            return Ok(data);
-        }
-
-        [HttpGet("byTermOrReligion/{id:int}/{byTerm:bool}")]
-        public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetTranslations(int id, bool byTerm)
-        {
-            if (byTerm)
-            {
-                return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsByTermIdPipeline.Request(id));
-            }
-            return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsByFeelingIdPipeline.Request(id));
-        }
-
-
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ConceptTranslation>> GetTranslation(int id)
+        public async Task<ActionResult<ConceptTranslationViewModel>> GetTranslation(int id)
         {
             return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationByIdPipeline.Request(id));
         }

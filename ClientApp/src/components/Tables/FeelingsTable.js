@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const FeelingsTable = ({ feelings }) => {
+const FeelingsTable = ({ feelings, searchRegion, searchCountry, searchTerm }) => {
     const navigate = useNavigate();
 
     const handleRowClick = (feeling) => {
-        navigate(`/translation/byTermOrReligion/${feeling.id}/${false}`);
+        navigate(`/translation/byTermOrReligion/${feeling.feelingId}/${false}?searchRegion=${searchRegion}&searchCountry=${searchCountry}&searchTerm=${searchTerm}`);
     };
 
     return (
-        <table className="table table-striped" aria-labelledby="tableLabel">
+        <table className="table table-striped table-hover" aria-labelledby="tableLabel">
             <thead>
                 <tr>
                     <th>Feeling</th>
@@ -17,7 +17,7 @@ const FeelingsTable = ({ feelings }) => {
             </thead>
             <tbody>
                 {feelings.map(feeling =>
-                    <tr key={feeling.id} onClick={() => handleRowClick(feeling)}>
+                    <tr key={feeling.feelingId} onClick={() => handleRowClick(feeling)}>
                         <td>
                             {feeling.feelingName}
                         </td>

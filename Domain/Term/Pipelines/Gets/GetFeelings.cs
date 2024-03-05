@@ -1,19 +1,17 @@
-// FeelingPipeline.cs
-
+using iconcept.Domain.Term;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-using iconcept.Domain.Term;
 
 namespace iconcept.Domain.Term.Pipelines;
 public class GetFeelingsPipeline
 {
-    public record Request : IRequest<List<Feeling>> { }
+    public record Request() : IRequest<List<Feeling>>;
 
     public class Handler : IRequestHandler<Request, List<Feeling>>
     {
@@ -25,7 +23,6 @@ public class GetFeelingsPipeline
         }
 
         public async Task<List<Feeling>> Handle(Request request, CancellationToken cancellationToken)
-            => await _db.Feelings.ToListAsync(cancellationToken);
+            => await _db.Feelings.ToListAsync();
     }
-
 }

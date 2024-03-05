@@ -37,6 +37,12 @@ export class NavMenu extends Component {
               <NavItem>
                 <NavLink tag={Link} to="/suggestTranslation"><FontAwesomeIcon icon={faCirclePlus} /></NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/register"> Register </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/login"> Login </NavLink>
+              </NavItem>
             </ul>
           </Collapse>
         </Navbar>

@@ -4,6 +4,8 @@ import Translations from "./components/UserPages/Translations";
 import SuggestTranslation from "./components/UserPages/SuggestTranslation";
 import EditTranslation from "./components/UserPages/EditTranslation";
 import ApproveSuggestions from "./components/EditorPages/ApproveSuggestions";
+import { Register } from "./components/Register";
+import { Login } from "./components/Login";
 
 const AppRoutes = [
   {
@@ -25,6 +27,14 @@ const AppRoutes = [
   {
     path: '/approveSuggestions',
     element: <ApproveSuggestions />
+  },
+  {
+  path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   }
 ];
 

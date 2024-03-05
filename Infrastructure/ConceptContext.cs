@@ -1,15 +1,15 @@
 using iconcept.Domain.Term;
 using iconcept.Domain.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MediatR;
 
-public class ConceptDbContext : DbContext
+namespace iconcept.Infrastructure;
+public class ConceptDbContext :  IdentityDbContext<User>
 {
-    public ConceptDbContext(DbContextOptions<ConceptDbContext> options)
-        : base(options)
+    public ConceptDbContext(DbContextOptions configuration) : base(configuration)
     {
     }
-
-    public DbSet<User> User { get; set; }
     public DbSet<ConceptTranslation> ConceptTranslations { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Feeling> Feelings { get; set; }

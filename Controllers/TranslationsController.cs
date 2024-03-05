@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using iconcept.Domain.Term.Pipelines;
 namespace iconcept.Controllers
 {
     [Route("api/translations")]
@@ -30,7 +31,7 @@ namespace iconcept.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ConceptTranslationViewModel>> GetTranslation(int id)
         {
-            return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationByIdPipeline.Request(id));
+            return await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
         }
     }
 }

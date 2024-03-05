@@ -1,8 +1,8 @@
 using iconcept.Domain.User;
-//using iconcept.Domain.User.Pipelines;
+using iconcept.Domain.User.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-/*
+
 namespace iconcept.Controllers.User
 {
     [Route("api/login")]
@@ -18,7 +18,7 @@ namespace iconcept.Controllers.User
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserData loginData)
+        public async Task<IActionResult> Post(LoginData loginData)
         {
             //HttpContext.Log();
             var result = await _mediator.Send(new LoginUser.Request(loginData));
@@ -31,4 +31,3 @@ namespace iconcept.Controllers.User
         }
     }
 }
-*/

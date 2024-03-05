@@ -1,5 +1,5 @@
-/*
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export class Register extends Component {
   static displayName = Register.name;
@@ -9,12 +9,12 @@ export class Register extends Component {
 
     this.state = {
       formData: {
-        firstname: '',
-        surname: '',
-        email: '',
-        password: '',
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        Password: "",
       },
-      message: '',
+      message: "",
     };
   }
 
@@ -30,76 +30,77 @@ export class Register extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
+    const { formData } = this.state;
+  
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
+      const response = await axios.post(`api/register`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          firstname: formData.firstname,
-          surname: formData.surname,
-          email: formData.email,
-          password: formData.password,
-        }),
       });
-
-      const data = await response.json();
-
+  
+      const data = response.data;
+  
       if (response.status === 201) {
-        this.setState({ message: 'Registration successful' });
+        this.setState({ message: `Registration successful for ${data.email}` });
       } else {
-        this.setState({ message: 'Registration failed: ' + data.errors.join(', ') });
+        const errorMessage = response.data.message || 'Registration failed';
+        this.setState({ message: errorMessage });
       }
     } catch (error) {
-      this.setState({ message: 'An error occurred: ' + error.toString() });
+      console.error('Registration error:', error);
+      this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
     }
-  };
+
+  }
 
   render() {
     const { formData, message } = this.state;
-
+    console.log(formData);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
-            First Name:
+            Firstname
             <input
               type="text"
-              name="firstname"
-              value={formData.firstname}
+              name="FirstName"
+              value={formData.FirstName}
               onChange={this.handleChange}
+              required
             />
           </label>
           <br />
           <label>
-            Surname:
+            Lastname
             <input
-              type="text"
-              name="surname"
-              value={formData.surname}
+              type="lastname"
+              name="Lastname"
+              value={formData.LastName}
               onChange={this.handleChange}
+              
             />
           </label>
           <br />
           <label>
-            Email:
+            Email
             <input
-              type="text"
-              name="email"
-              value={formData.email}
+              type="email"
+              name="Email"
+              value={formData.Email}
               onChange={this.handleChange}
+              required
             />
           </label>
           <br />
           <label>
-            Password:
+            Password
             <input
               type="password"
-              name="password"
-              value={formData.password}
+              name="Password"
+              value={formData.Password}
               onChange={this.handleChange}
+              required
             />
           </label>
           <br />
@@ -109,7 +110,6 @@ export class Register extends Component {
       </div>
     );
   }
-}
+};
 
 export default Register;
-*/

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using iconcept.Domain.Term.Pipelines;
 namespace iconcept.Controllers
 {
     [Route("api/translations")]
@@ -21,8 +22,8 @@ namespace iconcept.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetTermsFeelings()
         {
-            var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request("","",""));
-            var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
+            var terms = await _mediator.Send(new GetTermsPipeline.Request("","",""));
+            var feelings = await _mediator.Send(new GetFeelingsPipeline.Request());
             var data = new { Terms = terms, Feelings = feelings };
 
             return Ok(data);
@@ -30,8 +31,8 @@ namespace iconcept.Controllers
         [HttpGet("filtered")]
         public async Task<ActionResult<IEnumerable<object>>> GetTermsFeelings(string country, string region, string religion)
         {
-            var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request(country, region, religion));
-            var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
+            var terms = await _mediator.Send(new GetTermsPipeline.Request(country, region, religion));
+            var feelings = await _mediator.Send(new GetFeelingsPipeline.Request());
             var data = new { Terms = terms, Feelings = feelings };
 
             return Ok(data);
@@ -42,9 +43,9 @@ namespace iconcept.Controllers
         {
             if (byTerm)
             {
-                return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsByTermIdPipeline.Request(id));
+                return await _mediator.Send(new GetTranslationsByTermIdPipeline.Request(id));
             }
-            return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsByFeelingIdPipeline.Request(id));
+            return await _mediator.Send(new GetTranslationsByFeelingIdPipeline.Request(id));
         }
 
 
@@ -52,7 +53,7 @@ namespace iconcept.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ConceptTranslation>> GetTranslation(int id)
         {
-            return await _mediator.Send(new Domain.Term.Pipelines.GetTranslationByIdPipeline.Request(id));
+            return await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
         }
     }
 }

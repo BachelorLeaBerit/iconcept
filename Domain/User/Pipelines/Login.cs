@@ -1,11 +1,11 @@
 using iconcept.Domain.User;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-/*
+
 namespace iconcept.Domain.User.Pipelines;
 public class LoginUser
 {
-    public record Request(UserData LoginData) : IRequest<UserResponse>;
+    public record Request(LoginData LoginData) : IRequest<UserResponse>;
 
     public class Handler : IRequestHandler<Request, UserResponse>
     {
@@ -40,4 +40,3 @@ public class LoginUser
         }
     }
 }
-*/

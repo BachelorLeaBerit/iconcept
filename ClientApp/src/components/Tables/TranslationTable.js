@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Table = ( {translations} ) => {
+const TranslationTable = ( {translations} ) => {
   const navigate = useNavigate();
 
   const handleRowClick = (translation) => {
     navigate(`/translation/${translation.id}`);
   };
-
+  console.log(translations)
   return (
-    <table className="table table-striped" aria-labelledby="tableLabel">
+    <table className="table table-striped table-hover" aria-labelledby="tableLabel">
         <thead>
           <tr>
             <th>Concept</th>
@@ -20,7 +20,7 @@ const Table = ( {translations} ) => {
           {translations.map(translation =>
             <tr key={translation.id} onClick={() => handleRowClick(translation)}>
               <td>
-                  {translation.term.termName}
+                  {translation.termName}
               </td>
               <td>
                 {translation.context}
@@ -32,4 +32,4 @@ const Table = ( {translations} ) => {
   );
 };
 
-export default Table;
+export default TranslationTable;

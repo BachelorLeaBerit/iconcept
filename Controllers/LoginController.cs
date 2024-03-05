@@ -18,16 +18,16 @@ namespace iconcept.Controllers.User
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserData loginData)
+        public async Task<IActionResult> Post(LoginData loginData)
         {
             //HttpContext.Log();
             var result = await _mediator.Send(new LoginUser.Request(loginData));
             if (result.IsSuccess)
             {
-                return Ok(new RouteResponse<string>(loginData.Username, result.Errors));
+                return Ok(new RouteResponse<string>(loginData.Email, result.Errors));
             }
 
-            return Unauthorized(new RouteResponse<string>(loginData.Username, result.Errors));
+            return Unauthorized(new RouteResponse<string>(loginData.Email, result.Errors));
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iconcept.Domain.User.Pipelines;
 public class RegisterUser
 {
-    public record Request(UserData RegisterData) : IRequest<UserResponse>;
+    public record Request(RegisterData RegisterData) : IRequest<UserResponse>;
 
     public class Handler : IRequestHandler<Request, UserResponse>
     {
@@ -20,7 +20,10 @@ public class RegisterUser
         {
             var user = new User
             {
-                UserName = request.RegisterData.Username,
+                FirstName = request.RegisterData.FirstName,
+                LastName = request.RegisterData.LastName,
+                Email = request.RegisterData.Email,
+                UserName = request.RegisterData.Email
                 
             };
             var result = await _userManager.CreateAsync(user, request.RegisterData.Password);

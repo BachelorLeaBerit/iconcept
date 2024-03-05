@@ -9,7 +9,9 @@ export class Register extends Component {
 
     this.state = {
       formData: {
-        Username: "",
+        FirstName: "",
+        LastName: "",
+        Email: "",
         Password: "",
       },
       message: "",
@@ -40,7 +42,7 @@ export class Register extends Component {
       const data = response.data;
   
       if (response.status === 201) {
-        this.setState({ message: `Registration successful for ${data.username}` });
+        this.setState({ message: `Registration successful for ${data.email}` });
       } else {
         const errorMessage = response.data.message || 'Registration failed';
         this.setState({ message: errorMessage });
@@ -59,11 +61,33 @@ export class Register extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Username
+            Firstname
             <input
               type="text"
-              name="Username"
-              value={formData.Username}
+              name="FirstName"
+              value={formData.FirstName}
+              onChange={this.handleChange}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Lastname
+            <input
+              type="lastname"
+              name="Lastname"
+              value={formData.LastName}
+              onChange={this.handleChange}
+              
+            />
+          </label>
+          <br />
+          <label>
+            Email
+            <input
+              type="email"
+              name="Email"
+              value={formData.Email}
               onChange={this.handleChange}
               required
             />

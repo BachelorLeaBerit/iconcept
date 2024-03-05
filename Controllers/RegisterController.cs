@@ -17,7 +17,7 @@ public class RegisterController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(UserData registerData)
+    public async Task<IActionResult> Post(RegisterData registerData)
     {
         try
         {
@@ -25,7 +25,7 @@ public class RegisterController : ControllerBase
             
             if (result.IsSuccess)
             {
-                return Created(nameof(Post), new RouteResponse<string>(registerData.Username, null));
+                return Created(nameof(Post), new RouteResponse<string>(registerData.Email, null));
             }
             else
             {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { redirect } from 'react-router-dom';
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       formData: {
-        username: '',
+        email: '',
         password: ''
       },
       message: ''
@@ -29,7 +30,7 @@ export class Login extends Component {
       const response = await axios.post('/api/login', this.state.formData);
       if (response.status === 200) {
         this.setState({ message: 'Login successful' });
-        // Redirect user or perform other actions upon successful login
+        redirect('/counter');
       } else {
         this.setState({ message: 'Login failed' });
       }
@@ -47,11 +48,11 @@ export class Login extends Component {
         <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Username:
+            Email:
             <input
-              type="text"
-              name="username"
-              value={formData.username}
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={this.handleChange}
               required
             />

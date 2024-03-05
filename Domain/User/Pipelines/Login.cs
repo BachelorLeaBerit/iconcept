@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 namespace iconcept.Domain.User.Pipelines;
 public class LoginUser
 {
-    public record Request(UserData LoginData) : IRequest<UserResponse>;
+    public record Request(LoginData LoginData) : IRequest<UserResponse>;
 
     public class Handler : IRequestHandler<Request, UserResponse>
     {
@@ -20,7 +20,7 @@ public class LoginUser
 
         public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByNameAsync(request.LoginData.Username);
+            var user = await _userManager.FindByEmailAsync(request.LoginData.Email);
             var err = new List<string>
                 {
                     "Email or password is wrong"

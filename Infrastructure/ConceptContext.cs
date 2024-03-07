@@ -1,5 +1,5 @@
 using iconcept.Domain.Term;
-using iconcept.Domain.User;
+using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MediatR;

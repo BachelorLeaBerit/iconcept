@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faHouse } from '@fortawesome/free-solid-svg-icons';
 import './NavMenu.css';
+import LogoutButton from './LogoutButton';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -15,12 +16,17 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true
     };
+    this.handleLogout = this.handleLogout.bind(this);
+
   }
 
   toggleNavbar () {
     this.setState({
       collapsed: !this.state.collapsed
     });
+  }
+  async handleLogout() {
+    await LogoutButton();
   }
 
   render() {
@@ -43,6 +49,13 @@ export class NavMenu extends Component {
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/login"> Login </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/admin"> Admin </NavLink>
+              </NavItem>
+              <NavItem>
+              <NavLink tag={Link} className="text-dark" to="/logout" onClick={this.handleLogout}> Logout</NavLink>
+              </NavItem>
+
             </ul>
           </Collapse>
         </Navbar>

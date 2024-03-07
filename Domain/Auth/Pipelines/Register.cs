@@ -1,8 +1,8 @@
-using iconcept.Domain.User;
+using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.User.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines;
 public class RegisterUser
 {
     public record Request(RegisterData RegisterData) : IRequest<UserResponse>;

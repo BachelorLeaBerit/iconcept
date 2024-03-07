@@ -6,6 +6,7 @@ import EditTranslation from "./components/UserPages/EditTranslation";
 import ApproveSuggestions from "./components/EditorPages/ApproveSuggestions";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
+import AdminPanel from "./components/Admin";
 
 const AppRoutes = [
   {
@@ -35,6 +36,10 @@ const AppRoutes = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPanel />,
   }
 ];
 

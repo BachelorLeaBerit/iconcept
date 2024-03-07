@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using iconcept.Domain.User;
-using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,37 +8,35 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using iconcept.Domain.Auth;
+using iconcept.Domain.Term;
 using iconcept.Infrastructure;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        });
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
-// builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
 
 var IsDevelopment = builder.Environment.IsDevelopment();
 
-var connection = string.Empty;
-
 builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDevelopment ? "Development." : "")}json");
-// connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
 
-// else
-// {
-//     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
-// }
-
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ConceptDbContext>()
-    .AddDefaultTokenProviders()
-    .AddUserManager<UserManager<User>>();
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    // Configure identity options if needed
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ConceptDbContext>()
+.AddDefaultTokenProviders()
+.AddUserManager<UserManager<User>>();
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
     options.UseSqlite($"Data Source={Path.Combine("Infrastructure", "concept.db")}"));
@@ -51,23 +47,18 @@ builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:44453")
-            .AllowAnyOrigin().AllowAnyHeader()
-                                                  .AllowAnyMethod();
-        });
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 else
@@ -79,17 +70,25 @@ else
     {
         var initializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
         await initializer.SeedAsync();
-    }
 
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        // Create default roles if they don't exist
+        var roles = new List<string> { "Admin", "Editor", "Normal" };
+        foreach (var roleName in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+        }
+    }
 }
 
 app.UseCors();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -100,5 +99,3 @@ app.MapFallbackToFile("index.html");
 app.MapControllers();
 
 app.Run();
-
-

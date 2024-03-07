@@ -1,7 +1,7 @@
 using System.Net.Mail;
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.User;
+namespace iconcept.Domain.Auth;
 
 public class User : IdentityUser
 {

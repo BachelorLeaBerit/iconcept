@@ -4,8 +4,8 @@ using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace iconcept.Controllers
-{[Route("api/register")]
+namespace iconcept.Controllers;
+[Route("api/register")]
 [ApiController]
 public class RegisterController : ControllerBase
 {
@@ -51,5 +51,4 @@ public class RegisterController : ControllerBase
             return BadRequest(new RouteResponse<string>(null, new[] { "An error occurred while processing your request" }));
         }
     }
-}
 }

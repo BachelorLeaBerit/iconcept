@@ -74,11 +74,11 @@ export class Register extends Component {
           <label>
             Lastname
             <input
-              type="lastname"
-              name="Lastname"
+              type="text"
+              name="LastName"
               value={formData.LastName}
               onChange={this.handleChange}
-              
+              required
             />
           </label>
           <br />

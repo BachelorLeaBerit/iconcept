@@ -1,21 +1,23 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using iconcept.Domain.Auth.Pipelines;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iconcept.Controllers
 {
     [ApiController]
-    [Route("api/users/logout")]
-    public class AuthController : ControllerBase
+    [Route("api/logout")]
+    [Authorize]
+    public class LogoutController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AuthController(IMediator mediator)
+        public LogoutController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("logout")]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _mediator.Send(new LogoutUser.Request());

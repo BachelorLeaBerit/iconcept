@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export class Login extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ export class Login extends Component {
         email: '',
         password: ''
       },
-      message: ''
+      message: '',
+      redirectToRegister: false  // New state to track redirection
     };
   }
 
@@ -29,8 +30,8 @@ export class Login extends Component {
     try {
       const response = await axios.post('/api/login', this.state.formData);
       if (response.status === 200) {
-        this.setState({ message: 'Login successful' });
-        redirect('/counter');
+        localStorage.setItem('token', response.data.token); // Store token in local storage
+        this.setState({ message: 'Login successful', redirectToRegister: true });  // Set redirectToRegister to true
       } else {
         this.setState({ message: 'Login failed' });
       }
@@ -41,7 +42,12 @@ export class Login extends Component {
   };
 
   render() {
-    const { formData, message } = this.state;
+    const { formData, message, redirectToRegister } = this.state;
+
+    // Redirect to /register if redirectToRegister is true
+    if (redirectToRegister) {
+      return <Navigate to="/" />;
+    }
 
     return (
       <div>

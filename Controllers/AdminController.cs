@@ -13,7 +13,7 @@ namespace iconcept.Controllers
     [ApiController]
     [Authorize]
     [Authorize (Roles = "Admin")]
-    [Route("api/admin/users")]
+    [Route("api/admin")]
     public class AdminUserController : ControllerBase
     {
         private readonly UserManager<Domain.Auth.User> _userManager;

@@ -12,8 +12,8 @@ const context = [
   "/api/feelings",
   "/api/login",
   "/api/register",
-  "/api/admin/users",
-  "api/users/logout"
+  "/api/admin",
+  "/api/logout"
 ];
 
 const onError = (err, req, resp, target) => {

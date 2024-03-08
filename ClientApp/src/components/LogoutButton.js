@@ -4,8 +4,7 @@ import axios from 'axios';
 const LogoutButton = () => {
     const handleLogout = async () => {
         try {
-            await axios.post('api/users/logout');
-            // Perform any additional cleanup or navigation logic after successful logout
+            await axios.post('api/logout');
         } catch (error) {
             console.error('Error logging out:', error);
         }

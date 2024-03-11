@@ -11,7 +11,7 @@ export class Login extends Component {
         password: ''
       },
       message: '',
-      redirectToRegister: false  // New state to track redirection
+      redirectToHome: false
     };
   }
 
@@ -30,8 +30,8 @@ export class Login extends Component {
     try {
       const response = await axios.post('/api/login', this.state.formData);
       if (response.status === 200) {
-        localStorage.setItem('token', response.data.token); // Store token in local storage
-        this.setState({ message: 'Login successful', redirectToRegister: true });  // Set redirectToRegister to true
+        localStorage.setItem('token', response.data.token);
+        this.setState({ message: 'Login successful', redirectToHome: true });
       } else {
         this.setState({ message: 'Login failed' });
       }
@@ -42,42 +42,47 @@ export class Login extends Component {
   };
 
   render() {
-    const { formData, message, redirectToRegister } = this.state;
+    const { formData, message, redirectToHome } = this.state;
 
-    // Redirect to /register if redirectToRegister is true
-    if (redirectToRegister) {
+    if (redirectToHome) {
       return <Navigate to="/" />;
     }
 
     return (
-      <div>
-        <h2>Login</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Login</button>
-        </form>
-        {message && <p>{message}</p>}
+      <div className="container d-flex justify-content-center align-items-center vh-80 mt-5">
+        <div className="card p-4">
+          <h2 className="text-center mb-3">Logg inn</h2>
+          <form onSubmit={this.handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Epost</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Passord</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="text-center">
+            <button type="submit" className="btn btn-success align-center">Logg inn</button>
+            </div>
+          </form>
+          {message && <p className="mt-3 text-danger">{message}</p>}
+        </div>
       </div>
     );
   }

@@ -29,6 +29,8 @@ const AdminPanel = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
                 }
             });
+            console.log('Users:', response.data);
+            console.log('Token:', 'hei', localStorage.getItem('token'));
             setUsers(response.data);
             setLoading(false);
         } catch (error) {
@@ -59,31 +61,33 @@ const AdminPanel = () => {
 
     return (
         <div>
-            <h1>Admin Panel</h1>
+            <h2>Admin</h2>
+            <h4>Alle brukere</h4>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
-                            <th>User ID</th>
-                            <th>Username</th>
-                            <th>Assign Role</th>
+                            <th>Navn</th>
+                            <th>Epost</th>
+                            <th>Roller</th>
+                            <th>Legg til rolle</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user) => (
                             <tr key={user.id}>
-                                <td>{user.id}</td>
+                                <td>{user.firstName} {user.lastName}</td>
                                 <td>{user.userName}</td>
+                                <td>{user.roles ? user.roles.join(', ') : ''}</td> {/* Display roles if available */}
                                 <td>
-                                    <select onChange={(e) => setSelectedRole(e.target.value)}>
-                                        <option value="">Select Role</option>
+                                    <select className="form-select" onChange={(e) => setSelectedRole(e.target.value)}>
+                                        <option value="">Velg Rolle</option>
                                         <option value="Admin">Admin</option>
-                                        <option value="Editor">Editor</option>
-                                        {/* Add other roles as needed */}
+                                        <option value="Editor">Redaktør</option>
                                     </select>
-                                    <button onClick={() => assignRole(user.id)}>Assign Role</button>
+                                    <button className="btn btn-primary" onClick={() => assignRole(user.id)}>Legg til rolle</button>
                                 </td>
                             </tr>
                         ))}

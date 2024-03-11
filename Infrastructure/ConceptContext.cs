@@ -26,6 +26,13 @@ public class ConceptDbContext :  IdentityDbContext<User>
             .WithOne()
             .HasForeignKey(t => t.TermId)
             .IsRequired();
-    }
+
+
+        modelBuilder.Entity<User>()
+                   .HasMany(u => u.Roles)
+                   .WithOne()
+                   .HasForeignKey(ur => ur.UserId)
+                   .IsRequired();
+        }
 
 }

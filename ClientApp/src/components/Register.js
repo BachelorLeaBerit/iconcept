@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 export class Register extends Component {
   static displayName = Register.name;
@@ -15,6 +16,7 @@ export class Register extends Component {
         Password: "",
       },
       message: "",
+      redirectToLogin: false,
     };
   }
 
@@ -42,7 +44,7 @@ export class Register extends Component {
       const data = response.data;
   
       if (response.status === 201) {
-        this.setState({ message: `Registration successful for ${data.email}` });
+        this.setState({ message: `Registration successful for ${data.email}`, redirectToLogin: true });
       } else {
         const errorMessage = response.data.message || 'Registration failed';
         this.setState({ message: errorMessage });
@@ -55,61 +57,74 @@ export class Register extends Component {
   }
 
   render() {
-    const { formData, message } = this.state;
-    console.log(formData);
+    const { formData, message, redirectToLogin } = this.state;
+
+    if (redirectToLogin) {
+      return <Navigate to="/login" />;
+    }
+
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Firstname
-            <input
-              type="text"
-              name="FirstName"
-              value={formData.FirstName}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Lastname
-            <input
-              type="text"
-              name="LastName"
-              value={formData.LastName}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Email
-            <input
-              type="email"
-              name="Email"
-              value={formData.Email}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Password
-            <input
-              type="password"
-              name="Password"
-              value={formData.Password}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Register</button>
-        </form>
-        {message && <p>{message}</p>}
+      <div className="container d-flex justify-content-center align-items-center vh-50 mt-5">
+        <div className="card p-4">
+          <h2 className="text-center mb-4">Registrer ny bruker</h2>
+          <form onSubmit={this.handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="firstName" className="form-label">Fornavn</label>
+              <input
+                type="text"
+                className="form-control"
+                id="firstName"
+                name="FirstName"
+                value={formData.FirstName}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="lastName" className="form-label">Etternavn</label>
+              <input
+                type="text"
+                className="form-control"
+                id="lastName"
+                name="LastName"
+                value={formData.LastName}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Epost</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="Email"
+                value={formData.Email}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Passord</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="Password"
+                value={formData.Password}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-warning">Registrer</button>
+            </div>
+          </form>
+          {message && <p className="mt-3">{message}</p>}
+        </div>
       </div>
     );
   }
-};
+}
 
 export default Register;

@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace iconcept.Controllers
 {
     [ApiController]
-    [Authorize]
-    [Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/admin")]
     public class AdminUserController : ControllerBase
     {
@@ -23,12 +22,21 @@ namespace iconcept.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/admin/users
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(users);
+            var usersWithRoles = await _userManager.Users
+            .Select(u => new
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                Roles = _userManager.GetRolesAsync(u).Result.ToList()
+            })
+           .ToListAsync();
+
+            return Ok(usersWithRoles);
         }
 
         // POST: api/admin/users/{userId}/assign-role
@@ -51,5 +59,7 @@ namespace iconcept.Controllers
                 return BadRequest(result.Errors);
             }
         }
+
     }
+
 }

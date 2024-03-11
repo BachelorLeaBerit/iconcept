@@ -82,8 +82,16 @@ else
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
         }
+         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var adminUser = await userManager.FindByEmailAsync("leamadelen@gmail.com");
+        
+        if (adminUser != null)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
     }
 }
+
 
 app.UseCors();
 app.UseHttpsRedirection();

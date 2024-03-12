@@ -1,2 +1,0 @@
-# iconcept
-Best bachelors

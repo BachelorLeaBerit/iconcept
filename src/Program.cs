@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using iconcept.Domain.User;
 using iconcept.Domain.Term;
 using Microsoft.Extensions.Options;
 using MediatR;
@@ -16,6 +15,7 @@ using FluentValidation.AspNetCore;
 using System.Reflection;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using FluentValidation;
+using iconcept.Domain.Auth;
 
 
 
@@ -91,6 +91,25 @@ else
     {
         var initializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
         await initializer.SeedAsync();
+
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        // Create default roles if they don't exist
+        var roles = new List<string> { "Admin", "Editor", "Normal" };
+        foreach (var roleName in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+        }
+         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var adminUser = await userManager.FindByEmailAsync("leamadelen@gmail.com");
+        
+        if (adminUser != null)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
     }
 
 }

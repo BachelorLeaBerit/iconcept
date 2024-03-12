@@ -7,6 +7,7 @@ import { Register } from "./components/Register";
 import { Login } from "./components/Login";
 import AdminPanel from "./components/Admin";
 import LogoutButton from "./components/LogoutButton";
+import Profile from "./components/Profile";
 
 const AppRoutes = [
   {
@@ -44,6 +45,10 @@ const AppRoutes = [
   {
     path: '/logout',
     element: <LogoutButton />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   }
 ];
 

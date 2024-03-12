@@ -76,22 +76,32 @@ const AdminPanel = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.firstName} {user.lastName}</td>
-                                <td>{user.userName}</td>
-                                <td>{user.roles ? user.roles.join(', ') : ''}</td> {/* Display roles if available */}
-                                <td>
-                                    <select className="form-select" onChange={(e) => setSelectedRole(e.target.value)}>
-                                        <option value="">Velg Rolle</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Editor">Redaktør</option>
-                                    </select>
-                                    <button className="btn btn-primary" onClick={() => assignRole(user.id)}>Legg til rolle</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
+  {users.map((user) => (
+    <tr key={user.id}>
+      <td>{user.firstName} {user.lastName}</td>
+      <td>{user.userName}</td>
+      <td>
+        {user.roles && user.roles.length > 0 ? (
+          <ul>
+            {user.roles.map((role, index) => (
+              <li key={index}>{role.name}</li>
+            ))}
+          </ul>
+        ) : (
+          <span>No roles</span>
+        )}
+      </td>
+      <td>
+        <select className="form-select" onChange={(e) => setSelectedRole(e.target.value)}>
+          <option value="">Velg Rolle</option>
+          <option value="Admin">Admin</option>
+          <option value="Editor">Redaktør</option>
+        </select>
+        <button className="btn btn-primary" onClick={() => assignRole(user.id)}>Legg til rolle</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
                 </table>
             )}
         </div>

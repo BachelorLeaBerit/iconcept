@@ -45,7 +45,7 @@ export class Login extends Component {
     const { formData, message, redirectToHome } = this.state;
 
     if (redirectToHome) {
-      return <Navigate to="/" />;
+      return <Navigate to="/profile" />;
     }
 
     return (

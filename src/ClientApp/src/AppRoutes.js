@@ -1,11 +1,13 @@
 import { Home } from "./components/UserPages/Home";
 import TranslationDetails from './components/UserPages/TranslationDetails';
-import Translations from "./components/UserPages/Translations";
 import SuggestTranslation from "./components/UserPages/SuggestTranslation";
 import EditTranslation from "./components/UserPages/EditTranslation";
 import ApproveSuggestions from "./components/EditorPages/ApproveSuggestions";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
+import AdminPanel from "./components/Admin";
+import LogoutButton from "./components/LogoutButton";
+import Profile from "./components/Profile";
 
 const AppRoutes = [
   {
@@ -35,6 +37,18 @@ const AppRoutes = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPanel />,
+  },
+  {
+    path: '/logout',
+    element: <LogoutButton />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   }
 ];
 

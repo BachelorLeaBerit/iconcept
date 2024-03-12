@@ -1,5 +1,5 @@
 using iconcept.Domain.Term;
-using iconcept.Domain.User;
+using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MediatR;
@@ -26,6 +26,13 @@ public class ConceptDbContext :  IdentityDbContext<User>
             .WithOne()
             .HasForeignKey(t => t.TermId)
             .IsRequired();
-    }
+
+
+        modelBuilder.Entity<User>()
+                   .HasMany(u => u.Roles)
+                   .WithOne()
+                   .HasForeignKey(ur => ur.UserId)
+                   .IsRequired();
+        }
 
 }

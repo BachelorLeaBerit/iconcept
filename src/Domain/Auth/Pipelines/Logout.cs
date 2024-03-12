@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.User.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines;
 public class LogoutUser
 {
     public record Request() : IRequest;

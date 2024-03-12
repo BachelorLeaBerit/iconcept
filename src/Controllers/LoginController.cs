@@ -1,5 +1,5 @@
-using iconcept.Domain.User;
-using iconcept.Domain.User.Pipelines;
+using iconcept.Domain.Auth;
+using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

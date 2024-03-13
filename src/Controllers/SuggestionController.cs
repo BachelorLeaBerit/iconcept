@@ -50,10 +50,10 @@ public class SuggestionController : ControllerBase
         return Ok(translations);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateSuggestedTranslation(int id)
+    [HttpPut]
+    public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] ApproveSuggestedCtCommand command)
     {
-        await _mediator.Send(new ApproveSuggestedCtCommand(id));
+        await _mediator.Send(command);
         return NoContent();
     }
 

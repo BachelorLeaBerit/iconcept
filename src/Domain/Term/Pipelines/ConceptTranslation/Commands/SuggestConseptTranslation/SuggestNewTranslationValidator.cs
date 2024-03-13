@@ -10,7 +10,7 @@ public class SuggestTranslationCommandValidator : AbstractValidator<SuggestTrans
             .NotEmpty().WithMessage("Must have a termName");
         RuleFor(ct => ct.Translation).MaximumLength(200).WithMessage("Max 200 char")
             .NotEmpty().WithMessage("Cant be empty");
-        RuleFor(ct => ct.Comment).MaximumLength(10).WithMessage("Cant be longer than 10 chars");
+        RuleFor(ct => ct.Comment).MaximumLength(100).WithMessage("Cant be longer than 10 chars");
         RuleFor(ct => ct.NorwegianDefinition).MaximumLength(100).WithMessage("Too long");
         RuleFor(ct => ct.Context).MaximumLength(100).WithMessage("Too long");
     }

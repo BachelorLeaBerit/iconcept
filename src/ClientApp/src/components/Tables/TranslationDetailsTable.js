@@ -1,6 +1,24 @@
-import React from "react-router-dom";
+import React, { useState } from "react";
 
-const TranslationDetailsTable = ({ translation }) => {
+
+const TranslationDetailsTable = ({ translation, onChange }) => {
+  const [formData, setFormData] = useState(
+    {
+    norwegianDefinition: translation.norwegianDefinition,
+    translation: translation.translation,
+    Id: translation.id,
+    context: translation.context,
+    comment: translation.comment
+    }
+  );
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData({ ...formData, [name]: value });
+    onChange({ name, value });
+  };
+  
   return (
     <table
       className="table table-striped table-bordered"
@@ -13,11 +31,31 @@ const TranslationDetailsTable = ({ translation }) => {
         </tr>
         <tr>
           <th>Norsk definisjon</th>
-          <td>{translation.norwegianDefinition}</td>
+          <td>
+            {translation.status === 2 ? (
+              <input
+                type="text"
+                name="norwegianDefinition"
+                value={formData.norwegianDefinition}
+                onChange={handleChange}
+              />
+            ) : (
+              translation.norwegianDefinition
+            )}
+          </td>
         </tr>
         <tr>
           <th>Konsept oversettelse</th>
-          <td>{translation.translation}</td>
+          <td>{translation.status === 2 ? (
+              <input
+                type="text"
+                name="translation"
+                value={formData.translation}
+                onChange={handleChange}
+              />
+            ) : (
+              translation.translation
+            )}</td>
         </tr>
         {translation.status === 1 && (
           <tr className="table-danger">
@@ -37,7 +75,16 @@ const TranslationDetailsTable = ({ translation }) => {
         </tr>
         <tr>
           <th>Kontekst</th>
-          <td>{translation.context}</td>
+          <td>{translation.status === 2 ? (
+              <input
+                type="text"
+                name="context"
+                value={formData.context}
+                onChange={handleChange}
+              />
+            ) : (
+              translation.context
+            )}</td>
         </tr>
         <tr>
           <th>Religion(er)</th>
@@ -67,6 +114,21 @@ const TranslationDetailsTable = ({ translation }) => {
                   .map((region) => region.regionName)
                   .join(", ")
               : "N/A"}
+          </td>
+        </tr>
+        <tr>
+          <th>Kommentar</th>
+          <td>
+          {translation.status === 2 ? (
+              <input
+                type="text"
+                name="comment"
+                value={formData.comment}
+                onChange={handleChange}
+              />
+            ) : (
+              translation.comment
+            )}
           </td>
         </tr>
       </tbody>

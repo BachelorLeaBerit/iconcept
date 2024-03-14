@@ -22,7 +22,23 @@ const Profile = () => {
         };
 
         fetchProfile();
+
     }, []);
+
+    const handleDeleteUser = async (Id) => {
+        try {
+            await axios.delete(`/api/profile/${Id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            // Reset the user profile
+            //setUserProfile(null);
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            // Handle error
+        }
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -37,8 +53,9 @@ const Profile = () => {
             <h2>Brukerprofil</h2>
             <p><strong>Fornavn: </strong> {userProfile.firstName}</p>
             <p><strong>Etternavn: </strong> {userProfile.lastName}</p>
-            <p><strong>Epost: </strong> {userProfile.email}</p>
+            <p><strong>E-post: </strong> {userProfile.email}</p>
             <p> <strong> Dine roller: </strong> {userProfile.role}</p>
+            <button onClick={() => handleDeleteUser(userProfile.id)}>Slett bruker</button>
         </div>
     );
 };

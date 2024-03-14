@@ -15,7 +15,7 @@ export class NavMenu extends Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
-      isLoggedIn: false // Track user login status
+      isLoggedIn: localStorage.getItem('token') ? true : false // Check if token exists
     };
     this.handleLogout = this.handleLogout.bind(this);
   }
@@ -28,6 +28,8 @@ export class NavMenu extends Component {
 
   async handleLogout() {
     await LogoutButton();
+    localStorage.removeItem('token'); // Remove token from local storage on logout
+    this.setState({ isLoggedIn: false }); // Update isLoggedIn state
   }
 
   render() {
@@ -46,22 +48,25 @@ export class NavMenu extends Component {
               <NavItem>
                 <NavLink tag={Link} to="/suggestTranslation"><FontAwesomeIcon icon={faCirclePlus} /></NavLink>
               </NavItem>
-              {isLoggedIn ? null : ( 
+              {isLoggedIn ? (
                 <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/register"> <strong>Registrering</strong> </NavLink>
+                    <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <Button tag={Link} className="text-dark btn-light" to="/" onClick={this.handleLogout}> Logg ut</Button>
+                  </NavItem>
+                </>
+              ) : (
+                <>
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/register"> <strong>Registrer bruker</strong> </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/login"><strong>Logg inn</strong> </NavLink>
                   </NavItem>
                 </>
               )}
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
-              </NavItem>
-              <NavItem>
-                <Button tag={Link} className="text-dark" to="/logout" onClick={this.handleLogout}> Logg ut</Button>
-              </NavItem>
             </ul>
           </Collapse>
         </Navbar>

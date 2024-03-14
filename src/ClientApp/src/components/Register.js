@@ -93,7 +93,7 @@ export class Register extends Component {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">Epost</label>
+              <label htmlFor="email" className="form-label">E-post</label>
               <input
                 type="email"
                 className="form-control"

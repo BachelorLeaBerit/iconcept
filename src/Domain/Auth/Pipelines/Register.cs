@@ -2,6 +2,8 @@ using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
+using System.Globalization; // Add this namespace for TextInfo
+
 namespace iconcept.Domain.Auth.Pipelines
 {
     public class RegisterUser
@@ -23,8 +25,9 @@ namespace iconcept.Domain.Auth.Pipelines
             {
                 var user = new User
                 {
-                    FirstName = request.RegisterData.FirstName,
-                    LastName = request.RegisterData.LastName,
+                    // Capitalize the first letter of FirstName and LastName
+                    FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.FirstName.ToLower()),
+                    LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.LastName.ToLower()),
                     Email = request.RegisterData.Email,
                     UserName = request.RegisterData.Email
                 };

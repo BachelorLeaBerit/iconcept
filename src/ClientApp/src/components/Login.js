@@ -54,7 +54,7 @@ export class Login extends Component {
           <h2 className="text-center mb-3">Logg inn</h2>
           <form onSubmit={this.handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">Epost</label>
+              <label htmlFor="email" className="form-label">E-post</label>
               <input
                 type="email"
                 className="form-control"

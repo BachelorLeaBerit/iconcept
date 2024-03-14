@@ -40,6 +40,21 @@ const AdminPanel = () => {
         }
     };
 
+    const handleDeleteUser = async (userId) => {
+        try {
+            await axios.delete(`/api/admin/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
+                }
+            });
+            // Remove the deleted user from the users state
+            setUsers(users.filter(user => user.id !== userId));
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            // Handle error
+        }
+    };
+
     const handleEditUserRole = (user) => {
         setSelectedUser(user);
         setShowModal(true);
@@ -57,12 +72,13 @@ const AdminPanel = () => {
             {loading ? (
                 <p>Laster inn...</p>
             ) : (
-                <table className="table">
+                <table className="table table-striped">
                     <thead>
                         <tr>
                             <th>Navn</th>
-                            <th>Epost</th>
+                            <th>E-post</th>
                             <th>Rolle</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -73,7 +89,10 @@ const AdminPanel = () => {
                                 <td>{user.email}</td>
                                 <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen roller'}</td>
                                 <td>
-                                    <button className="btn" style={{backgroundColor: '#FF3EA5'}} onClick={() => handleEditUserRole(user)}>Endre Rolle</button>
+                                    <button className="btn" style={{backgroundColor: '#FDA403'}} onClick={() => handleEditUserRole(user)}>Endre rolle</button>
+                                </td>
+                                <td>
+                                    <button className="btn" style={{backgroundColor: '#FF6969'}} onClick={() => handleDeleteUser(user.id)}>Slett bruker</button>
                                 </td>
                             </tr>
                         ))}

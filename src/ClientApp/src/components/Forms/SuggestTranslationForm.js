@@ -188,7 +188,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           {errors.norwegianDefinition && <FormFeedback>{errors.norwegianDefinition}</FormFeedback>}
         </FormGroup>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mb-3">
           Submit
         </Button>
       </Form>

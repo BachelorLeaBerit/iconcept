@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using iconcept.Domain.Auth.Pipelines;
+using MediatR;
 
 namespace iconcept.Controllers
 {
@@ -17,9 +19,13 @@ namespace iconcept.Controllers
     {
         private readonly UserManager<Domain.Auth.User> _userManager;
 
-        public AdminUserController(UserManager<Domain.Auth.User> userManager)
+        private readonly IMediator _mediator;
+
+        public AdminUserController(UserManager<Domain.Auth.User> userManager, IMediator mediator)
         {
             _userManager = userManager;
+            _mediator = mediator;
+
         }
 
         [HttpGet]
@@ -40,37 +46,51 @@ namespace iconcept.Controllers
         }
 
         // POST: api/admin/users/{userId}/assign-role
-      [HttpPost("{userId}/assign-role")]
-public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
-{
-    var user = await _userManager.FindByIdAsync(userId);
-    if (user == null)
-    {
-        return NotFound();
-    }
-
-    // Remove existing roles for the user
-    var existingRoles = await _userManager.GetRolesAsync(user);
-    if (existingRoles.Any())
-    {
-        var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
-        if (!removeResult.Succeeded)
+        [HttpPost("{userId}/assign-role")]
+        public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
         {
-            return BadRequest(removeResult.Errors);
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Remove existing roles for the user
+            var existingRoles = await _userManager.GetRolesAsync(user);
+            if (existingRoles.Any())
+            {
+                var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
+                if (!removeResult.Succeeded)
+                {
+                    return BadRequest(removeResult.Errors);
+                }
+            }
+
+            // Assign the new role to the user
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
-    }
+        
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var result = await _mediator.Send(new DeleteUser.Request(userId));
+            if (result)
+            {
+                return Ok("User deleted successfully.");
+            }
+            else
+            {
+                return NotFound("User not found or deletion failed.");
+            }
+        }
 
-    // Assign the new role to the user
-    var result = await _userManager.AddToRoleAsync(user, roleName);
-    if (result.Succeeded)
-    {
-        return Ok();
     }
-    else
-    {
-        return BadRequest(result.Errors);
-    }
-}
-    }
-
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import './NavMenu.css';
 import LogoutButton from './LogoutButton';
 
@@ -54,7 +54,10 @@ export class NavMenu extends Component {
                     <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
                   </NavItem>
                   <NavItem>
-                    <Button tag={Link} className="text-dark btn-light" to="/" onClick={this.handleLogout}> Logg ut</Button>
+                    <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser}/></NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <Button tag={Link} className="text-dark btn-light btn-sm" to="/" onClick={this.handleLogout}> Logg ut</Button>
                   </NavItem>
                 </>
               ) : (

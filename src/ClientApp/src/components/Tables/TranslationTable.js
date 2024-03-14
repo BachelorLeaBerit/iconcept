@@ -1,13 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const TranslationTable = ( {translations} ) => {
+const TranslationTable = ( {translations, handleRowClick} ) => {
   const navigate = useNavigate();
-
-  const handleRowClick = (translation) => {
-    navigate(`/translation/${translation.id}`);
-  };
-  console.log(translations)
   return (
     <table className="table table-hover mt-3" aria-labelledby="tableLabel">
         <thead>

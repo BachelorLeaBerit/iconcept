@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import TermsTable from "../Tables/TermsTable";
-import FeelingsTable from "../Tables/FeelingsTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import TranslationTable from "../Tables/TranslationTable";
-import axios from 'axios';
+import axios from "axios";
+import TranslationDetailsTable from "../Tables/TranslationDetailsTable";
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -18,20 +17,13 @@ export class Home extends Component {
       searchTerm: "",
       searchCountry: "",
       searchRegion: "",
+      selectedTranslation: null,
     };
   }
 
   componentDidMount() {
     this.populateConceptsData();
   }
-
-  toggleShowTerms = () => {
-    this.setState({ showTerms: true });
-  };
-
-  toggleShowFeelings = () => {
-    this.setState({ showTerms: false });
-  };
 
   handleSearchChange = (event) => {
     const { name, value } = event.target;
@@ -42,9 +34,19 @@ export class Home extends Component {
     this.populateConceptsData();
   };
 
+  handleRowClick = (translation) => {
+    this.setState({ selectedTranslation: translation });
+  };
+
   render() {
-    const { loading, searchCountry, searchRegion, searchTerm, translations } =
-      this.state;
+    const {
+      loading,
+      searchCountry,
+      searchRegion,
+      searchTerm,
+      translations,
+      selectedTranslation,
+    } = this.state;
 
     if (loading) {
       return (
@@ -99,8 +101,17 @@ export class Home extends Component {
             </button>
           </div>
         </div>
-        <div>
-          <TranslationTable translations={translations}></TranslationTable>
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "50%", paddingRight: "1rem" }}>
+            <h2>List of Terms</h2>
+            <TranslationTable translations={translations} handleRowClick={this.handleRowClick}></TranslationTable>
+          </div>
+          <div style={{ width: "50%" }}>
+            <h2>Translation Details</h2>
+            {selectedTranslation && (
+              <TranslationDetailsTable translation={selectedTranslation} />
+            )}
+          </div>
         </div>
       </div>
     );

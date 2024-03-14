@@ -1,6 +1,24 @@
 /* Provide sufficient contrast against white background */
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+}
+
 a {
   color: #d60397;
+}
+
+body {
+  background-color: rgba(226, 193, 208, 0.457);
+}
+
+header {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -12,7 +30,6 @@ code {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  color: #FEE9B2;
 }
+

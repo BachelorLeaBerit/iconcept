@@ -36,13 +36,13 @@ function TranslationDetails() {
 
     return (
         <div>
-            <h1>Translation Details</h1>
+            <h3>Oversettelsesdetaljer</h3>
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <TranslationDetailsTable translation={translation}></TranslationDetailsTable>
             )}
-            <Button onClick={toEdit}><FontAwesomeIcon icon={faPenToSquare} /></Button>
+            <Button onClick={toEdit}><FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring</Button>
         </div>
     );
 }

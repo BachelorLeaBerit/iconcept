@@ -104,12 +104,12 @@ else
             }
         }
          var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-        var adminUser = await userManager.FindByEmailAsync("leamadelen@gmail.com");
-        
-        if (adminUser != null)
-        {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
+        var adminUser1 = await userManager.FindByEmailAsync("leamadelen@gmail.com");
+        var adminUser2 = await userManager.FindByEmailAsync("beritfrii@gmail.com");
+
+        await userManager.AddToRoleAsync(adminUser1, "Admin");
+        await userManager.AddToRoleAsync(adminUser2, "Admin");
+
     }
 
 }

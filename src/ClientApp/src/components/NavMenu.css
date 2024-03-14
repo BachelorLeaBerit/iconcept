@@ -1,12 +1,19 @@
-﻿a.navbar-brand {
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Londrina+Shadow&family=Madimi+One&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Rozha+One&display=swap');
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-html {
-  font-size: 14px;
+.navbar-brand {
+  font-family: 'Madimi One', sans-serif;
+  font-size: 45px;
+  font-weight: 900;
+  color: #ffffff;
 }
+
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -16,3 +23,4 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+

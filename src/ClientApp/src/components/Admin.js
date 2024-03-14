@@ -4,9 +4,11 @@ import { Navigate } from 'react-router-dom';
 
 const AdminPanel = () => {
     const [users, setUsers] = useState([]);
-    const [selectedRole, setSelectedRole] = useState('');
+    const [selectedUser, setSelectedUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+    const [showModal, setShowModal] = useState(false);
+    const [selectedRole, setSelectedRole] = useState('');
 
     useEffect(() => {
         // Check if user is authenticated
@@ -30,7 +32,6 @@ const AdminPanel = () => {
                 }
             });
             console.log('Users:', response.data);
-            console.log('Token:', 'hei', localStorage.getItem('token'));
             setUsers(response.data);
             setLoading(false);
         } catch (error) {
@@ -39,19 +40,31 @@ const AdminPanel = () => {
         }
     };
 
-    const assignRole = async (userId) => {
+    const handleEditUserRole = (user) => {
+        setSelectedUser(user);
+        setShowModal(true);
+    };
+
+    const assignRole = async () => {
         try {
-            await axios.post(`/api/admin/${userId}/assign-role`, `"${selectedRole}"`, {
+            await axios.post(`/api/admin/${selectedUser.id}/assign-role`, `"${selectedRole}"`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
                 }
             });
+            closeModal(); // Close the modal after assigning role
             fetchUsers(); // Refresh user list after assigning role
         } catch (error) {
             console.error('Error assigning role:', error);
             // Handle error
         }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedRole('');
+        setSelectedUser(null);
     };
 
     if (!loggedIn) {
@@ -61,10 +74,10 @@ const AdminPanel = () => {
 
     return (
         <div>
-            <h2>Admin</h2>
+            <h2 style={{ textAlign: 'center' }}>Admin</h2>
             <h4>Alle brukere</h4>
             {loading ? (
-                <p>Loading...</p>
+                <p>Laster inn...</p>
             ) : (
                 <table className="table">
                     <thead>
@@ -72,37 +85,37 @@ const AdminPanel = () => {
                             <th>Navn</th>
                             <th>Epost</th>
                             <th>Roller</th>
-                            <th>Legg til rolle</th>
+                            <th>Rediger Rolle</th>
                         </tr>
                     </thead>
                     <tbody>
-  {users.map((user) => (
-    <tr key={user.id}>
-      <td>{user.firstName} {user.lastName}</td>
-      <td>{user.userName}</td>
-      <td>
-        {user.roles && user.roles.length > 0 ? (
-          <ul>
-            {user.roles.map((role, index) => (
-              <li key={index}>{role.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <span>No roles</span>
-        )}
-      </td>
-      <td>
-        <select className="form-select" onChange={(e) => setSelectedRole(e.target.value)}>
-          <option value="">Velg Rolle</option>
-          <option value="Admin">Admin</option>
-          <option value="Editor">Redaktør</option>
-        </select>
-        <button className="btn btn-primary" onClick={() => assignRole(user.id)}>Legg til rolle</button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.firstName} {user.lastName}</td>
+                                <td>{user.email}</td>
+                                <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen roller'}</td>
+                                <td>
+                                    <button data-toggle="modal" data-target="#modal" className="btn" style={{backgroundColor: '#D0BFFF'}} onClick={() => handleEditUserRole(user)}>Rediger Rolle</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
+            )}
+
+            {showModal && selectedUser && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2> Rediger brukerrolle for {selectedUser.firstName} {selectedUser.lastName}</h2>
+                        <select className="form-select" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                            <option value="">Velg Rolle</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Editor">Redaktør</option>
+                        </select>
+                        <button className="btn btn-primary" onClick={assignRole}>Legg til rolle</button>
+                    </div>
+                </div>
             )}
         </div>
     );

@@ -9,6 +9,7 @@ import {
   FormGroup,
   Label,
 } from "reactstrap";
+
 import TranslationDetailsTable from "../Tables/TranslationDetailsTable";
 import axios from "axios";
 

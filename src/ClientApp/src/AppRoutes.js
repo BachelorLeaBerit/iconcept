@@ -8,6 +8,7 @@ import { Login } from "./components/Login";
 import AdminPanel from "./components/Admin";
 import LogoutButton from "./components/LogoutButton";
 import Profile from "./components/Profile";
+import EditUserRoleModal from "./components/EditUserRoleModal";
 
 const AppRoutes = [
   {
@@ -49,6 +50,10 @@ const AppRoutes = [
   {
     path: '/profile',
     element: <Profile />,
+  },
+  {
+    path: '/editUserRole',
+    element: <EditUserRoleModal />,
   }
 ];
 

@@ -9,11 +9,11 @@ const TranslationTable = ( {translations} ) => {
   };
   console.log(translations)
   return (
-    <table className="table table-striped table-hover" aria-labelledby="tableLabel">
+    <table className="table table-hover mt-3" aria-labelledby="tableLabel">
         <thead>
           <tr>
-            <th>Concept</th>
-            <th>Context</th>
+            <th>Konsept</th>
+            <th>Kontekst</th>
           </tr>
         </thead>
         <tbody>

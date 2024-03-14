@@ -35,10 +35,10 @@ const Profile = () => {
     return (
         <div>
             <h2>Brukerprofil</h2>
-            <p><strong>Fornavn</strong> {userProfile.firstName}</p>
-            <p><strong>Etternavn</strong> {userProfile.lastName}</p>
-            <p><strong>Epost</strong> {userProfile.email}</p>
-            <p>Roller {userProfile.role}</p>
+            <p><strong>Fornavn: </strong> {userProfile.firstName}</p>
+            <p><strong>Etternavn: </strong> {userProfile.lastName}</p>
+            <p><strong>Epost: </strong> {userProfile.email}</p>
+            <p> <strong> Dine roller: </strong> {userProfile.role}</p>
         </div>
     );
 };

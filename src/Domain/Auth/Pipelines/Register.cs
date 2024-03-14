@@ -2,38 +2,55 @@ using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.Auth.Pipelines;
-public class RegisterUser
+namespace iconcept.Domain.Auth.Pipelines
 {
-    public record Request(RegisterData RegisterData) : IRequest<UserResponse>;
-
-    public class Handler : IRequestHandler<Request, UserResponse>
+    public class RegisterUser
     {
-        private readonly UserManager<User> _userManager;
+        public record Request(RegisterData RegisterData) : IRequest<UserResponse>;
 
-        public Handler(UserManager<User> userManager)
+        public class Handler : IRequestHandler<Request, UserResponse>
         {
-            _userManager = userManager;
-        }
+            private readonly UserManager<User> _userManager;
+            private readonly RoleManager<IdentityRole> _roleManager;
 
-        public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
-        {
-            var user = new User
+            public Handler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
             {
-                FirstName = request.RegisterData.FirstName,
-                LastName = request.RegisterData.LastName,
-                Email = request.RegisterData.Email,
-                UserName = request.RegisterData.Email
-                
-            };
-            var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
-            var errList = new List<string>();
-            foreach (var err in result.Errors)
-            {
-                errList.Add(err.Description);
+                _userManager = userManager;
+                _roleManager = roleManager;
             }
 
-            return new UserResponse(result.Succeeded, errList.ToArray());
+            public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
+            {
+                var user = new User
+                {
+                    FirstName = request.RegisterData.FirstName,
+                    LastName = request.RegisterData.LastName,
+                    Email = request.RegisterData.Email,
+                    UserName = request.RegisterData.Email
+                };
+                
+                // Create the user
+                var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
+                if (!result.Succeeded)
+                {
+                    var errList = result.Errors.Select(err => err.Description).ToList();
+                    return new UserResponse(false, errList.ToArray());
+                }
+                
+                // Assign default role "bruker" to the user
+                var roleExists = await _roleManager.RoleExistsAsync("Bruker");
+                if (roleExists)
+                {
+                    await _userManager.AddToRoleAsync(user, "Bruker");
+                }
+                else
+                {
+                    // Handle if "bruker" role does not exist
+                    return new UserResponse(false, new[] { "Default role 'bruker' does not exist." });
+                }
+
+                return new UserResponse(true, null);
+            }
         }
     }
 }

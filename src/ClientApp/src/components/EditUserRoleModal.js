@@ -21,21 +21,26 @@ const EditUserRoleModal = ({ user, closeModal, fetchUsers }) => {
     };
 
     return (
-        <div className="modal">
-            <div className="modal-content">
+        <div className="modal" style={{ padding: '10px', borderRadius: '8px' }}>
+            <div className="modal-content" style={{ padding: '20px', width: '400px' }}>
                 <span className="close" onClick={closeModal}>&times;</span>
-                <h2> Rediger brukerrolle for {user.firstName} {user.lastName}</h2>
-                <select className="form-select" onChange={(e) => setSelectedRole(e.target.value)}>
-                    <option value="">Velg Rolle</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Editor">Redaktør</option>
-                </select>
-                <button className="btn btn-primary" onClick={assignRole}>Legg til rolle</button>
+                <h5 style={{ marginBottom: '20px' }}>Endre brukerrolle for <strong>{user.firstName} {user.lastName}</strong></h5>
+                {['Admin', 'Redaktør', 'Bruker'].map((role) => (
+                    <label key={role} style={{ display: 'block', marginBottom: '10px' }}>
+                        <input
+                            type="radio"
+                            name="role"
+                            value={role}
+                            checked={selectedRole === role}
+                            onChange={() => setSelectedRole(role)}
+                        />
+                        {' ' + role}
+                    </label>
+                ))}
+                <button className="btn btn-primary" onClick={assignRole}>Endre rolle</button>
             </div>
         </div>
     );
 };
-
-
 
 export default EditUserRoleModal;

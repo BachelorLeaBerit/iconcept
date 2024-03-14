@@ -40,26 +40,37 @@ namespace iconcept.Controllers
         }
 
         // POST: api/admin/users/{userId}/assign-role
-        [HttpPost("{userId}/assign-role")]
-        public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
+      [HttpPost("{userId}/assign-role")]
+public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
+{
+    var user = await _userManager.FindByIdAsync(userId);
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    // Remove existing roles for the user
+    var existingRoles = await _userManager.GetRolesAsync(user);
+    if (existingRoles.Any())
+    {
+        var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
+        if (!removeResult.Succeeded)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var result = await _userManager.AddToRoleAsync(user, roleName);
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
+            return BadRequest(removeResult.Errors);
         }
+    }
 
+    // Assign the new role to the user
+    var result = await _userManager.AddToRoleAsync(user, roleName);
+    if (result.Succeeded)
+    {
+        return Ok();
+    }
+    else
+    {
+        return BadRequest(result.Errors);
+    }
+}
     }
 
 }

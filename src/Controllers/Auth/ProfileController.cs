@@ -12,7 +12,6 @@ namespace iconcept.Controllers
         [HttpGet]
         public IActionResult GetUserProfile()
         {
-            var name = User.FindFirstValue("FirstName");
             var email = User.FindFirstValue(ClaimTypes.Email);
             var role = User.FindFirstValue(ClaimTypes.Role);
             var FirstName = User.FindFirstValue("FirstName");
@@ -22,10 +21,9 @@ namespace iconcept.Controllers
             // Construct the profile object
             var userProfile = new
             {
-                Name = name,
                 Email = email,
-                FirstName = FirstName,
-                LastName = LastName,
+                FirstName,
+                LastName,
                 Role = role
                 // Add other profile properties here
             };

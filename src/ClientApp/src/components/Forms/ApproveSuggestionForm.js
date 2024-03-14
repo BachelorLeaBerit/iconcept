@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Collapse, Button, CardBody, Card, Form, Input, FormGroup, Label } from "reactstrap";
+import { Collapse, Button, CardBody, Card, Form} from "reactstrap";
 import TranslationDetailsTable from "../Tables/TranslationDetailsTable";
 import axios from 'axios';
 

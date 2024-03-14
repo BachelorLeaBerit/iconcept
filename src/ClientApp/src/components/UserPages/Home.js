@@ -95,7 +95,7 @@ export class Home extends Component {
               onClick={this.handleSearch}
               className="btn btn-outline-dark"
             >
-              <FontAwesomeIcon icon={faFilter} />
+              <FontAwesomeIcon icon={faFilter} /> Søk
             </button>
           </div>
         </div>

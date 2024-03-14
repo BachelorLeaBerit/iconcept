@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Form, Button, Input, FormGroup, Row, Label } from "reactstrap";
+import { Form, Button, Input, FormGroup, Label } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
 const EditTranslationForm = ({ translation, onSubmit }) => {
@@ -37,8 +37,8 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
           <Label>Konseptoversettelse</Label>
           <Input type="textarea" value={formData.editedTranslation} name="editedTranslation" onChange={handleTranslationChange} />
         </FormGroup>
-        <Button variant="primary" type="submit">
-          Submit
+        <Button type="submit">
+          Send inn forslag
         </Button>
       </Form>
     </div>

@@ -36,7 +36,7 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/">iconcept</NavbarBrand>
+          <NavbarBrand tag={Link} to="/" className="mr-auto">iKonsept</NavbarBrand> {/* Centered relative to other items */}
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
@@ -49,15 +49,15 @@ export class NavMenu extends Component {
               {isLoggedIn ? null : ( 
                 <>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/register"> Registrering </NavLink>
+                    <NavLink tag={Link} className="text-dark" to="/register"> <strong>Registrering</strong> </NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login"> Logg inn </NavLink>
+                    <NavLink tag={Link} className="text-dark" to="/login"><strong>Logg inn</strong> </NavLink>
                   </NavItem>
                 </>
               )}
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/admin"> Admin </NavLink>
+                <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
               </NavItem>
               <NavItem>
                 <Button tag={Link} className="text-dark" to="/logout" onClick={this.handleLogout}> Logg ut</Button>

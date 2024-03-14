@@ -14,7 +14,7 @@ namespace iconcept.Controllers
         {
             var name = User.FindFirstValue("FirstName");
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var role = User.FindAll(ClaimTypes.Role);
+            var role = User.FindFirstValue(ClaimTypes.Role);
             var FirstName = User.FindFirstValue("FirstName");
             var LastName = User.FindFirstValue("LastName");
 

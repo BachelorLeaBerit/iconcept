@@ -13,7 +13,6 @@ function ApproveSuggestions() {
         const response = await axios.get(`api/suggestions/forApproval`);
         setTranslation(response.data);
         setLoading(false);
-        console.log("Fetched translation data:", response.data);
       } catch (error) {
         if (error.response) {
           console.log(error.response.data);

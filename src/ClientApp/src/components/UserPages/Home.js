@@ -103,11 +103,11 @@ export class Home extends Component {
         </div>
         <div style={{ display: "flex" }}>
           <div style={{ width: "50%", paddingRight: "1rem" }}>
-            <h2>List of Terms</h2>
+            <h4 className="mt-3">Begreper</h4>
             <TranslationTable translations={translations} handleRowClick={this.handleRowClick}></TranslationTable>
           </div>
           <div style={{ width: "50%" }}>
-            <h2>Translation Details</h2>
+            <h4 className="mt-3">Oversettelsesdetaljer</h4>
             {selectedTranslation && (
               <TranslationDetailsTable translation={selectedTranslation} />
             )}

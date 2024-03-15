@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using iconcept.Domain.Auth.Pipelines;
+using MediatR;
 
 namespace iconcept.Controllers
 {
@@ -17,9 +19,13 @@ namespace iconcept.Controllers
     {
         private readonly UserManager<Domain.Auth.User> _userManager;
 
-        public AdminUserController(UserManager<Domain.Auth.User> userManager)
+        private readonly IMediator _mediator;
+
+        public AdminUserController(UserManager<Domain.Auth.User> userManager, IMediator mediator)
         {
             _userManager = userManager;
+            _mediator = mediator;
+
         }
 
         [HttpGet]
@@ -49,6 +55,18 @@ namespace iconcept.Controllers
                 return NotFound();
             }
 
+            // Remove existing roles for the user
+            var existingRoles = await _userManager.GetRolesAsync(user);
+            if (existingRoles.Any())
+            {
+                var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
+                if (!removeResult.Succeeded)
+                {
+                    return BadRequest(removeResult.Errors);
+                }
+            }
+
+            // Assign the new role to the user
             var result = await _userManager.AddToRoleAsync(user, roleName);
             if (result.Succeeded)
             {
@@ -59,7 +77,20 @@ namespace iconcept.Controllers
                 return BadRequest(result.Errors);
             }
         }
+        
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var result = await _mediator.Send(new DeleteUser.Request(userId));
+            if (result)
+            {
+                return Ok("User deleted successfully.");
+            }
+            else
+            {
+                return NotFound("User not found or deletion failed.");
+            }
+        }
 
     }
-
 }

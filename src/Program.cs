@@ -102,12 +102,20 @@ else
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
         }
+
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         
         var adminUser1 = await userManager.FindByEmailAsync("lea@gmail.com");
 
         await userManager.AddToRoleAsync(adminUser1, "Admin");
         
+
+         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        //var adminUser1 = await userManager.FindByEmailAsync("leamadelen@gmail.com");
+        //var adminUser2 = await userManager.FindByEmailAsync("beritfrii@gmail.com");
+
+        //await userManager.AddToRoleAsync(adminUser1, "Admin");
+        //await userManager.AddToRoleAsync(adminUser2, "Admin");
     }
 
 }

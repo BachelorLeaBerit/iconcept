@@ -46,7 +46,7 @@ function SuggestTranslation() {
 
   return (
     <div>
-      <h1>Foreslå konseptoversettelse</h1>
+      <h2>Foreslå konseptoversettelse</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (

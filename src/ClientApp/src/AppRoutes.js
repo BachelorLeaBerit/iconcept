@@ -54,7 +54,8 @@ const AppRoutes = [
   {
     path: '/editUserRole',
     element: <EditUserRoleModal />,
-  }
+  },
+  
 ];
 
 export default AppRoutes;

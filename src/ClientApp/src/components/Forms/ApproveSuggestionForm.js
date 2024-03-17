@@ -34,7 +34,7 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
     const confirmed = window.confirm("Are you sure you want to approve?");
     if (confirmed) {
       try {
-        await axios(`/api/suggestions/`, {
+        await axios(`/api/approvesuggestion/`, {
           method: "PUT",
           data: editedData,
         });
@@ -50,9 +50,9 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
     if (confirmed) {
       try {
         if (translation.status === 2) {
-          await axios.delete(`/api/suggestions/${translation.id}`);
+          await axios.delete(`/api/approvesuggestion/${translation.id}`);
         } else {
-          await axios.put(`/api/suggestions/editNotApproved/${translation.id}`);
+          await axios.put(`/api/approvesuggestion/editNotApproved/${translation.id}`);
         }
         onTranslationUpdated();
       } catch (error) {
@@ -75,10 +75,10 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
                 onChange={handleEditedValues}
               ></TranslationDetailsTable>
               <Button color="success" onClick={handleApprove}>
-                Approve
+                Godkjenn
               </Button>
               <Button color="danger" onClick={handleDelete}>
-                Decline
+                Avslå
               </Button>
             </Form>
           </CardBody>

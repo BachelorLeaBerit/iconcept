@@ -52,7 +52,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           <Input
             type="text"
             name="termName"
-            placeholder="Enter Begrep"
             value={formData.termName || ""}
             onChange={(e) => handleChange("termName", e)}
             invalid={!!errors.termName}
@@ -77,6 +76,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
                 value: country.countryName,
                 label: country.countryName,
               }))}
+              placeholder="Velg"
             />
           </FormGroup>
           <FormGroup controlid="region" className="col-md-6">
@@ -96,6 +96,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
                 value: region.regionName,
                 label: region.regionName,
               }))}
+              placeholder="Velg"
             />
           </FormGroup>
         </Row>
@@ -117,6 +118,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
                 value: religion.religionName,
                 label: religion.religionName,
               }))}
+              placeholder="Velg"
             />
           </FormGroup>
           <FormGroup controlid="feeling" className="col-md-6">
@@ -136,6 +138,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
                 value: feeling.feelingName,
                 label: feeling.feelingName,
               }))}
+              placeholder="Velg"
             />
           </FormGroup>
         </Row>
@@ -143,7 +146,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           <Label>Konseptoversettelse</Label>
           <Input
             type="textarea"
-            placeholder="Enter Konseptoversettelse"
             name="translation"
             value={formData.translation || ""}
             onChange={(e) => handleChange("translation", e)}
@@ -155,7 +157,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           <Label>Kontekst</Label>
           <Input
             type="text"
-            placeholder="Enter Kontekst"
             name="context"
             value={formData.context || ""}
             onChange={(e) => handleChange("context", e)}
@@ -167,7 +168,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           <Label>Kommentar</Label>
           <Input
             type="text"
-            placeholder="Enter Kommentar"
             name="comment"
             value={formData.comment || ""}
             onChange={(e) => handleChange("comment", e)}
@@ -179,7 +179,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           <Label>Norsk definisjon</Label>
           <Input
             type="text"
-            placeholder="Enter Kommentar"
             name="norwegianDefinition"
             value={formData.norwegianDefinition || ""}
             onChange={(e) => handleChange("norwegianDefinition", e)}
@@ -188,9 +187,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           {errors.norwegianDefinition && <FormFeedback>{errors.norwegianDefinition}</FormFeedback>}
         </FormGroup>
 
-        <Button variant="primary" type="submit" className="mb-3">
-          Submit
-        </Button>
+        <Button type="submit" className="mb-3" style={{ backgroundColor: "#BFEA7C", color: "black" }}>
+          Send inn forslag til godkjenning
+        </Button> 
       </Form>
     </div>
   );

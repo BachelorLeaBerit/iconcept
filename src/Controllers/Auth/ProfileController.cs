@@ -25,7 +25,6 @@ namespace iconcept.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var Id = userIdClaim?.Value;
 
-            // Construct the profile object
             var userProfile = new
             {
                 Id,
@@ -33,7 +32,6 @@ namespace iconcept.Controllers
                 FirstName,
                 LastName,
                 Role = role
-                // Add other profile properties here
             };
 
             return Ok(userProfile);

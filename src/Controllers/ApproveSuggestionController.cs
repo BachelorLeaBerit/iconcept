@@ -9,9 +9,11 @@ using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Infrastructure;
 using iconcept.Domain.Term.Pipelines.Gets;
 using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iconcept.Controllers;
-[Route("api/suggestions")]
+[Route("api/approvesuggestion")]
+[Authorize(Roles = "Admin, Redaktør")]
 [ApiController]
 public class SuggestionController : ControllerBase
 {
@@ -22,27 +24,8 @@ public class SuggestionController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<object>>> GetTermsReligionsCountriesRegions()
-    {
-        var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request());
-        var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
-        var religions = await _mediator.Send(new Domain.Term.Pipelines.GetReligionsPipeline.Request());
-        var regions = await _mediator.Send(new Domain.Term.Pipelines.GetRegionsPipeline.Request());
-        var countries = await _mediator.Send(new GetCountriesPipeline.Request());
-
-        var data = new { Terms = terms, Feelings = feelings, Religions = religions, Regions = regions, Countries = countries };
-
-        return Ok(data);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<int>> PostSuggestNewTranslation([FromBody] SuggestTranslationCommand command)
-    {
-        return await _mediator.Send(command);
-    }
-
     [HttpGet("forApproval")]
+    [Authorize(Roles = "Admin, Redaktør")]
     public async Task<ActionResult<IEnumerable<ConceptTranslationDto>>> GetTranslationsForApproval()
     {
         var translations = await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsForApprovalPipeline.Request());
@@ -51,6 +34,7 @@ public class SuggestionController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin, Redaktør")]
     public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] ApproveSuggestedCtCommand command)
     {
         await _mediator.Send(command);
@@ -58,6 +42,7 @@ public class SuggestionController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin, Redaktør")]
     public async Task<IActionResult> DeleteSuggestedTranslation(int id)
     {
         await _mediator.Send(new DeleteSuggestedCtCommand(id));
@@ -65,13 +50,15 @@ public class SuggestionController : ControllerBase
     }
 
     [HttpPut("editNotApproved/{id:int}")]
-    public async Task<ActionResult> SomethingSmart(int id)
+    [Authorize(Roles = "Admin, Redaktør")]
+    public async Task<ActionResult> NotApprovedTranslation(int id)
     {
         await _mediator.Send(new EditNotApprovedCommand(id));
         return NoContent();
     }
 
     [HttpGet("translationToEdit/{id:int}")]
+    [Authorize(Roles = "Admin, Redaktør")]
     public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetTranslationToEdit(int id)
     {
         var translation = await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
@@ -80,6 +67,7 @@ public class SuggestionController : ControllerBase
     }
 
     [HttpPut("translationToEdit")]
+    [Authorize(Roles = "Admin, Redaktør")]
     public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] SuggestEditCommand command)
     {
         await _mediator.Send(command);

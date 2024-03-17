@@ -45,7 +45,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           </td>
         </tr>
         <tr>
-          <th>Konsept oversettelse</th>
+          <th>Konseptoversettelse</th>
           <td>{translation.status === 2 ? (
               <input
                 type="text"
@@ -64,7 +64,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           </tr>
         )}
         <tr>
-          <th>Følelse(r)</th>
+          <th>Følelser</th>
           <td>
             {translation.feelings
               ? translation.feelings
@@ -87,7 +87,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
             )}</td>
         </tr>
         <tr>
-          <th>Religion(er)</th>
+          <th>Religioner</th>
           <td>
             {translation.religions
               ? translation.religions

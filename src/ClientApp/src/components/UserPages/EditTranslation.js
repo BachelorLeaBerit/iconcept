@@ -10,7 +10,7 @@ function EditTranslation() {
 
   useEffect(() => {
     const fetchTranslation = async () => {
-      await axios.get(`api/approvesuggestion/translationToEdit/${id}`)
+      await axios.get(`api/suggestions/translationToEdit/${id}`)
         .then(response => {
           setTranslation(response.data);
           setLoading(false);

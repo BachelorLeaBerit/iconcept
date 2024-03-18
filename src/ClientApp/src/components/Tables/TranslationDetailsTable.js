@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 const TranslationDetailsTable = ({ translation, onChange }) => {
@@ -11,6 +15,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
     comment: translation.comment
     }
   );
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -18,6 +23,11 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
     setFormData({ ...formData, [name]: value });
     onChange({ name, value });
   };
+
+  const toEdit = (id) => {
+    console.log(id)
+    navigate(`/editTranslation/${id}`)
+}
   
   return (
     <table
@@ -27,7 +37,16 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
       <tbody>
         <tr className="table-info">
           <th>Begrep</th>
-          <td>{translation.termName}</td>
+          {translation.status === 0 ? (
+             <td style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+             <span style={{ marginRight: 'auto' }}>{translation.termName}</span>
+             <Button onClick={() => toEdit(translation.id)}>
+               <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
+             </Button>
+           </td>
+            ) : (
+              <td>{translation.termName}</td>  
+            )}
         </tr>
         <tr>
           <th>Norsk definisjon</th>

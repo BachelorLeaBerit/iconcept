@@ -57,15 +57,6 @@ public class SuggestionController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("translationToEdit/{id:int}")]
-    [Authorize(Roles = "Admin, Redaktør")]
-    public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetTranslationToEdit(int id)
-    {
-        var translation = await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
-
-        return Ok(translation);
-    }
-
     [HttpPut("translationToEdit")]
     [Authorize(Roles = "Admin, Redaktør")]
     public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] SuggestEditCommand command)

@@ -42,5 +42,13 @@ public class NewSuggestionController : ControllerBase
     {
         return await _mediator.Send(command);
     }
+
+    [HttpGet("translationToEdit/{id:int}")]
+    public async Task<ActionResult<IEnumerable<ConceptTranslation>>> GetTranslationToEdit(int id)
+    {
+        var translation = await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
+
+        return Ok(translation);
+    }
 }
 

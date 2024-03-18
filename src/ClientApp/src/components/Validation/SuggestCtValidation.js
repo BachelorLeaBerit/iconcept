@@ -2,7 +2,7 @@ export const ValidateForm = (formData) => {
   const errors = {};
 
   //Begrep validering
-  let termMax = 20;
+  let termMax = 50;
   let termMin = 2;
   let termNameData = formData.termName.trim()
   if (!termNameData) {
@@ -12,7 +12,7 @@ export const ValidateForm = (formData) => {
   } 
 
   //Konseptoversettelse validering
-  let translationMax = 200;
+  let translationMax = 500;
   let translationMin = 10;
   let translationData = formData.translation.trim();
   if (!translationData) {
@@ -22,7 +22,7 @@ export const ValidateForm = (formData) => {
   }
 
   //Kommentar, kontekst og norsk def. validering
-  let max = 100;
+  let max = 300;
   let min = 10;
   let error = `Må ha mellom ${min} og ${max} tegn!`;
 

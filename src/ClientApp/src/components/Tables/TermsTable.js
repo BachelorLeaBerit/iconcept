@@ -12,7 +12,7 @@ const TermsTable = ({ terms, searchRegion, searchCountry }) => {
         <table className="table table-striped table-hover" aria-labelledby="tableLabel">
             <thead>
                 <tr>
-                    <th>Term</th>
+                    <th>Begrep</th>
                 </tr>
             </thead>
             <tbody>

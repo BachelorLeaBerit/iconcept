@@ -41,21 +41,23 @@ const Profile = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="d-flex justify-content-center">Loading...</div>; {/* Apply Bootstrap classes for centering */}
     }
 
     if (!userProfile) {
-        return <div>Error: Unable to fetch user profile data</div>;
+        return <div className="d-flex justify-content-center">Error: Unable to fetch user profile data</div>; {/* Apply Bootstrap classes for centering */}
     }
 
     return (
-        <div>
-            <h2>Brukerprofil</h2>
-            <p><strong>Fornavn: </strong> {userProfile.firstName}</p>
-            <p><strong>Etternavn: </strong> {userProfile.lastName}</p>
-            <p><strong>E-post: </strong> {userProfile.email}</p>
-            <p> <strong> Dine roller: </strong> {userProfile.role}</p>
-            <button onClick={() => handleDeleteUser(userProfile.id)}>Slett bruker</button>
+        <div className="d-flex justify-content-center"> {/* Apply Bootstrap classes for centering */}
+            <div>
+                <h2>Brukerprofil</h2>
+                <p><strong>Fornavn: </strong> {userProfile.firstName}</p>
+                <p><strong>Etternavn: </strong> {userProfile.lastName}</p>
+                <p><strong>E-post: </strong> {userProfile.email}</p>
+                <p><strong>Din rolle: </strong> {userProfile.role}</p>
+                <button className="btn btn-danger" onClick={() => handleDeleteUser(userProfile.id)}>Slett bruker</button>
+            </div>
         </div>
     );
 };

@@ -19,7 +19,7 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isConfirmed = window.confirm("Are you sure you want to submit the changes?");
+    const isConfirmed = window.confirm("Er du sikker på at du vil legge til disse endringene?");
     if (isConfirmed) {
       onSubmit(formData);
       navigate("/");

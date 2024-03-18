@@ -2,35 +2,33 @@ import React, { Component } from 'react';
 import { Button, Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import './NavMenu.css';
+import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import LogoutButton from './LogoutButton';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false // Check if token exists
     };
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  toggleNavbar () {
+  toggleNavbar = () => {
     this.setState({
       collapsed: !this.state.collapsed
     });
-  }
+  };
 
-  async handleLogout() {
+  handleLogout = async () => {
     await LogoutButton();
     localStorage.removeItem('token'); // Remove token from local storage on logout
     this.setState({ isLoggedIn: false }); // Update isLoggedIn state
-  }
+  };
 
   render() {
     const { isLoggedIn } = this.state;
@@ -51,10 +49,13 @@ export class NavMenu extends Component {
               {isLoggedIn ? (
                 <>
                   <NavItem>
+                    <NavLink tag={Link} to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></NavLink>
+                  </NavItem>
+                  <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser}/></NavLink>
+                    <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser} /></NavLink>
                   </NavItem>
                   <NavItem>
                     <Button tag={Link} className="text-dark btn-light btn-sm" to="/" onClick={this.handleLogout}> Logg ut</Button>

@@ -2,6 +2,7 @@ using System.Collections;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
+using Domain.Common.Utilities;
 
 namespace iconcept.Domain.Term.Pipelines.SuggestTranslation;
 
@@ -33,7 +34,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
         {
             var newTerm = new Term
             {
-                TermName = request.TermName
+                TermName = StringUtilities.FirstLetterUpperCase(request.TermName)
             };
             _context.Terms.Add(newTerm);
             await _context.SaveChangesAsync(cancellationToken);
@@ -48,7 +49,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
             {
                 var country = await _context.Countries.Where(c => c.CountryName == countryName).FirstOrDefaultAsync();
                 if (country == null){
-                    var newCountry = new Country { CountryName = countryName };
+                    var newCountry = new Country { CountryName = StringUtilities.FirstLetterUpperCase(countryName) };
                     _context.Countries.Add(newCountry);
                     await _context.SaveChangesAsync(cancellationToken);
                     country = newCountry;
@@ -65,7 +66,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
             {
                 var region = await _context.Regions.Where(r => r.RegionName == regionName).FirstOrDefaultAsync();
                 if (region == null){
-                    var newRegion = new Region { RegionName = regionName };
+                    var newRegion = new Region { RegionName = StringUtilities.FirstLetterUpperCase(regionName) };
                     _context.Regions.Add(newRegion);
                     await _context.SaveChangesAsync(cancellationToken);
                     region = newRegion;
@@ -82,7 +83,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
             {
                 var feeling = await _context.Feelings.Where(f => f.FeelingName == feelingName).FirstOrDefaultAsync();
                 if (feeling == null){
-                    var newFeeling = new Feeling { FeelingName = feelingName };
+                    var newFeeling = new Feeling { FeelingName = StringUtilities.FirstLetterUpperCase(feelingName) };
                     _context.Feelings.Add(newFeeling);
                     await _context.SaveChangesAsync(cancellationToken);
                     feeling = newFeeling;
@@ -99,7 +100,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
             {
                 var religion = await _context.Religions.Where(rl => rl.ReligionName == religionName).FirstOrDefaultAsync();
                 if (religion == null){
-                    var newReligion = new Religion { ReligionName = religionName };
+                    var newReligion = new Religion { ReligionName = StringUtilities.FirstLetterUpperCase(religionName) };
                     _context.Religions.Add(newReligion);
                     await _context.SaveChangesAsync(cancellationToken);
                     religion = newReligion;
@@ -111,12 +112,12 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
 
         var entity = new Domain.Term.ConceptTranslation
         {
-            NorwegianDefinition = request.NorwegianDefinition,
-            Context = request.Context,
-            Translation = request.Translation,
+            NorwegianDefinition = StringUtilities.FirstLetterUpperCase(request.NorwegianDefinition),
+            Context = StringUtilities.FirstLetterUpperCase(request.Context),
+            Translation = StringUtilities.FirstLetterUpperCase(request.Translation),
             Status = Status.Suggested,
             LastModified = DateTime.Now,
-            Comment = request.Comment,
+            Comment = StringUtilities.FirstLetterUpperCase(request.Comment),
             Feelings = feelings,
             Countries = countries,
             Religions = religions,

@@ -48,7 +48,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
     <div className="container">
       <Form onSubmit={handleSubmit}>
         <FormGroup controlid="begrep">
-          <Label>Begrep</Label>
+          <Label>Begrep*</Label>
           <Input
             type="text"
             name="termName"
@@ -143,7 +143,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           </FormGroup>
         </Row>
         <FormGroup controlid="konseptoversettelse">
-          <Label>Konseptoversettelse</Label>
+          <Label>Konseptoversettelse*</Label>
           <Input
             type="textarea"
             name="translation"

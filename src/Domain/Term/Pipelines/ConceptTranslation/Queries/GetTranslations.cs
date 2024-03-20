@@ -12,13 +12,15 @@ using iconcept.Domain.Term.Pipelines.Gets;
 
 using iconcept.Domain.Term;
 using System.Reflection.Metadata.Ecma335;
+using Domain.Common.Models;
+using Domain.Common.Mappings;
 
 namespace iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
 public class GetTranslationsPipeline
 {
-    public record Request(string searchTerm, string searchCountry, string searchRegion) : IRequest<List<ConceptTranslationViewModel>>;
+    public record Request(string searchTerm, string searchCountry, string searchRegion, int PageNumber, int PageSize) : IRequest<PaginatedTranslations<ConceptTranslationViewModel>>;
 
-    public class Handler : IRequestHandler<Request, List<ConceptTranslationViewModel>>
+    public class Handler : IRequestHandler<Request, PaginatedTranslations<ConceptTranslationViewModel>>
     {
         private readonly ConceptDbContext _db;
 
@@ -27,7 +29,7 @@ public class GetTranslationsPipeline
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<List<ConceptTranslationViewModel>> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<PaginatedTranslations<ConceptTranslationViewModel>> Handle(Request request, CancellationToken cancellationToken)
         {
 
             var searchTerm = request.searchTerm?.ToLower().Trim();
@@ -77,7 +79,7 @@ public class GetTranslationsPipeline
                 TermName = _db.Terms.FirstOrDefault(term => term.Id == t.TermId)!.TermName
             })
             .OrderBy(t => t.TermName.ToLower())
-            .ToListAsync(cancellationToken);
+            .PaginatedTranslationsAsync(request.PageNumber, request.PageSize);
 
             return translations;
         }

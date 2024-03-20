@@ -2,6 +2,7 @@ using System.Collections;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
+using Domain.Common.Utilities;
 
 namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
@@ -32,10 +33,10 @@ public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtComma
         }
         if (translationToBeApproved.Status == Status.Suggested)
         {
-            if (request.ConceptTranslation is not null) translationToBeApproved.Translation = request.ConceptTranslation;
-            if (request.Context is not null) translationToBeApproved.Context = request.Context;
-            if (request.Comment is not null) translationToBeApproved.Comment = request.Comment;
-            if (request.NorwegianDefinition is not null) translationToBeApproved.NorwegianDefinition = request.NorwegianDefinition;
+            if (request.ConceptTranslation is not null) translationToBeApproved.Translation = StringUtilities.FirstLetterUpperCase(request.ConceptTranslation);
+            if (request.Context is not null) translationToBeApproved.Context = StringUtilities.FirstLetterUpperCase(request.Context);
+            if (request.Comment is not null) translationToBeApproved.Comment = StringUtilities.FirstLetterUpperCase(request.Comment);
+            if (request.NorwegianDefinition is not null) translationToBeApproved.NorwegianDefinition = StringUtilities.FirstLetterUpperCase(request.NorwegianDefinition);
         }
         translationToBeApproved.Status = Status.Approved;
         await _db.SaveChangesAsync();

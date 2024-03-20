@@ -26,9 +26,9 @@ namespace iconcept.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTermsFeelings([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry)
+        public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTermsFeelings([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry, [FromQuery] int PageNumber, [FromQuery] int PageSize)
         {
-            var translations = await _mediator.Send(new GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion));
+            var translations = await _mediator.Send(new GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion, PageNumber, PageSize));
             return Ok(translations);
         }
 

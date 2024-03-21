@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const [userProfile, setUserProfile] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -26,30 +28,34 @@ const Profile = () => {
     }, []);
 
     const handleDeleteUser = async (Id) => {
-        try {
-            await axios.delete(`/api/profile/${Id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            // Reset the user profile
-            //setUserProfile(null);
-        } catch (error) {
-            console.error('Error deleting user:', error);
-            // Handle error
+        const confirmed = window.confirm("Are you sure you want to delete your user?");
+        if (confirmed) {
+            try {
+                await axios.delete(`/api/profile/${Id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+                navigate('/');
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                // Handle error
+            }
         }
     };
 
     if (loading) {
-        return <div className="d-flex justify-content-center">Loading...</div>; {/* Apply Bootstrap classes for centering */}
+        return <div className="d-flex justify-content-center">Laster inn...</div>;
     }
 
     if (!userProfile) {
-        return <div className="d-flex justify-content-center">Error: Unable to fetch user profile data</div>; {/* Apply Bootstrap classes for centering */}
+        return <div className="d-flex justify-content-center">Error: Unable to fetch user profile data</div>;
     }
 
     return (
-        <div className="d-flex justify-content-center"> {/* Apply Bootstrap classes for centering */}
+        <div className="d-flex justify-content-center">
             <div>
                 <h2>Brukerprofil</h2>
                 <p><strong>Fornavn: </strong> {userProfile.firstName}</p>

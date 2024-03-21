@@ -11,7 +11,7 @@ export class Login extends Component {
         password: ''
       },
       message: '',
-      redirectToHome: false
+      redirectToHome: false,
     };
   }
 
@@ -21,6 +21,10 @@ export class Login extends Component {
       formData: {
         ...prevState.formData,
         [name]: value
+      },
+      errors: { // Clear corresponding error when input changes
+        ...prevState.errors,
+        [name]: ''
       }
     }));
   };
@@ -31,13 +35,12 @@ export class Login extends Component {
       const response = await axios.post('/api/login', this.state.formData);
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
-        this.setState({ message: 'Login successful', redirectToHome: true });
+        this.setState({ message: 'Suksessfull logg inn', redirectToHome: true });
       } else {
-        this.setState({ message: 'Login failed' });
+        this.setState({ message: 'Ikke gyldig logg inn' });
       }
     } catch (error) {
-      console.error('Login error:', error);
-      this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
+      this.setState({ message: `Feil e-post eller passord`});
     }
   };
 
@@ -63,7 +66,7 @@ export class Login extends Component {
                 value={formData.email}
                 onChange={this.handleChange}
                 required
-              />
+              />           
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Passord</label>

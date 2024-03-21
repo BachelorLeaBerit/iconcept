@@ -9,6 +9,7 @@ const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
     const [showModal, setShowModal] = useState(false);
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         // Check if user is authenticated
@@ -40,30 +41,35 @@ const AdminPanel = () => {
         }
     };
 
-    const handleDeleteUser = async (userId) => {
-        try {
-            await axios.delete(`/api/admin/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
-                }
-            });
-            // Remove the deleted user from the users state
-            setUsers(users.filter(user => user.id !== userId));
-        } catch (error) {
-            console.error('Error deleting user:', error);
-            // Handle error
-        }
-    };
-
     const handleEditUserRole = (user) => {
         setSelectedUser(user);
         setShowModal(true);
+    };
+
+    const handleDeleteUser = async (userIdToDelete) => {
+        const confirmed = window.confirm("Er du sikker på at du vil slette denne brukeren?");
+        if (confirmed) {
+            try {
+                await axios.delete(`/api/admin/${userIdToDelete}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
+                    }
+                });
+                // Remove the deleted user from the users state
+                setUsers(users.filter(user => user.id !== userIdToDelete));
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                // Handle error
+            }
+        }
     };
 
     if (!loggedIn) {
         // Redirect to login page if not authenticated
         return <Navigate to="/login" />;
     }
+
+    
 
     return (
         <div>
@@ -87,12 +93,17 @@ const AdminPanel = () => {
                             <tr key={user.id}>
                                 <td>{user.firstName} {user.lastName}</td>
                                 <td>{user.email}</td>
-                                <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen roller'}</td>
+                                <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen rolle'}</td>
                                 <td>
                                     <button className="btn" style={{backgroundColor: '#FDA403'}} onClick={() => handleEditUserRole(user)}>Endre rolle</button>
                                 </td>
                                 <td>
-                                    <button className="btn" style={{backgroundColor: '#FF6969'}} onClick={() => handleDeleteUser(user.id)}>Slett bruker</button>
+                                    {user.id !== userId && ( // Check if the user is not the currently logged-in user
+                                        <button className="btn" style={{backgroundColor: '#FF6969'}} onClick={() => handleDeleteUser(user.id)}>Slett bruker</button>
+                                    )}
+                                    {user.id === userId && ( // Check if the user is the currently logged-in user
+                                        <h1>Kan ikke slette deg selv</h1>
+                                    )}
                                 </td>
                             </tr>
                         ))}

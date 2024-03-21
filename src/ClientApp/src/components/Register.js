@@ -41,21 +41,23 @@ export class Register extends Component {
         },
       });
   
-      const data = response.data;
-  
       if (response.status === 201) {
-        this.setState({ message: `Registration successful for ${data.email}`, redirectToLogin: true });
+        this.setState({ message: `Registrering vellykket`, redirectToLogin: true });
       } else {
-        const errorMessage = response.data.message || 'Registration failed';
+        const errorMessage = response.data.errors ? response.data.errors.join(', ') : 'Registrering mislyktes';
         this.setState({ message: errorMessage });
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
+      console.error('Registreringsfeil:', error);
+      if (error.response) {
+        const errorMessage = error.response.data.errors ? error.response.data.errors.join(', ') : 'En feil oppstod';
+        this.setState({ message: errorMessage });
+      } else {
+        this.setState({ message: `En feil oppstod: ${error.message || error.toString()}` });
+      }
     }
-
   }
-
+  
   render() {
     const { formData, message, redirectToLogin } = this.state;
 

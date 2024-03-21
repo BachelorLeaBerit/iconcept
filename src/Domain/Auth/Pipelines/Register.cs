@@ -25,22 +25,19 @@ namespace iconcept.Domain.Auth.Pipelines
             {
                 var user = new User
                 {
-                    // Capitalize the first letter of FirstName and LastName
                     FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.FirstName.ToLower()),
                     LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.LastName.ToLower()),
                     Email = request.RegisterData.Email,
                     UserName = request.RegisterData.Email
                 };
                 
-                // Create the user
                 var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
                 if (!result.Succeeded)
                 {
                     var errList = result.Errors.Select(err => err.Description).ToList();
-                    return new UserResponse(false, errList.ToArray());
+                    return new UserResponse(false, [.. errList]);
                 }
                 
-                // Assign default role "bruker" to the user
                 var roleExists = await _roleManager.RoleExistsAsync("Bruker");
                 if (roleExists)
                 {
@@ -48,8 +45,7 @@ namespace iconcept.Domain.Auth.Pipelines
                 }
                 else
                 {
-                    // Handle if "bruker" role does not exist
-                    return new UserResponse(false, new[] { "Default role 'bruker' does not exist." });
+                    return new UserResponse(false, ["Default rolle 'bruker' eksisterer ikke."]);
                 }
 
                 return new UserResponse(true, null);

@@ -30,6 +30,11 @@ export class NavMenu extends Component {
     this.setState({ isLoggedIn: false }); // Update isLoggedIn state
   };
 
+  handleLogin = () => {
+    // Assuming you have some mechanism to set isLoggedIn to true upon successful login
+    this.setState({ isLoggedIn: true });
+  };
+
   render() {
     const { isLoggedIn } = this.state;
 

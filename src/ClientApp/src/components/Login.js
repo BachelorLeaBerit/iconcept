@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
 
 export class Login extends Component {
   constructor(props) {
@@ -10,8 +9,7 @@ export class Login extends Component {
         email: '',
         password: ''
       },
-      message: '',
-      redirectToHome: false,
+      message: ''
     };
   }
 
@@ -21,10 +19,6 @@ export class Login extends Component {
       formData: {
         ...prevState.formData,
         [name]: value
-      },
-      errors: { // Clear corresponding error when input changes
-        ...prevState.errors,
-        [name]: ''
       }
     }));
   };
@@ -35,21 +29,18 @@ export class Login extends Component {
       const response = await axios.post('/api/login', this.state.formData);
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
-        this.setState({ message: 'Suksessfull logg inn', redirectToHome: true });
+        // Redirect to profile page after successful login
+        window.location.href = '/profile';
       } else {
         this.setState({ message: 'Ikke gyldig logg inn' });
       }
     } catch (error) {
-      this.setState({ message: `Feil e-post eller passord`});
+      this.setState({ message: 'Feil e-post eller passord' });
     }
   };
 
   render() {
-    const { formData, message, redirectToHome } = this.state;
-
-    if (redirectToHome) {
-      return <Navigate to="/profile" />;
-    }
+    const { formData, message } = this.state;
 
     return (
       <div className="container d-flex justify-content-center align-items-center vh-80 mt-5">
@@ -81,7 +72,7 @@ export class Login extends Component {
               />
             </div>
             <div className="text-center">
-            <button type="submit" className="btn btn-success align-center">Logg inn</button>
+              <button type="submit" className="btn btn-success align-center">Logg inn</button>
             </div>
           </form>
           {message && <p className="mt-3 text-danger">{message}</p>}

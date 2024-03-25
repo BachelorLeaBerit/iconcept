@@ -15,7 +15,11 @@ const Profile = () => {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 });
-                console.log('User profile:', response.data);
+                //console.log('User profile:', response.data);
+                const { email, role, id } = response.data; // Destructure email and role from response.data
+                localStorage.setItem('role', role); // Store user's role in localStorage
+                localStorage.setItem('id', response.data.id);
+                console.log('Logged in as:', email, role, id); // L
                 setUserProfile(response.data);
                 setLoading(false);
             } catch (error) {

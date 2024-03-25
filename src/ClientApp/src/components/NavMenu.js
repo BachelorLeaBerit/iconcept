@@ -14,7 +14,8 @@ export class NavMenu extends Component {
 
     this.state = {
       collapsed: true,
-      isLoggedIn: localStorage.getItem('token') ? true : false // Check if token exists
+      isLoggedIn: localStorage.getItem('token') ? true : false, // Check if token exists
+      role: localStorage.getItem('role') // Retrieve user's role from localStorage
     };
   }
 
@@ -27,16 +28,12 @@ export class NavMenu extends Component {
   handleLogout = async () => {
     await LogoutButton();
     localStorage.removeItem('token'); // Remove token from local storage on logout
-    this.setState({ isLoggedIn: false }); // Update isLoggedIn state
-  };
-
-  handleLogin = () => {
-    // Assuming you have some mechanism to set isLoggedIn to true upon successful login
-    this.setState({ isLoggedIn: true });
+    localStorage.removeItem('role'); // Remove user role from local storage on logout
+    this.setState({ isLoggedIn: false, role: null }); // Update isLoggedIn and userRole states
   };
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn, role } = this.state;
 
     return (
       <header>
@@ -53,12 +50,16 @@ export class NavMenu extends Component {
               </NavItem>
               {isLoggedIn ? (
                 <>
+                { ((role === "Redaktør") || (role === "Admin")) && ( // Render translator link only if user is a translator}
                   <NavItem>
                     <NavLink tag={Link} to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
-                  </NavItem>
+                )}
+                { role === "Admin" && ( // Render admin link only if user is an admin
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
+                    </NavItem>
+                  )}
                   <NavItem>
                     <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser} /></NavLink>
                   </NavItem>

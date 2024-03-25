@@ -9,7 +9,9 @@ const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
     const [showModal, setShowModal] = useState(false);
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('id');
+    console.log('userId:', userId);
+
 
     useEffect(() => {
         // Check if user is authenticated
@@ -21,7 +23,6 @@ const AdminPanel = () => {
             return;
         }
 
-        // Fetch users if user is authenticated
         fetchUsers();
     }, []);
 
@@ -33,7 +34,9 @@ const AdminPanel = () => {
                 }
             });
             console.log('Users:', response.data);
-            setUsers(response.data);
+            console.log('Logged in as:', localStorage.getItem('id'));
+            const filteredUsers = response.data.filter(user => user.id !== userId);
+            setUsers(filteredUsers);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -89,24 +92,22 @@ const AdminPanel = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.firstName} {user.lastName}</td>
-                                <td>{user.email}</td>
-                                <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen rolle'}</td>
-                                <td>
-                                    <button className="btn" style={{backgroundColor: '#FDA403'}} onClick={() => handleEditUserRole(user)}>Endre rolle</button>
-                                </td>
-                                <td>
-                                    {user.id !== userId && ( // Check if the user is not the currently logged-in user
-                                        <button className="btn" style={{backgroundColor: '#FF6969'}} onClick={() => handleDeleteUser(user.id)}>Slett bruker</button>
-                                    )}
-                                    {user.id === userId && ( // Check if the user is the currently logged-in user
-                                        <h1>Kan ikke slette deg selv</h1>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
+                    {users.map((user) => (
+        // Check if the user is not the currently logged-in user
+        user.id !== userId && (
+            <tr key={user.id}>
+                <td>{user.firstName} {user.lastName}</td>
+                <td>{user.email}</td>
+                <td>{user.roles && user.roles.length > 0 ? user.roles.join(', ') : 'Ingen rolle'}</td>
+                <td>
+                    <button className="btn" style={{backgroundColor: '#FDA403'}} onClick={() => handleEditUserRole(user)}>Endre rolle</button>
+                </td>
+                <td>
+                    <button className="btn" style={{backgroundColor: '#FF6969'}} onClick={() => handleDeleteUser(user.id)}>Slett bruker</button>
+                </td>
+            </tr>
+        )
+    ))}
                     </tbody>
                 </table>
             )}

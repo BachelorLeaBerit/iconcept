@@ -9,7 +9,7 @@ export class Login extends Component {
         email: '',
         password: ''
       },
-      message: ''
+      message: '',
     };
   }
 
@@ -27,9 +27,11 @@ export class Login extends Component {
     e.preventDefault();
     try {
       const response = await axios.post('/api/login', this.state.formData);
+      console.log('Response:', response); // Log entire response object
+  
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
-        // Redirect to profile page after successful login
+        localStorage.setItem('id', response.data.id);
         window.location.href = '/profile';
       } else {
         this.setState({ message: 'Ikke gyldig logg inn' });

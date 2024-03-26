@@ -45,7 +45,8 @@ public class GetTranslationsForApprovalPipeline
                 Countries = ct.Countries.Select(c => new CountryDto { CountryId = c.Id, CountryName = c.CountryName }).ToList(),
                 Religions = ct.Religions.Select(r => new ReligionDto { ReligionId = r.Id, ReligionName = r.ReligionName }).ToList(),
                 Feelings = ct.Feelings.Select(f => new FeelingDto { FeelingId = f.Id, FeelingName = f.FeelingName }).ToList(),
-                TermName = _db.Terms.FirstOrDefault(term => term.Id == ct.TermId)!.TermName
+                TermName = _db.Terms.FirstOrDefault(term => term.Id == ct.TermId)!.TermName,
+                EditorEmail = ct.EditorEmail
             })
             .ToListAsync(cancellationToken);
     }

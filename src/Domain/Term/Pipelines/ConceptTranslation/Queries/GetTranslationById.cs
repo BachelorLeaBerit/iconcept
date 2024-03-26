@@ -48,7 +48,8 @@ public class GetTranslationByIdPipeline
                     Countries = t.Countries.Select(c => new CountryViewModel{ CountryName = c.CountryName }).ToList(),
                     Feelings = t.Feelings.Select(f => new FeelingVm {FeelingName = f.FeelingName}).ToList(),
                     Religions = t.Religions.Select(rl => new ReligionVm { ReligionName = rl.ReligionName}).ToList(),
-                    TermName = _db.Terms.FirstOrDefault(term => term.Id == t.TermId)!.TermName
+                    TermName = _db.Terms.FirstOrDefault(term => term.Id == t.TermId)!.TermName,
+                    EditorEmail = t.EditorEmail
                 })
                 .SingleOrDefaultAsync(cancellationToken);
             if (translation is null) throw new Exception($"Translation with Id {request.Id} was not found in the database");

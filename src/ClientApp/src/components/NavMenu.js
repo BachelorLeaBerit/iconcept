@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NavMenu.css';
 import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
-import LogoutButton from './LogoutButton';
+import handleLogout from './LogoutButton'; // Import handleLogout directly
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -26,10 +26,8 @@ export class NavMenu extends Component {
   };
 
   handleLogout = async () => {
-    await LogoutButton();
-    localStorage.removeItem('token'); // Remove token from local storage on logout
-    localStorage.removeItem('role'); // Remove user role from local storage on logout
-    this.setState({ isLoggedIn: false, role: null }); // Update isLoggedIn and userRole states
+    await handleLogout(); // Call the imported handleLogout function
+    this.setState({ isLoggedIn: false, role: null }); // Update isLoggedIn and role states
   };
 
   render() {

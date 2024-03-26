@@ -19,6 +19,7 @@ const Profile = () => {
                 const { email, role, id } = response.data; // Destructure email and role from response.data
                 localStorage.setItem('role', role); // Store user's role in localStorage
                 localStorage.setItem('id', response.data.id);
+                localStorage.setItem('email', email);
                 console.log('Logged in as:', email, role, id); // L
                 setUserProfile(response.data);
                 setLoading(false);

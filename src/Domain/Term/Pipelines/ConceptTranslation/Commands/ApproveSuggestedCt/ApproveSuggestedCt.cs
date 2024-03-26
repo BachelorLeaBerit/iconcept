@@ -13,6 +13,7 @@ public record ApproveSuggestedCtCommand : IRequest
     public string? Comment { get; set; }
     public string? Context { get; set; }
     public string? NorwegianDefinition { get; set; }
+    public string EditorEmail { get; set; }
 }
 
 public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtCommand>
@@ -37,6 +38,7 @@ public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtComma
             if (request.Context is not null) translationToBeApproved.Context = StringUtilities.FirstLetterUpperCase(request.Context);
             if (request.Comment is not null) translationToBeApproved.Comment = StringUtilities.FirstLetterUpperCase(request.Comment);
             if (request.NorwegianDefinition is not null) translationToBeApproved.NorwegianDefinition = StringUtilities.FirstLetterUpperCase(request.NorwegianDefinition);
+            if (request.EditorEmail is not null) translationToBeApproved.EditorEmail = request.EditorEmail;
         }
         translationToBeApproved.Status = Status.Approved;
         await _db.SaveChangesAsync();

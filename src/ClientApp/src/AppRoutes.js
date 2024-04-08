@@ -1,4 +1,4 @@
-import { Home } from "./components/UserPages/Home";
+import Home from "./components/UserPages/Home";
 import TranslationDetails from './components/UserPages/TranslationDetails';
 import SuggestTranslation from "./components/UserPages/SuggestTranslation";
 import EditTranslation from "./components/UserPages/EditTranslation";
@@ -9,12 +9,11 @@ import AdminPanel from "./components/Admin";
 import LogoutButton from "./components/LogoutButton";
 import Profile from "./components/Profile";
 import EditUserRoleModal from "./components/EditUserRoleModal";
-import AlgoliaTest from "./components/UserPages/AlgoliaTest";
 
 const AppRoutes = [
   {
     index: true,
-    element: <AlgoliaTest />
+    element: <Home />
   },
   {
     path: '/translation/:id',

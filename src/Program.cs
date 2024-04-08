@@ -29,7 +29,6 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
-// builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
 
 var IsDevelopment = builder.Environment.IsDevelopment();
@@ -45,8 +44,6 @@ builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDe
 // }
 
 
-//Algolia for searching
-//builder.Services.AddSingleton<ISearchClient, SearchClient>();
 builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", "b80b9704fd7a85590c852f88d8983cb8"));
 builder.Services.AddScoped<AlgoliaService>();
 
@@ -65,9 +62,6 @@ builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 }); 
-//builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-//builder.Services.AddFluentValidation(new[] {Assembly.GetExecutingAssembly()});
-
 
 builder.Services.AddCors(options =>
 {
@@ -101,7 +95,7 @@ else
         await initializer.SeedAsync();
 
         var algoliaService = scope.ServiceProvider.GetRequiredService<AlgoliaService>();
-        await algoliaService.SaveRecordsToAlgoliaAsync();
+        //await algoliaService.SaveRecordsToAlgoliaAsync();
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

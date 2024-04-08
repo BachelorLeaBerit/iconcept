@@ -20,4 +20,5 @@ public class ConceptTranslation
     public int TermId { get; set; }
     public List<Religion> Religions { get; set; } = [];
     public List<Region> Regions { get; set; } = [];
+    public string? EditorEmail { get; set; }
 }

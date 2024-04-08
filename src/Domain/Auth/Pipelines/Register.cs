@@ -1,8 +1,11 @@
 using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-
-using System.Globalization; // Add this namespace for TextInfo
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace iconcept.Domain.Auth.Pipelines
 {
@@ -23,24 +26,33 @@ namespace iconcept.Domain.Auth.Pipelines
 
             public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
             {
+                // Validate first name
+                if (string.IsNullOrWhiteSpace(request.RegisterData.FirstName) || request.RegisterData.FirstName.Length < 2 || request.RegisterData.FirstName.Length > 50)
+                {
+                    return new UserResponse(false, ["Fornavn må være mellom 2 og 50 tegn langt."]);
+                }
+
+                // Validate last name
+                if (string.IsNullOrWhiteSpace(request.RegisterData.LastName) || request.RegisterData.LastName.Length < 2 || request.RegisterData.LastName.Length > 50)
+                {
+                    return new UserResponse(false, ["Etternavn må være mellom 2 og 50 tegn langt."]);
+                }
+
                 var user = new User
                 {
-                    // Capitalize the first letter of FirstName and LastName
                     FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.FirstName.ToLower()),
                     LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.LastName.ToLower()),
                     Email = request.RegisterData.Email,
                     UserName = request.RegisterData.Email
                 };
-                
-                // Create the user
+
                 var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
                 if (!result.Succeeded)
                 {
-                    var errList = result.Errors.Select(err => err.Description).ToList();
-                    return new UserResponse(false, errList.ToArray());
+                    var errList = result.Errors.Select(err => err.Description).ToArray();
+                    return new UserResponse(false, errList);
                 }
-                
-                // Assign default role "bruker" to the user
+
                 var roleExists = await _roleManager.RoleExistsAsync("Bruker");
                 if (roleExists)
                 {
@@ -48,8 +60,7 @@ namespace iconcept.Domain.Auth.Pipelines
                 }
                 else
                 {
-                    // Handle if "bruker" role does not exist
-                    return new UserResponse(false, new[] { "Default role 'bruker' does not exist." });
+                    return new UserResponse(false, ["Standardrollen 'Bruker' eksisterer ikke."]);
                 }
 
                 return new UserResponse(true, null);

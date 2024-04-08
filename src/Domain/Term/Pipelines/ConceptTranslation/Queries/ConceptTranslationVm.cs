@@ -16,4 +16,5 @@ public class ConceptTranslationViewModel
     public List<FeelingVm> Feelings { get; set; }
     public string TermName { get; set; }
     public string? EditedTranslation { get; set; }
+    public string? EditorEmail { get; set; }
 }

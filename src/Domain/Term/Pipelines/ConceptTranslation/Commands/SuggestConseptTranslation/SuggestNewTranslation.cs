@@ -17,6 +17,7 @@ public record SuggestTranslationCommand : IRequest<int>
     public string TermName { get; init; }
     public IEnumerable<string> Religions { get; init; }
     public IEnumerable<string> Regions { get; init; }
+    public string EditorEmail { get; init; }
 }
 
 public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationCommand, int>
@@ -123,6 +124,7 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
             Religions = religions,
             Regions = regions,
             TermId = term.Id,
+            EditorEmail = request.EditorEmail
         };
         _context.ConceptTranslations.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);

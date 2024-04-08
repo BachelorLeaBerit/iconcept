@@ -1,8 +1,9 @@
-using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using iconcept.Domain.Auth.Pipelines;
 
 namespace iconcept.Controllers
 {
@@ -11,9 +12,13 @@ namespace iconcept.Controllers
     [Route("api/profile")]
     public class UserProfileController : ControllerBase
     {
-
         private readonly IMediator _mediator;
-        
+
+        public UserProfileController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
         public IActionResult GetUserProfile()
         {
@@ -40,15 +45,15 @@ namespace iconcept.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
-            var result = await _mediator.Send(new DeleteUser.Request(userId));
+            var command = new DeleteUser.Request(userId);
+            var result = await _mediator.Send(command);
+
             if (result)
             {
-                return Ok("User deleted successfully.");
+                return Ok();
             }
-            else
-            {
-                return NotFound("User not found or deletion failed.");
-            }
+
+            return BadRequest();
         }
     }
 }

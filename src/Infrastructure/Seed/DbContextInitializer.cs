@@ -55,7 +55,8 @@ public class DbContextInitializer
                 Religions = [new Religion{ReligionName = "Islam"}],
                 Regions = [new Region{RegionName = "Arabiske beltet"}],
                 LastModified = new DateTime(2007, 1, 1), // Fix: Change the value to a DateTime object
-                Status = Status.Approved
+                Status = Status.Approved,
+                
             },
           
             ]},

@@ -16,6 +16,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
     norwegianDefinition: "",
     translation: "",
     comment: "",
+    editorEmail: localStorage.getItem('email') || "", // Prefill editorEmail if user is logged in
   });
   const [errors, setErrors] = useState({});
 
@@ -185,6 +186,18 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             invalid={!!errors.norwegianDefinition}
           />
           {errors.norwegianDefinition && <FormFeedback>{errors.norwegianDefinition}</FormFeedback>}
+        </FormGroup>
+        <FormGroup controlid="editoremail">
+          <Label>Din e-post* - vil kun være synlig for admin </Label>
+          <Input
+            type="text"
+            name="editoremail"
+            value={formData.editorEmail}
+            onChange={(e) => handleChange("editorEmail", e)}
+            disabled={localStorage.getItem('email') !== null} // Disable input if user is logged in
+            invalid={!!errors.editorEmail}
+          />          
+          {errors.editorEmail && <FormFeedback>{errors.editorEmail}</FormFeedback>}
         </FormGroup>
 
         <Button type="submit" className="mb-3" style={{ backgroundColor: "#BFEA7C", color: "black" }}>

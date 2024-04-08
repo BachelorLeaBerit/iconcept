@@ -20,7 +20,8 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
     conceptTranslation: translation.translation,
     Id: translation.id,
     context: translation.context,
-    comment: translation.comment
+    comment: translation.comment,
+    editorEmail: translation.editorEmail,
   });
 
   const toggle = () => setIsOpen(!isOpen);

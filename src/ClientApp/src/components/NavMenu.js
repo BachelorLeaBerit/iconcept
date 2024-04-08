@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NavMenu.css';
 import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
-import LogoutButton from './LogoutButton';
+import handleLogout from './LogoutButton'; 
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -14,7 +14,8 @@ export class NavMenu extends Component {
 
     this.state = {
       collapsed: true,
-      isLoggedIn: localStorage.getItem('token') ? true : false // Check if token exists
+      isLoggedIn: localStorage.getItem('token') ? true : false,
+      role: localStorage.getItem('role') 
     };
   }
 
@@ -25,13 +26,12 @@ export class NavMenu extends Component {
   };
 
   handleLogout = async () => {
-    await LogoutButton();
-    localStorage.removeItem('token'); // Remove token from local storage on logout
-    this.setState({ isLoggedIn: false }); // Update isLoggedIn state
+    await handleLogout(); 
+    this.setState({ isLoggedIn: false, role: null });
   };
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn, role } = this.state;
 
     return (
       <header>
@@ -48,12 +48,16 @@ export class NavMenu extends Component {
               </NavItem>
               {isLoggedIn ? (
                 <>
+                { ((role === "Redaktør") || (role === "Admin")) && ( // Render translator link only if user is a translator}
                   <NavItem>
                     <NavLink tag={Link} to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
-                  </NavItem>
+                )}
+                { role === "Admin" && ( // Render admin link only if user is an admin
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
+                    </NavItem>
+                  )}
                   <NavItem>
                     <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser} /></NavLink>
                   </NavItem>

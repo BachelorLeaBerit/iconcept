@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using iconcept.Domain.Auth.Pipelines;
 using MediatR;
+using System.Security.Claims;
 
 namespace iconcept.Controllers
 {
@@ -77,10 +78,19 @@ namespace iconcept.Controllers
                 return BadRequest(result.Errors);
             }
         }
-        
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
+            // Get the current user's ID
+            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Check if the user to be deleted is the same as the current user
+            if (userId == currentUserId)
+            {
+                return BadRequest("Cannot delete yourself.");
+            }
+
+            // Proceed with deletion
             var result = await _mediator.Send(new DeleteUser.Request(userId));
             if (result)
             {
@@ -91,6 +101,5 @@ namespace iconcept.Controllers
                 return NotFound("User not found or deletion failed.");
             }
         }
-
     }
 }

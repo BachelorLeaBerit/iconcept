@@ -25,8 +25,8 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
   };
 
   const toEdit = (id) => {
-    console.log(id)
-    navigate(`/editTranslation/${id}`)
+    let Id = parseInt(id);
+    navigate(`/editTranslation/${Id}`)
 }
   
   return (
@@ -37,10 +37,10 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
       <tbody>
         <tr className="table-info">
           <th>Begrep</th>
-          {translation.status === 0 ? (
+          {!(translation.status === 2 || translation.status === 1) ? (
              <td style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
              <span style={{ marginRight: 'auto' }}>{translation.termName}</span>
-             <Button onClick={() => toEdit(translation.id)}>
+             <Button onClick={() => toEdit(translation.objectID)}>
                <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
              </Button>
            </td>
@@ -87,7 +87,6 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           <td>
             {translation.feelings
               ? translation.feelings
-                  .map((feeling) => feeling.feelingName)
                   .join(", ")
               : "N/A"}
           </td>
@@ -110,7 +109,6 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           <td>
             {translation.religions
               ? translation.religions
-                  .map((religion) => religion.religionName)
                   .join(", ")
               : "N/A"}
           </td>
@@ -120,7 +118,6 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           <td>
             {translation.countries
               ? translation.countries
-                  .map((country) => country.countryName)
                   .join(", ")
               : "N/A"}
           </td>
@@ -130,7 +127,6 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           <td>
             {translation.regions
               ? translation.regions
-                  .map((region) => region.regionName)
                   .join(", ")
               : "N/A"}
           </td>

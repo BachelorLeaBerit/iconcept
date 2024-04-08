@@ -9,6 +9,7 @@ using iconcept.Domain.Term.Pipelines;
 using iconcept.Infrastructure;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation;
 using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+using Algolia.Search.Clients;
 
 namespace iconcept.Controllers
 {
@@ -17,12 +18,13 @@ namespace iconcept.Controllers
     public class TranslationsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ConceptDbContext _dbContext;
+       private readonly ISearchClient _searchClient;
+        private ISearchClient? searchClient;
 
-        public TranslationsController(IMediator mediator, ConceptDbContext dbContext)
+        public TranslationsController(IMediator mediator)
         {
             _mediator = mediator;
-            _dbContext = dbContext;
+            _searchClient = searchClient;
         }
 
         [HttpGet]

@@ -16,6 +16,7 @@ using System.Reflection;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using FluentValidation;
 using iconcept.Domain.Auth;
+using Algolia.Search.Clients;
 
 
 
@@ -42,6 +43,12 @@ builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDe
 // {
 //     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 // }
+
+
+//Algolia for searching
+//builder.Services.AddSingleton<ISearchClient, SearchClient>();
+builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", "b80b9704fd7a85590c852f88d8983cb8"));
+builder.Services.AddScoped<AlgoliaService>();
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ConceptDbContext>()
@@ -91,6 +98,9 @@ else
     {
         var initializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
         await initializer.SeedAsync();
+
+        var algoliaService = scope.ServiceProvider.GetRequiredService<AlgoliaService>();
+        //await algoliaService.SaveRecordsToAlgoliaAsync();
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

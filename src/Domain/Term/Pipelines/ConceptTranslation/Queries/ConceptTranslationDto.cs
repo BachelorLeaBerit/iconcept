@@ -11,10 +11,10 @@ public class ConceptTranslationDto
     public Status Status { get; set; }
     public DateTime LastModified { get; set; }
     public string? Comment { get; set; }
-    public List<RegionDto> Regions { get; set; }
-    public List<CountryDto> Countries { get; set; }
-    public List<ReligionDto> Religions { get; set; }
-    public List<FeelingDto> Feelings { get; set; }
+    public List<string> Regions { get; set; }
+    public List<string> Countries { get; set; }
+    public List<string> Religions { get; set; }
+    public List<string> Feelings { get; set; }
     public string TermName { get; set; }
     public string? EditorEmail { get; set; }
 }

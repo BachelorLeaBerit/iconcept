@@ -19,16 +19,20 @@ public record ApproveSuggestedCtCommand : IRequest
 public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtCommand>
 {
     private readonly ConceptDbContext _db;
-    public ApproveSuggestedCtHandler(ConceptDbContext db)
+    private readonly AlgoliaService _algoliaService;
+    public ApproveSuggestedCtHandler(ConceptDbContext db, AlgoliaService algoliaService)
     {
         _db = db;
+        _algoliaService = algoliaService;
     }
 
     public async Task Handle(ApproveSuggestedCtCommand request, CancellationToken cancellationToken)
     {
         var translationToBeApproved = await _db.ConceptTranslations.SingleOrDefaultAsync(ct => ct.Id == request.Id, cancellationToken);
         if (translationToBeApproved is null) throw new Exception($"ConceptTranslation with Id {request.Id} was not found in the database");
-        if (translationToBeApproved.Status == Status.Edited){
+        if (translationToBeApproved.Status == Status.Edited)
+        {
+            await _algoliaService.UpdateRecord(translationToBeApproved.Id, translationToBeApproved.EditedTranslation);
             translationToBeApproved.Translation = translationToBeApproved.EditedTranslation;
             translationToBeApproved.EditedTranslation = "";
         }
@@ -39,9 +43,12 @@ public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtComma
             if (request.Comment is not null) translationToBeApproved.Comment = StringUtilities.FirstLetterUpperCase(request.Comment);
             if (request.NorwegianDefinition is not null) translationToBeApproved.NorwegianDefinition = StringUtilities.FirstLetterUpperCase(request.NorwegianDefinition);
             if (request.EditorEmail is not null) translationToBeApproved.EditorEmail = request.EditorEmail;
+            await _db.SaveChangesAsync();
+            await _algoliaService.SaveRecord(translationToBeApproved);
         }
         translationToBeApproved.Status = Status.Approved;
         await _db.SaveChangesAsync();
+
         return;
     }
 }

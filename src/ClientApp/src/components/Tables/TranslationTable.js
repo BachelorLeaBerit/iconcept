@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const TranslationTable = ({ translations, handleRowClick }) => {
-  const navigate = useNavigate();
-  const [clickedRow, setClickedRow] = useState(null);
-
-  const handleClick = (translation) => {
-    setClickedRow(translation.id);
-    handleRowClick(translation); // Pass the entire translation object
-  };
-
+const TranslationTable = ( {translations, handleRowClick} ) => {
+  console.log(translations)
   return (
     <table className="table table-hover mt-3 table-light" aria-labelledby="tableLabel">
       <thead className="thead-light">

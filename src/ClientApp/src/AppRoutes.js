@@ -9,11 +9,12 @@ import AdminPanel from "./components/Admin";
 import LogoutButton from "./components/LogoutButton";
 import Profile from "./components/Profile";
 import EditUserRoleModal from "./components/EditUserRoleModal";
+import AlgoliaTest from "./components/UserPages/AlgoliaTest";
 
 const AppRoutes = [
   {
     index: true,
-    element: <Home />
+    element: <AlgoliaTest />
   },
   {
     path: '/translation/:id',

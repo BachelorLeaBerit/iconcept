@@ -101,7 +101,7 @@ else
         await initializer.SeedAsync();
 
         var algoliaService = scope.ServiceProvider.GetRequiredService<AlgoliaService>();
-        //await algoliaService.SaveRecordsToAlgoliaAsync();
+        await algoliaService.SaveRecordsToAlgoliaAsync();
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -116,9 +116,9 @@ else
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         
-        var adminUser1 = await userManager.FindByEmailAsync("leamadelen@gmail.com");
+        // var adminUser1 = await userManager.FindByEmailAsync("leamadelen@gmail.com");
 
-        await userManager.AddToRoleAsync(adminUser1, "Admin");
+        // await userManager.AddToRoleAsync(adminUser1, "Admin");
         
     }
 

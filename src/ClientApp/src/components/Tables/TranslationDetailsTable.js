@@ -152,7 +152,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
           </td>
         </tr>
         <tr>
-          <th>Redaktør E-post</th>
+          <th>Forfatterens e-post</th>
           <td>{translation.editorEmail}</td>
         </tr>
       </tbody>

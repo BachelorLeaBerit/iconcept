@@ -47,5 +47,14 @@ export const ValidateForm = (formData) => {
     }
   }
 
+  let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  let editorEmailData = formData.editorEmail.trim();
+  if (!editorEmailData) {
+    errors.editorEmail = "Må inneholde en e-postadresse!";
+  }
+  else if (!emailRegex.test(editorEmailData)) {
+    errors.editorEmail = "Ugyldig e-postadresse!";
+  }
+
   return errors;
 };

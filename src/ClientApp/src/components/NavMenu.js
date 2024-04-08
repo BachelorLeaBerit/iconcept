@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NavMenu.css';
 import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
-import handleLogout from './LogoutButton'; // Import handleLogout directly
+import handleLogout from './LogoutButton'; 
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -14,8 +14,8 @@ export class NavMenu extends Component {
 
     this.state = {
       collapsed: true,
-      isLoggedIn: localStorage.getItem('token') ? true : false, // Check if token exists
-      role: localStorage.getItem('role') // Retrieve user's role from localStorage
+      isLoggedIn: localStorage.getItem('token') ? true : false,
+      role: localStorage.getItem('role') 
     };
   }
 
@@ -26,8 +26,8 @@ export class NavMenu extends Component {
   };
 
   handleLogout = async () => {
-    await handleLogout(); // Call the imported handleLogout function
-    this.setState({ isLoggedIn: false, role: null }); // Update isLoggedIn and role states
+    await handleLogout(); 
+    this.setState({ isLoggedIn: false, role: null });
   };
 
   render() {

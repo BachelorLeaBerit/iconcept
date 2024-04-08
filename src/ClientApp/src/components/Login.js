@@ -30,9 +30,9 @@ export class Login extends Component {
       console.log('Response:', response); // Log entire response object
   
       if (response.status === 200) {
+        window.location.href = '/profile';
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('id', response.data.id);
-        window.location.href = '/profile';
       } else {
         this.setState({ message: 'Ikke gyldig logg inn' });
       }

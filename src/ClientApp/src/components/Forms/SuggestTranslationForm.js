@@ -195,7 +195,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             value={formData.editorEmail}
             onChange={(e) => handleChange("editorEmail", e)}
             disabled={localStorage.getItem('email') !== null} // Disable input if user is logged in
+            invalid={!!errors.editorEmail}
           />          
+          {errors.editorEmail && <FormFeedback>{errors.editorEmail}</FormFeedback>}
         </FormGroup>
 
         <Button type="submit" className="mb-3" style={{ backgroundColor: "#BFEA7C", color: "black" }}>

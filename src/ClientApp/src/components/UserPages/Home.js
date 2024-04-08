@@ -23,10 +23,6 @@ const Home = () => {
     setTranslation(translation);
   };
 
-  const [page, setPage] = useState(0);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
   return (
     <div>

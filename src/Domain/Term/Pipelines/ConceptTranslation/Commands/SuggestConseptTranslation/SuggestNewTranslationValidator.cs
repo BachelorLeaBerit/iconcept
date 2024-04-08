@@ -6,12 +6,19 @@ public class SuggestTranslationCommandValidator : AbstractValidator<SuggestTrans
 {
     public SuggestTranslationCommandValidator()
     {
-        RuleFor(ct => ct.TermName).MaximumLength(50).WithMessage("Must be shorter than 50 chars")
-            .NotEmpty().WithMessage("Must have a termName");
-        RuleFor(ct => ct.Translation).MaximumLength(500).WithMessage("Max 200 char")
-            .NotEmpty().WithMessage("Cant be empty");
-        RuleFor(ct => ct.Comment).MaximumLength(300).WithMessage("Cant be longer than 10 chars");
-        RuleFor(ct => ct.NorwegianDefinition).MaximumLength(300).WithMessage("Too long");
-        RuleFor(ct => ct.Context).MaximumLength(300).WithMessage("Too long");
+        RuleFor(ct => ct.TermName).Length(2,50).WithMessage("The length of {PropertyName} must be between {MinLength} and {MaxLength}. You entered {TotalLength} characters.")
+            .NotEmpty().WithMessage("Must have a termName.");
+
+        RuleFor(ct => ct.Translation).Length(10,500).WithMessage("The length of {PropertyName} must be between {MinLength} and {MaxLength}. You entered {TotalLength} characters.")
+            .NotEmpty().WithMessage("Must have a translation.");
+
+        RuleFor(ct => ct.Comment).Length(10,300).WithMessage("The length of {PropertyName} must be between {MinLength} and {MaxLength}. You entered {TotalLength} characters.");
+
+        RuleFor(ct => ct.NorwegianDefinition).Length(10,300).WithMessage("The length of {PropertyName} must be between {MinLength} and {MaxLength}. You entered {TotalLength} characters.");
+
+        RuleFor(ct => ct.Context).Length(10,300).WithMessage("The length of {PropertyName} must be between {MinLength} and {MaxLength}. You entered {TotalLength} characters.");
+
+        RuleFor(ct => ct.EditorEmail).EmailAddress();
     }
+
 }

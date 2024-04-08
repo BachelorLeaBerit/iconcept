@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import SuggestTranslationForm from "../Forms/SuggestTranslationForm";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SuggestTranslation() {
   const [translationData, setTranslationData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +38,12 @@ function SuggestTranslation() {
       data: formData,
     })
     .then (function(response){
-      console.log(response.data);
-      window.location.reload();
+      if (window.confirm("Vellykket innsending av forslag! Ønsker du å sende inn et nytt forslag?")) {
+        window.location.reload();
+      }
+      else {
+        navigate("/");
+      }
     })
     .catch (function(error) {
       console.error("Error adding translation suggestion:", error);

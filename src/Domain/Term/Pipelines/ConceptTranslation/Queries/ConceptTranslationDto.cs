@@ -16,6 +16,7 @@ public class ConceptTranslationDto
     public List<ReligionDto> Religions { get; set; }
     public List<FeelingDto> Feelings { get; set; }
     public string TermName { get; set; }
+    public string? EditorEmail { get; set; }
 }
 
 public class RegionDto

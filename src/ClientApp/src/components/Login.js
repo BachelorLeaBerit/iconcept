@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
 
 export class Login extends Component {
   constructor(props) {
@@ -11,7 +10,6 @@ export class Login extends Component {
         password: ''
       },
       message: '',
-      redirectToHome: false
     };
   }
 
@@ -29,24 +27,22 @@ export class Login extends Component {
     e.preventDefault();
     try {
       const response = await axios.post('/api/login', this.state.formData);
+      console.log('Response:', response); // Log entire response object
+  
       if (response.status === 200) {
+        window.location.href = '/profile';
         localStorage.setItem('token', response.data.token);
-        this.setState({ message: 'Login successful', redirectToHome: true });
+        localStorage.setItem('id', response.data.id);
       } else {
-        this.setState({ message: 'Login failed' });
+        this.setState({ message: 'Ikke gyldig logg inn' });
       }
     } catch (error) {
-      console.error('Login error:', error);
-      this.setState({ message: `An error occurred: ${error.message || error.toString()}` });
+      this.setState({ message: 'Feil e-post eller passord' });
     }
   };
 
   render() {
-    const { formData, message, redirectToHome } = this.state;
-
-    if (redirectToHome) {
-      return <Navigate to="/profile" />;
-    }
+    const { formData, message } = this.state;
 
     return (
       <div className="container d-flex justify-content-center align-items-center vh-80 mt-5">
@@ -63,7 +59,7 @@ export class Login extends Component {
                 value={formData.email}
                 onChange={this.handleChange}
                 required
-              />
+              />           
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Passord</label>
@@ -78,7 +74,7 @@ export class Login extends Component {
               />
             </div>
             <div className="text-center">
-            <button type="submit" className="btn btn-success align-center">Logg inn</button>
+              <button type="submit" className="btn btn-success align-center">Logg inn</button>
             </div>
           </form>
           {message && <p className="mt-3 text-danger">{message}</p>}

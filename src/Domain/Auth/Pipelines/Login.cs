@@ -23,7 +23,7 @@ public class LoginUser
             var user = await _userManager.FindByEmailAsync(request.LoginData.Email);
             var err = new List<string>
                 {
-                    "Email or password is wrong"
+                    "E-post eller passord ikke korrekt."
                 };
             if (user is null)
             {

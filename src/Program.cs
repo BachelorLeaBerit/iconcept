@@ -61,6 +61,7 @@ builder.Services.AddMediatR(cfg => {
 //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 //builder.Services.AddFluentValidation(new[] {Assembly.GetExecutingAssembly()});
 
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -105,7 +106,7 @@ else
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         
-        var adminUser1 = await userManager.FindByEmailAsync("beritfrii@gmail.com");
+        var adminUser1 = await userManager.FindByEmailAsync("leamadelen@gmail.com");
 
         await userManager.AddToRoleAsync(adminUser1, "Admin");
         

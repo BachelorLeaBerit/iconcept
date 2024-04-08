@@ -12,7 +12,8 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
     translation: translation.translation,
     Id: translation.id,
     context: translation.context,
-    comment: translation.comment
+    comment: translation.comment,
+    editorEmail: translation.editorEmail
     }
   );
   const navigate = useNavigate();
@@ -149,6 +150,10 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
               translation.comment
             )}
           </td>
+        </tr>
+        <tr>
+          <th>Forfatterens e-post</th>
+          <td>{translation.editorEmail}</td>
         </tr>
       </tbody>
     </table>

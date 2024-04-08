@@ -1,18 +1,20 @@
-import React from 'react';
 import axios from 'axios';
 
-const LogoutButton = () => {
-    const handleLogout = async () => {
-        try {
-            await axios.post('api/logout');
-        } catch (error) {
-            console.error('Error logging out:', error);
-        }
-    };
+const handleLogout = async () => {
+    try {
+        await axios.post('api/logout');
 
-    return (
-        <button onClick={handleLogout}>Logout</button>
-    );
+        // Clear localStorage
+        localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('email'); // Assuming user email is stored in localStorage
+        localStorage.removeItem('id'); // Assumin
+        console.log('User logged out');
+
+    } catch (error) {
+        console.error('Error logging out:', error);
+    }
 };
 
-export default LogoutButton;
+export default handleLogout;

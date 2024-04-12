@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Form, Button, Input, FormGroup, Row, Label, FormFeedback } from "reactstrap";
+import {
+  Form,
+  Button,
+  Input,
+  FormGroup,
+  Row,
+  Label,
+  FormFeedback,
+} from "reactstrap";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../Validation/SuggestCtValidation";
 
@@ -16,7 +24,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
     norwegianDefinition: "",
     translation: "",
     comment: "",
-    editorEmail: localStorage.getItem('email') || "", // Prefill editorEmail if user is logged in
+    editorEmail: localStorage.getItem("email") || "", // Prefill editorEmail if user is logged in
   });
   const [errors, setErrors] = useState({});
 
@@ -38,6 +46,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = ValidateForm(formData);
+    console.log(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       onSubmit(formData);
     } else {
@@ -79,6 +88,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
+            {errors.countries && <div className="text-danger">{errors.countries}</div>}
           </FormGroup>
           <FormGroup controlid="region" className="col-md-6">
             <Label>Region</Label>
@@ -99,6 +109,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
+            {errors.regions && <div className="text-danger">{errors.regions}</div>}
           </FormGroup>
         </Row>
         <Row>
@@ -121,6 +132,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
+            {errors.religions && <div className="text-danger">{errors.religions}</div>}
           </FormGroup>
           <FormGroup controlid="feeling" className="col-md-6">
             <Label>Følelse</Label>
@@ -141,6 +153,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
+            {errors.feelings && <div className="text-danger">{errors.feelings}</div>}
           </FormGroup>
         </Row>
         <FormGroup controlid="konseptoversettelse">
@@ -152,7 +165,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             onChange={(e) => handleChange("translation", e)}
             invalid={!!errors.translation}
           />
-          {errors.translation && <FormFeedback>{errors.translation}</FormFeedback>}
+          {errors.translation && (
+            <FormFeedback>{errors.translation}</FormFeedback>
+          )}
         </FormGroup>
         <FormGroup controlid="kontekst">
           <Label>Kontekst</Label>
@@ -185,7 +200,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             onChange={(e) => handleChange("norwegianDefinition", e)}
             invalid={!!errors.norwegianDefinition}
           />
-          {errors.norwegianDefinition && <FormFeedback>{errors.norwegianDefinition}</FormFeedback>}
+          {errors.norwegianDefinition && (
+            <FormFeedback>{errors.norwegianDefinition}</FormFeedback>
+          )}
         </FormGroup>
         <FormGroup controlid="editoremail">
           <Label>Din e-post* - vil kun være synlig for admin </Label>
@@ -194,15 +211,21 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             name="editoremail"
             value={formData.editorEmail}
             onChange={(e) => handleChange("editorEmail", e)}
-            disabled={localStorage.getItem('email') !== null} // Disable input if user is logged in
+            disabled={localStorage.getItem("email") !== null} // Disable input if user is logged in
             invalid={!!errors.editorEmail}
-          />          
-          {errors.editorEmail && <FormFeedback>{errors.editorEmail}</FormFeedback>}
+          />
+          {errors.editorEmail && (
+            <FormFeedback>{errors.editorEmail}</FormFeedback>
+          )}
         </FormGroup>
 
-        <Button type="submit" className="mb-3" style={{ backgroundColor: "#BFEA7C", color: "black" }}>
+        <Button
+          type="submit"
+          className="mb-3"
+          style={{ backgroundColor: "#BFEA7C", color: "black" }}
+        >
           Send inn forslag til godkjenning
-        </Button> 
+        </Button>
       </Form>
     </div>
   );

@@ -50,5 +50,12 @@ public class NewSuggestionController : ControllerBase
 
         return Ok(translation);
     }
+
+    [HttpPut("translationToEdit")]
+    public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] SuggestEditCommand command)
+    {
+        await _mediator.Send(command);
+        return NoContent();
+    }
 }
 

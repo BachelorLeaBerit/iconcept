@@ -57,12 +57,6 @@ public class SuggestionController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("translationToEdit")]
-    [Authorize(Roles = "Admin, Redaktør")]
-    public async Task<IActionResult> UpdateSuggestedTranslation([FromBody] SuggestEditCommand command)
-    {
-        await _mediator.Send(command);
-        return NoContent();
-    }
+
 }
 

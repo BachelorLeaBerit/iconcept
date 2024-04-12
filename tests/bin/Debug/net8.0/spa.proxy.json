@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44453",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\Berit\\Dropbox\\PC\\Documents\\3_year\\Bachelor\\iconcept\\src\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}

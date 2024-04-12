@@ -32,7 +32,6 @@ public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtComma
         if (translationToBeApproved is null) throw new Exception($"ConceptTranslation with Id {request.Id} was not found in the database");
         if (translationToBeApproved.Status == Status.Edited)
         {
-            await _algoliaService.UpdateRecord(translationToBeApproved.Id, translationToBeApproved.EditedTranslation);
             translationToBeApproved.Translation = translationToBeApproved.EditedTranslation;
             translationToBeApproved.EditedTranslation = "";
         }
@@ -44,8 +43,8 @@ public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtComma
             if (request.NorwegianDefinition is not null) translationToBeApproved.NorwegianDefinition = StringUtilities.FirstLetterUpperCase(request.NorwegianDefinition);
             if (request.EditorEmail is not null) translationToBeApproved.EditorEmail = request.EditorEmail;
             await _db.SaveChangesAsync();
-            await _algoliaService.SaveRecord(translationToBeApproved);
         }
+        await _algoliaService.SaveRecord(translationToBeApproved);
         translationToBeApproved.Status = Status.Approved;
         await _db.SaveChangesAsync();
 

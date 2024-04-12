@@ -10,9 +10,11 @@ public record EditNotApprovedCommand(int Id) : IRequest;
 public class EditNotApprovedCommandHandler : IRequestHandler<EditNotApprovedCommand>
 {
     private readonly ConceptDbContext _db;
-    public EditNotApprovedCommandHandler(ConceptDbContext db)
+    private readonly AlgoliaService _algoliaService;
+    public EditNotApprovedCommandHandler(ConceptDbContext db, AlgoliaService algoliaService)
     {
         _db = db;
+        _algoliaService = algoliaService;
     }
 
     public async Task Handle(EditNotApprovedCommand request, CancellationToken cancellationToken)
@@ -22,7 +24,7 @@ public class EditNotApprovedCommandHandler : IRequestHandler<EditNotApprovedComm
         translation.EditedTranslation = "";
         translation.Status = Status.Approved;
         await _db.SaveChangesAsync();
-
+        await _algoliaService.SaveRecord(translation);
         return;
     }
 }

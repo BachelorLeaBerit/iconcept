@@ -29,7 +29,7 @@ function EditTranslation() {
 
   const handleSubmit = async (formData) => {
     try {
-      const response = await axios("/api/approvesuggestion/translationToEdit", {
+      const response = await axios("/api/suggestions/translationToEdit", {
         method: "PUT",
         data: formData,
       });

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Form, Button, Input, FormGroup, Label, FormFeedback } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import { ValidateEditForm } from "../Validation/EditValidation";
+import { ValidateEditForm } from "../../utils/Validation/EditValidation";
 
 const EditTranslationForm = ({ translation, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -20,7 +19,7 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = ValidateEditForm(formData);
-    console.log(validationErrors);  
+    console.log(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       const isConfirmed = window.confirm(
         "Er du sikker på at du vil legge til disse endringene?"
@@ -36,31 +35,44 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
 
   return (
     <div className="container">
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label>Begrep</Label>
-          <Input value={translation.termName} disabled />
-        </FormGroup>
-        <FormGroup>
-          <Label>Kontekst</Label>
-          <Input type="textarea" value={translation.context} disabled />
-        </FormGroup>
-        <FormGroup>
-          <Label>Konseptoversettelse</Label>
-          <Input
-            type="textarea"
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="termName">Begrep</label>
+          <input
+            id="termName"
+            className="form-control"
+            value={translation.termName}
+            disabled
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="context">Kontekst</label>
+          <textarea
+            id="context"
+            className="form-control"
+            value={translation.context}
+            disabled
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="editedTranslation">Konseptoversettelse</label>
+          <textarea
+            id="editedTranslation"
+            className={"form-control" + (errors.editedTranslation ? " is-invalid" : "")}
             value={formData.editedTranslation}
             name="editedTranslation"
             onChange={handleTranslationChange}
-            invalid={!!errors.editedTranslation}
           />
           {errors.editedTranslation && (
-            <FormFeedback>{errors.editedTranslation}</FormFeedback>
+            <div className="invalid-feedback">{errors.editedTranslation}</div>
           )}
-        </FormGroup>
-        <Button type="submit">Send inn forslag</Button>
-      </Form>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Send inn forslag
+        </button>
+      </form>
     </div>
   );
 };
+
 export default EditTranslationForm;

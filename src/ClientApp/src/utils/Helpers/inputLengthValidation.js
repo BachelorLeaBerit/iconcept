@@ -1,3 +1,4 @@
+
 export function inputLengthValidation(inputString, maxLength, minLength)
 {
     if (inputString.length > maxLength)

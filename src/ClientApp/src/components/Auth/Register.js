@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { ValidateUserForm } from './Validation/UserValidation';
+import { ValidateUserForm } from '../../utils/Validation/UserValidation';
 
 export class Register extends Component {
   static displayName = Register.name;

@@ -1,18 +1,9 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Button,
-  Input,
-  FormGroup,
-  Row,
-  Label,
-  FormFeedback,
-} from "reactstrap";
 import Select from "react-select/creatable";
-import { ValidateForm } from "../Validation/SuggestCtValidation";
+import { ValidateForm } from "../../utils/Validation/SuggestCtValidation";
 
 const SuggestTranslationForm = ({ data, onSubmit }) => {
-  const { terms, feelings, religions, regions, countries } = data;
+  const { feelings, religions, regions, countries } = data;
 
   const [formData, setFormData] = useState({
     termName: "",
@@ -24,7 +15,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
     norwegianDefinition: "",
     translation: "",
     comment: "",
-    editorEmail: localStorage.getItem("email") || "", // Prefill editorEmail if user is logged in
+    editorEmail: localStorage.getItem("email") || "",
   });
   const [errors, setErrors] = useState({});
 
@@ -56,23 +47,23 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
 
   return (
     <div className="container">
-      <Form onSubmit={handleSubmit}>
-        <FormGroup controlid="begrep">
-          <Label>Begrep*</Label>
-          <Input
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="termName">Begrep*</label>
+          <input
             type="text"
-            name="termName"
+            className={"form-control" + (errors.termName ? " is-invalid" : "")}
+            id="termName"
             value={formData.termName || ""}
             onChange={(e) => handleChange("termName", e)}
-            invalid={!!errors.termName}
           />
-          {errors.termName && <FormFeedback>{errors.termName}</FormFeedback>}
-        </FormGroup>
-        <Row>
-          <FormGroup controlid="land" className="col-md-6">
-            <Label>Land</Label>
+          {errors.termName && <div className="text-danger">{errors.termName}</div>}
+        </div>
+        <div className="row">
+          <div className="form-group col-md-6">
+            <label htmlFor="countries">Land</label>
             <Select
-              name="countries"
+              id="countries"
               value={formData.countries.map((c) => ({
                 value: c,
                 label: c,
@@ -89,11 +80,11 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               placeholder="Velg"
             />
             {errors.countries && <div className="text-danger">{errors.countries}</div>}
-          </FormGroup>
-          <FormGroup controlid="region" className="col-md-6">
-            <Label>Region</Label>
+          </div>
+          <div className="form-group col-md-6">
+            <label htmlFor="regions">Region</label>
             <Select
-              name="regions"
+              id="regions"
               value={formData.regions.map((r) => ({
                 value: r,
                 label: r,
@@ -110,13 +101,13 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               placeholder="Velg"
             />
             {errors.regions && <div className="text-danger">{errors.regions}</div>}
-          </FormGroup>
-        </Row>
-        <Row>
-          <FormGroup controlid="religion" className="col-md-6">
-            <Label>Religion</Label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="form-group col-md-6">
+            <label htmlFor="religions">Religion</label>
             <Select
-              name="religions"
+              id="religions"
               value={formData.religions.map((r) => ({
                 value: r,
                 label: r,
@@ -133,11 +124,11 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               placeholder="Velg"
             />
             {errors.religions && <div className="text-danger">{errors.religions}</div>}
-          </FormGroup>
-          <FormGroup controlid="feeling" className="col-md-6">
-            <Label>Følelse</Label>
+          </div>
+          <div className="form-group col-md-6">
+            <label htmlFor="feelings">Følelse</label>
             <Select
-              name="feelings"
+              id="feelings"
               value={formData.feelings.map((f) => ({
                 value: f,
                 label: f,
@@ -154,79 +145,78 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               placeholder="Velg"
             />
             {errors.feelings && <div className="text-danger">{errors.feelings}</div>}
-          </FormGroup>
-        </Row>
-        <FormGroup controlid="konseptoversettelse">
-          <Label>Konseptoversettelse*</Label>
-          <Input
-            type="textarea"
-            name="translation"
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="translation">Konseptoversettelse*</label>
+          <textarea
+            className={"form-control" + (errors.translation ? " is-invalid" : "")}
+            id="translation"
             value={formData.translation || ""}
             onChange={(e) => handleChange("translation", e)}
-            invalid={!!errors.translation}
           />
           {errors.translation && (
-            <FormFeedback>{errors.translation}</FormFeedback>
+            <div className="text-danger">{errors.translation}</div>
           )}
-        </FormGroup>
-        <FormGroup controlid="kontekst">
-          <Label>Kontekst</Label>
-          <Input
+        </div>
+        <div className="form-group">
+          <label htmlFor="context">Kontekst</label>
+          <input
             type="text"
-            name="context"
+            className={"form-control" + (errors.context ? " is-invalid" : "")}
+            id="context"
             value={formData.context || ""}
             onChange={(e) => handleChange("context", e)}
-            invalid={!!errors.context}
           />
-          {errors.context && <FormFeedback>{errors.context}</FormFeedback>}
-        </FormGroup>
-        <FormGroup controlid="kommentar">
-          <Label>Kommentar</Label>
-          <Input
+          {errors.context && <div className="text-danger">{errors.context}</div>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="comment">Kommentar</label>
+          <input
             type="text"
-            name="comment"
+            className={"form-control" + (errors.comment ? " is-invalid" : "")}
+            id="comment"
             value={formData.comment || ""}
             onChange={(e) => handleChange("comment", e)}
-            invalid={!!errors.comment}
           />
-          {errors.comment && <FormFeedback>{errors.comment}</FormFeedback>}
-        </FormGroup>
-        <FormGroup controlid="norskdef">
-          <Label>Norsk definisjon</Label>
-          <Input
+          {errors.comment && <div className="text-danger">{errors.comment}</div>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="norwegianDefinition">Norsk definisjon</label>
+          <input
             type="text"
-            name="norwegianDefinition"
+            className={"form-control" + (errors.norwegianDefinition ? " is-invalid" : "")}
+            id="norwegianDefinition"
             value={formData.norwegianDefinition || ""}
             onChange={(e) => handleChange("norwegianDefinition", e)}
-            invalid={!!errors.norwegianDefinition}
           />
           {errors.norwegianDefinition && (
-            <FormFeedback>{errors.norwegianDefinition}</FormFeedback>
+            <div className="text-danger">{errors.norwegianDefinition}</div>
           )}
-        </FormGroup>
-        <FormGroup controlid="editoremail">
-          <Label>Din e-post* - vil kun være synlig for admin </Label>
-          <Input
+        </div>
+        <div className="form-group">
+          <label htmlFor="editorEmail">Din e-post* - vil kun være synlig for admin</label>
+          <input
             type="text"
-            name="editoremail"
+            className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
+            id="editorEmail"
             value={formData.editorEmail}
             onChange={(e) => handleChange("editorEmail", e)}
-            disabled={localStorage.getItem("email") !== null} // Disable input if user is logged in
-            invalid={!!errors.editorEmail}
+            disabled={localStorage.getItem("email") !== null}
           />
           {errors.editorEmail && (
-            <FormFeedback>{errors.editorEmail}</FormFeedback>
+            <div className="text-danger">{errors.editorEmail}</div>
           )}
-        </FormGroup>
+        </div>
 
-        <Button
+        <button
           type="submit"
-          className="mb-3"
+          className="btn mb-3"
           style={{ backgroundColor: "#BFEA7C", color: "black" }}
         >
           Send inn forslag til godkjenning
-        </Button>
-      </Form>
+        </button>
+      </form>
     </div>
   );
 };

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './NavMenu.css';
 import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
-import handleLogout from './LogoutButton'; 
+import '../styles/NavMenu.css';
+import handleLogout from './Auth/LogoutButton'; 
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -35,49 +34,53 @@ export class NavMenu extends Component {
 
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/" className="mr-auto">iKonsept</NavbarBrand> {/* Centered relative to other items */}
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/"><FontAwesomeIcon icon={faHouse} /></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} to="/suggestTranslation"><FontAwesomeIcon icon={faCirclePlus} /></NavLink>
-              </NavItem>
-              {isLoggedIn ? (
-                <>
-                { ((role === "Redaktør") || (role === "Admin")) && ( // Render translator link only if user is a translator}
-                  <NavItem>
-                    <NavLink tag={Link} to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></NavLink>
-                  </NavItem>
-                )}
-                { role === "Admin" && ( // Render admin link only if user is an admin
-                    <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/admin"> <strong>Admin</strong> </NavLink>
-                    </NavItem>
+        <nav className="navbar navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3">
+          <div className="container">
+            <Link className="navbar-brand" to="/">iKonsept</Link> {/* Centered relative to other items */}
+            <button className="navbar-toggler" type="button" onClick={this.toggleNavbar}>
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className={"collapse navbar-collapse justify-content-end" + (this.state.collapsed ? "" : " show")}>
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/"><FontAwesomeIcon icon={faHouse} /></Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/suggestTranslation"><FontAwesomeIcon icon={faCirclePlus} /></Link>
+                </li>
+                {isLoggedIn ? (
+                  <>
+                  { ((role === "Redaktør") || (role === "Admin")) && ( // Render translator link only if user is a translator}
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></Link>
+                    </li>
                   )}
-                  <NavItem>
-                    <NavLink tag={Link} to="/profile"><FontAwesomeIcon icon={faUser} /></NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <Button tag={Link} className="text-dark btn-light btn-sm" to="/" onClick={this.handleLogout}> Logg ut</Button>
-                  </NavItem>
-                </>
-              ) : (
-                <>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/register"> <strong>Registrer bruker</strong> </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login"><strong>Logg inn</strong> </NavLink>
-                  </NavItem>
-                </>
-              )}
-            </ul>
-          </Collapse>
-        </Navbar>
+                  { role === "Admin" && ( // Render admin link only if user is an admin
+                      <li className="nav-item">
+                        <Link className="nav-link text-dark" to="/admin"> <strong>Admin</strong> </Link>
+                      </li>
+                    )}
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/profile"><FontAwesomeIcon icon={faUser} /></Link>
+                    </li>
+                    <li className="nav-item">
+                      <button className="nav-link text-dark btn btn-light btn-sm" onClick={this.handleLogout}> Logg ut</button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link text-dark" to="/register"> <strong>Registrer bruker</strong> </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link text-dark" to="/login"><strong>Logg inn</strong> </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
+        </nav>
       </header>
     );
   }

@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import {
-  Collapse,
-  Button,
-  CardBody,
-  Card,
-  Form,
-  Input,
-  FormGroup,
-  Label,
-} from "reactstrap";
+import axios from "axios";
 
 import TranslationDetailsTable from "../Tables/TranslationDetailsTable";
-import axios from "axios";
 
 function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +16,8 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const handleEditedValues = ( { name, value }) => {
-    setEditedData(values => ({...values, [name]: value}));
+  const handleEditedValues = ({ name, value }) => {
+    setEditedData((values) => ({ ...values, [name]: value }));
   };
 
   const handleApprove = async () => {
@@ -53,7 +43,9 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
         if (translation.status === 2) {
           await axios.delete(`/api/approvesuggestion/${translation.id}`);
         } else {
-          await axios.put(`/api/approvesuggestion/editNotApproved/${translation.id}`);
+          await axios.put(
+            `/api/approvesuggestion/editNotApproved/${translation.id}`
+          );
         }
         onTranslationUpdated();
       } catch (error) {
@@ -64,27 +56,31 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
 
   return (
     <>
-      <Button color="primary" onClick={toggle} style={{ marginBottom: "1rem" }}>
+      <button
+        className="btn btn-primary"
+        onClick={toggle}
+        style={{ marginBottom: "1rem" }}
+      >
         {translation.termName}
-      </Button>
-      <Collapse isOpen={isOpen}>
-        <Card>
-          <CardBody>
-            <Form>
+      </button>
+      {isOpen && (
+        <div className="card">
+          <div className="card-body">
+            <form>
               <TranslationDetailsTable
                 translation={translation}
                 onChange={handleEditedValues}
-              ></TranslationDetailsTable>
-              <Button color="success" onClick={handleApprove}>
+              />
+              <button className="btn btn-success" onClick={handleApprove}>
                 Godkjenn
-              </Button>
-              <Button color="danger" onClick={handleDelete}>
+              </button>
+              <button className="btn btn-danger" onClick={handleDelete}>
                 Avslå
-              </Button>
-            </Form>
-          </CardBody>
-        </Card>
-      </Collapse>
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

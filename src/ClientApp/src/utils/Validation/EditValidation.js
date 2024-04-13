@@ -1,5 +1,5 @@
-import { regexValidation } from "./Helpers/regexValidation";
-import { inputLengthValidation } from "./Helpers/inputLengthValidation";
+import { regexValidation } from "../../utils/Helpers/regexValidation";
+import { inputLengthValidation } from "../Helpers/inputLengthValidation";
 
 export const ValidateEditForm = (formData) => {
   const errors = {};
@@ -10,9 +10,9 @@ export const ValidateEditForm = (formData) => {
   let regexErrorMsg = regexValidation(translationData, allowedCharactersRegex);
   if (!translationData) {
     errors.editedTranslation = "Må inneholde en konseptoversettelse!";
-  } else if (regexValidation != "") {
+  } else if (regexValidation !== "") {
     errors.editedTranslation = regexErrorMsg;
-  } else if (lengthErrorMsg != "") {
+  } else if (lengthErrorMsg !== "") {
     errors.editedTranslation = lengthErrorMsg;
   }
 

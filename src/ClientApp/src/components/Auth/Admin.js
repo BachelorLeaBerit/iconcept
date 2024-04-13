@@ -72,8 +72,6 @@ const AdminPanel = () => {
         return <Navigate to="/login" />;
     }
 
-    
-
     return (
         <div>
             <h2 style={{ textAlign: 'center' }}>Admin</h2>

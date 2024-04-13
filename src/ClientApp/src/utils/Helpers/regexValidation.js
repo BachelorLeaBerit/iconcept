@@ -1,3 +1,4 @@
+
 export function regexValidation(inputString, allowedCharactersRegex) {
   console.log(allowedCharactersRegex);
   if (!allowedCharactersRegex.test(inputString)) {

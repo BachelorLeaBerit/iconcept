@@ -13,12 +13,12 @@ a {
 }
 
 body {
-  background-color: #dee5e8;
+  background-color: #f6f7f7;
 }
 
 header {
-  background: rgb(231,228,215);
-background: radial-gradient(circle, rgba(231,228,215,1) 0%, rgba(203,214,219,1) 100%);
+  background: rgb(237, 237, 234);
+  background: radial-gradient(circle, rgb(244, 243, 239) 0%, rgb(221, 226, 227)100%);
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

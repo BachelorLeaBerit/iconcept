@@ -4,7 +4,7 @@ export const ValidateUserForm = (formData) => {
   const firstNameMax = 50;
   const firstNameMin = 2;
   const firstNameData = formData.FirstName.trim();
-  const firstNameRegex = /^[a-zA-Z]+$/; // Regular expression to allow only letters
+  const firstNameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+){0,2}$/;
   if (!firstNameData) {
     errors.firstName = "Må inneholde et fornavn";
   } else if (!firstNameRegex.test(firstNameData)) {
@@ -25,7 +25,7 @@ export const ValidateUserForm = (formData) => {
     errors.lastName = `Må ha mellom ${lastNameMin} og ${lastNameMax} bokstaver`;
   }
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9æøåÆØÅ._%+-]+@[a-zA-Z0-9æøåÆØÅ.-]+\.[a-zA-Z]{2,}$/;
   const emailData = formData.Email.trim();
 
   if (!emailData) {

@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'reactstrap';
+import axios from 'axios';
 import TranslationDetailsTable from '../Tables/TranslationDetailsTable';
-import axios from 'axios'
-
 
 function TranslationDetails() {
     const { id } = useParams();
@@ -19,16 +17,15 @@ function TranslationDetails() {
     
     useEffect(() => {
         const fetchTranslation = async () => {
-            await axios.get(`api/translations/${id}`)
-            .then(response => {
+            try {
+                const response = await axios.get(`/api/translations/${id}`);
                 setTranslation(response.data);
                 setLoading(false);
                 console.log('Fetched translation data:', response.data);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.log(error);
                 setLoading(false);
-            });
+            }
         };
 
         fetchTranslation();
@@ -42,7 +39,7 @@ function TranslationDetails() {
             ) : (
                 <TranslationDetailsTable translation={translation}></TranslationDetailsTable>
             )}
-            <Button onClick={toEdit}><FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring</Button>
+            <button className="btn" onClick={toEdit}><FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring</button>
         </div>
     );
 }

@@ -1,5 +1,5 @@
-import { regexValidation } from "./Helpers/regexValidation";
-import { inputLengthValidation } from "./Helpers/inputLengthValidation";
+import { regexValidation } from "../Helpers/regexValidation";
+import { inputLengthValidation } from "../Helpers/inputLengthValidation";
 
 export const ValidateForm = (formData) => {
   const errors = {};
@@ -12,9 +12,9 @@ export const ValidateForm = (formData) => {
   let termNameRegexError = regexValidation(termNameData, regex);
   if (!termNameData) {
     errors.termName = "Må inneholde et begrep!";
-  } else if (termNameRegexError != "") {
+  } else if (termNameRegexError !== "") {
     errors.termName = termNameRegexError;
-  } else if (termNameLengthError != "") {
+  } else if (termNameLengthError !== "") {
     errors.termName = termNameLengthError;
   }
 
@@ -24,9 +24,9 @@ export const ValidateForm = (formData) => {
   let translationRegexError = regexValidation(translationData, allowedCharactersRegex)
   if (!translationData) {
     errors.translation = "Må inneholde en konseptoversettelse!";
-  } else if (translationRegexError != "") {
+  } else if (translationRegexError !== "") {
     errors.translation = translationRegexError;
-  } else if (translationLengthError != "") {
+  } else if (translationLengthError !== "") {
     errors.translation = translationLengthError;
   }
 
@@ -38,9 +38,9 @@ export const ValidateForm = (formData) => {
   let contextLengthError = inputLengthValidation(contextData, max, min);
   let contextRegexError = regexValidation(contextData, allowedCharactersRegex);
   if (contextData) {
-    if (contextLengthError != "") {
+    if (contextLengthError !== "") {
       errors.context = contextLengthError;
-    } else if (contextRegexError != "") {
+    } else if (contextRegexError !== "") {
       errors.context = contextRegexError;
     }
   }
@@ -49,9 +49,9 @@ export const ValidateForm = (formData) => {
   let commentLengthError = inputLengthValidation(commentData, max, min);
   let commentRegexError = regexValidation(commentData, allowedCharactersRegex);
   if (commentData) {
-    if (commentLengthError != "") {
+    if (commentLengthError !== "") {
       errors.comment = commentLengthError;
-    } else if (commentRegexError != "") {
+    } else if (commentRegexError !== "") {
       errors.comment = commentRegexError;
     }
   }
@@ -60,9 +60,9 @@ export const ValidateForm = (formData) => {
   let norwegianDefinitionLengthError = inputLengthValidation(norwegianDefinitionData, max, min);
   let norwegianDefinitionRegexError = regexValidation(norwegianDefinitionData, allowedCharactersRegex);
   if (norwegianDefinitionData) {
-    if (norwegianDefinitionLengthError != "") {
+    if (norwegianDefinitionLengthError !== "") {
       errors.norwegianDefinition = norwegianDefinitionLengthError;
-    } else if (norwegianDefinitionRegexError != "") {
+    } else if (norwegianDefinitionRegexError !== "") {
       errors.norwegianDefinition = norwegianDefinitionRegexError;
     }
   }
@@ -86,9 +86,9 @@ export const ValidateForm = (formData) => {
     let countryName = country.trim();
     let countryLenghtError = inputLengthValidation(countryName, maxChar, minChar);
     let countryRegexError = regexValidation(countryName, regex)
-    if (countryLenghtError != "") {
+    if (countryLenghtError !== "") {
       errors.countries += `${countryName}: ` + countryLenghtError ;
-    } else if (countryRegexError != "") {
+    } else if (countryRegexError !== "") {
       errors.countries += `${countryName}: ` + countryRegexError;
     }
   }
@@ -101,9 +101,9 @@ export const ValidateForm = (formData) => {
     let feelingName = feeling.trim();
     let feelingLengthError = inputLengthValidation(feelingName, maxChar, minChar)
     let feelingRegexError = regexValidation(feelingName, regex);
-    if (feelingLengthError != "") {
+    if (feelingLengthError !== "") {
       errors.feelings += `${feelingName}: ` + feelingLengthError;
-    } else if (feelingRegexError != "") {
+    } else if (feelingRegexError !== "") {
       errors.feelings += `${feelingName}: ` + feelingRegexError;
     }
   }
@@ -116,9 +116,9 @@ export const ValidateForm = (formData) => {
     let regionName = region.trim();
     let regionLengthError = inputLengthValidation(regionName, maxChar, minChar);
     let regionRegexError = regexValidation(regionName, regex);
-    if (regionLengthError != "") {
+    if (regionLengthError !== "") {
       errors.regions += `${regionName}: ` + regionLengthError;
-    } else if (regionRegexError != "") {
+    } else if (regionRegexError !== "") {
       errors.regions += `${regionName}: ` + regionRegexError;
     }
   }
@@ -131,9 +131,9 @@ export const ValidateForm = (formData) => {
     let religionName = religion.trim();
     let religionLengthError = inputLengthValidation(religionName, maxChar, minChar);
     let religionRegexError = regexValidation(religionName, regex);
-    if (religionLengthError != "") {
+    if (religionLengthError !== "") {
       errors.religions += `${religionName}: ` + religionLengthError;
-    } else if (religionRegexError != "") {
+    } else if (religionRegexError !== "") {
       errors.religions += `${religionName}: ` + religionRegexError;
     }
   }

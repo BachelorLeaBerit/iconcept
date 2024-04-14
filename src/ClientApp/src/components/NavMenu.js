@@ -31,12 +31,13 @@ export class NavMenu extends Component {
 
   render() {
     const { isLoggedIn, role } = this.state;
+    console.log("Role:", role);
 
     return (
       <header>
         <nav className="navbar navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3">
           <div className="container">
-            <Link className="navbar-brand" to="/">iKonsept</Link> {/* Centered relative to other items */}
+            <Link className="navbar-brand" to="/">iKonsept</Link>
             <button className="navbar-toggler" type="button" onClick={this.toggleNavbar}>
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -50,12 +51,12 @@ export class NavMenu extends Component {
                 </li>
                 {isLoggedIn ? (
                   <>
-                  { ((role === "Redaktør") || (role === "Admin")) && ( // Render translator link only if user is a translator}
+                  { ((role === "Redaktør") || (role === "Admin")) && (
                     <li className="nav-item">
                       <Link className="nav-link" to="/approveSuggestions"><FontAwesomeIcon icon={faCheck}></FontAwesomeIcon></Link>
                     </li>
                   )}
-                  { role === "Admin" && ( // Render admin link only if user is an admin
+                  { role === "Admin" && (
                       <li className="nav-item">
                         <Link className="nav-link text-dark" to="/admin"> <strong>Admin</strong> </Link>
                       </li>

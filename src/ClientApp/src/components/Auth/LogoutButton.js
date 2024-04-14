@@ -3,12 +3,12 @@ import axios from 'axios';
 const handleLogout = async () => {
     try {
         await axios.post('api/logout');
-        // Clear localStorage
+
         localStorage.clear();
         localStorage.removeItem('token');
         localStorage.removeItem('role');
-        localStorage.removeItem('email'); // Assuming user email is stored in localStorage
-        localStorage.removeItem('id'); // Assumin
+        localStorage.removeItem('email'); 
+        localStorage.removeItem('id'); 
         window.location.href = '/';
 
         console.log('User logged out');

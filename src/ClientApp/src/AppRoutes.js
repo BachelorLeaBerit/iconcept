@@ -3,12 +3,12 @@ import TranslationDetails from './components/UserPages/TranslationDetails';
 import SuggestTranslation from "./components/UserPages/SuggestTranslation";
 import EditTranslation from "./components/UserPages/EditTranslation";
 import ApproveSuggestions from "./components/EditorPages/ApproveSuggestions";
-import { Register } from "./components/Auth/Register";
-import { Login } from "./components/Auth/Login";
-import AdminPanel from "./components/Auth/Admin";
+import Register from "./components/Auth/Register/Register";
+import Login from "./components/Auth/Login/Login";
+import AdminPanel from "./components/Auth/Admin/Admin";
 import LogoutButton from "./components/Auth/LogoutButton";
 import Profile from "./components/Auth/Profile";
-import EditUserRoleModal from "./components/Auth/EditUserRoleModal";
+import EditUserRoleModal from "./components/Auth/Admin/EditRoleModal";
 
 const AppRoutes = [
   {

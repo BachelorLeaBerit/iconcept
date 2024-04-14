@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const EditUserRoleModal = ({ user, closeModal, fetchUsers }) => {
+const EditRoleModal = ({ user, closeModal, fetchUsers }) => {
     const [selectedRole, setSelectedRole] = useState('');
 
     const assignRole = async () => {
@@ -9,14 +9,13 @@ const EditUserRoleModal = ({ user, closeModal, fetchUsers }) => {
             await axios.post(`/api/admin/${user.id}/assign-role`, `"${selectedRole}"`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}` // Include JWT token in headers
+                    Authorization: `Bearer ${localStorage.getItem('token')}` 
                 }
             });
-            closeModal(); // Close the modal after assigning role
-            fetchUsers(); // Refresh user list after assigning role
+            closeModal();
+            fetchUsers();
         } catch (error) {
             console.error('Error assigning role:', error);
-            // Handle error
         }
     };
 
@@ -43,4 +42,4 @@ const EditUserRoleModal = ({ user, closeModal, fetchUsers }) => {
     );
 };
 
-export default EditUserRoleModal;
+export default EditRoleModal;

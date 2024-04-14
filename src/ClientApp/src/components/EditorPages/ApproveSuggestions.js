@@ -10,14 +10,12 @@ function ApproveSuggestions() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check if token exists in localStorage
         const token = localStorage.getItem('token');
         if (!token) {
           console.log('Token not found. User not authenticated.');
           return;
         }
 
-        // Set authorization header with JWT token
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         const response = await axios.get(`api/approvesuggestion/forApproval`);

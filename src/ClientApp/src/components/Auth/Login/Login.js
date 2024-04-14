@@ -1,7 +1,10 @@
+// Login.js
 import React, { Component } from 'react';
 import axios from 'axios';
+import LoginForm from './LoginForm';
+import LoginMessage from './LoginMessage';
 
-export class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +30,8 @@ export class Login extends Component {
     e.preventDefault();
     try {
       const response = await axios.post('/api/login', this.state.formData);
-      console.log('Response:', response); // Log entire response object
-  
+      console.log('Response:', response);
+
       if (response.status === 200) {
         window.location.href = '/profile';
         localStorage.setItem('token', response.data.token);
@@ -48,36 +51,12 @@ export class Login extends Component {
       <div className="container d-flex justify-content-center align-items-center vh-80 mt-5">
         <div className="card p-4">
           <h2 className="text-center mb-3">Logg inn</h2>
-          <form onSubmit={this.handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">E-post</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={this.handleChange}
-                required
-              />           
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Passord</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-            <div className="text-center">
-              <button type="submit" className="btn btn-success align-center">Logg inn</button>
-            </div>
-          </form>
-          {message && <p className="mt-3 text-danger">{message}</p>}
+          <LoginForm
+            formData={formData}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+          <LoginMessage message={message} />
         </div>
       </div>
     );

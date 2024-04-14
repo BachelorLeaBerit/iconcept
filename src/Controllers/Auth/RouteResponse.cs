@@ -1,4 +1,4 @@
-namespace iconcept.Controllers
+namespace iconcept.Controllers.Auth
 {
     public record RouteResponse<T>(T Data, string[] Errors);
 }

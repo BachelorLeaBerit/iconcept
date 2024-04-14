@@ -1,5 +1,3 @@
-// FeelingPipeline.cs
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +6,14 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.Gets;
-
+using iconcept.Domain.Term.Pipelines.Get;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Domain.Term;
 using System.Reflection.Metadata.Ecma335;
 using Domain.Common.Models;
 using Domain.Common.Mappings;
 
-namespace iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 public class GetTranslationsPipeline
 {
     public record Request(string searchTerm, string searchCountry, string searchRegion, int PageNumber, int PageSize) : IRequest<PaginatedTranslations<ConceptTranslationViewModel>>;

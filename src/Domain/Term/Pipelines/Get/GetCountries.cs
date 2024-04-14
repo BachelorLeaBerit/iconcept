@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using iconcept.Infrastructure;
 
-namespace iconcept.Domain.Term.Pipelines.Gets;
+namespace iconcept.Domain.Term.Pipelines.Get;
 public class GetCountriesPipeline
 {
     public record Request() : IRequest<List<Country>>;

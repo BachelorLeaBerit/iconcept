@@ -4,7 +4,7 @@ using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace iconcept.Controllers;
+namespace iconcept.Controllers.Auth;
 [Route("api/register")]
 [ApiController]
 public class RegisterController : ControllerBase
@@ -17,7 +17,7 @@ public class RegisterController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(RegisterData registerData)
+    public async Task<IActionResult> Register(RegisterData registerData)
     {
         try
         {
@@ -25,29 +25,24 @@ public class RegisterController : ControllerBase
             
             if (result.IsSuccess)
             {
-                return Created(nameof(Post), new RouteResponse<string>(registerData.Email, null));
+                return Created(nameof(Register), new RouteResponse<string>(registerData.Email, null));
             }
             else
             {
-                // Handle validation errors
                 if (result.Errors.Any())
                 {
                     var validationErrors = result.Errors.ToArray();
                     return BadRequest(new RouteResponse<string>(null, validationErrors));
                 }
-                // Handle other types of errors
                 else
                 {
-                    // Return a generic error message
                     return BadRequest(new RouteResponse<string>(null, new[] { "Registration failed" }));
                 }
             }
         }
         catch (Exception ex)
         {
-            // Log the exception
             Console.WriteLine(ex);
-            // Return a generic error message
             return BadRequest(new RouteResponse<string>(null, new[] { "An error occurred while processing your request" }));
         }
     }

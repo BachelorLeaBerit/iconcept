@@ -1,3 +1,5 @@
+
+namespace iconcept.Domain.Term.DTO;
 public class AlgoliaDto
 {
     public string ObjectID { get; set; }

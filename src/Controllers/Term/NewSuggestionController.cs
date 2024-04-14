@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
-using iconcept.Domain.Term.Pipelines.SuggestTranslation;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.Gets;
-using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+using iconcept.Domain.Term.Pipelines.Get;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 using Microsoft.AspNetCore.Authorization;
 
-namespace iconcept.Controllers;
+namespace iconcept.Controllers.Term;
+
 [Route("api/suggestions")]
 [ApiController]
 public class NewSuggestionController : ControllerBase
@@ -26,10 +26,10 @@ public class NewSuggestionController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<object>>> GetTermsReligionsCountriesRegions()
     {
-        var terms = await _mediator.Send(new Domain.Term.Pipelines.GetTermsPipeline.Request());
-        var feelings = await _mediator.Send(new Domain.Term.Pipelines.GetFeelingsPipeline.Request());
-        var religions = await _mediator.Send(new Domain.Term.Pipelines.GetReligionsPipeline.Request());
-        var regions = await _mediator.Send(new Domain.Term.Pipelines.GetRegionsPipeline.Request());
+        var terms = await _mediator.Send(new GetTermsPipeline.Request());
+        var feelings = await _mediator.Send(new GetFeelingsPipeline.Request());
+        var religions = await _mediator.Send(new GetReligionsPipeline.Request());
+        var regions = await _mediator.Send(new GetRegionsPipeline.Request());
         var countries = await _mediator.Send(new GetCountriesPipeline.Request());
 
         var data = new { Terms = terms, Feelings = feelings, Religions = religions, Regions = regions, Countries = countries };

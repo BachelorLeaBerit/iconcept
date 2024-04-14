@@ -1,6 +1,8 @@
 using iconcept.Domain.Term;
 using iconcept.Domain.Term.Pipelines;
 
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
+
 public class ConceptTranslationDto
 {
     public int Id { get; set; }

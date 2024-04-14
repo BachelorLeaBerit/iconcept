@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using iconcept.Domain.Auth;
 
 namespace iconcept.Domain.Auth.Pipelines;
-
-public class DeleteUser
+public class AssignRole
 {
-    public record Request(string UserId) : IRequest<bool>;
+    public record Request(string UserId, string RoleName) : IRequest<bool>;
 
     public class Handler : IRequestHandler<Request, bool>
     {
@@ -26,10 +25,18 @@ public class DeleteUser
             {
                 return false;
             }
+            var existingRoles = await _userManager.GetRolesAsync(user);
+            if (existingRoles.Count > 0)
+            {
+                var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
+                if (!removeResult.Succeeded)
+                {
+                    return false;
+                }
+            }
 
-            var result = await _userManager.DeleteAsync(user);
+            var result = await _userManager.AddToRoleAsync(user, request.RoleName);
             return result.Succeeded;
         }
     }
 }
-

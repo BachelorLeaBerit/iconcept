@@ -11,95 +11,64 @@ using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using System.Security.Claims;
 
-namespace iconcept.Controllers
+namespace iconcept.Controllers.Auth;
+
+[ApiController]
+[Authorize(Roles = "Admin")]
+[Route("api/admin")]
+public class AdminController : ControllerBase
 {
-    [ApiController]
-    [Authorize(Roles = "Admin")]
-    [Route("api/admin")]
-    public class AdminUserController : ControllerBase
+    private readonly UserManager<User> _userManager;
+
+    private readonly IMediator _mediator;
+
+    public AdminController(UserManager<User> userManager, IMediator mediator)
     {
-        private readonly UserManager<Domain.Auth.User> _userManager;
+        _userManager = userManager;
+        _mediator = mediator;
+    }
 
-        private readonly IMediator _mediator;
+    [HttpGet]
+    public async Task<IActionResult> GetUsers()
+    {
+        var request = new GetUsers.Request();
+        var usersWithRoles = await _mediator.Send(request);
+        return Ok(usersWithRoles);
+    }
 
-        public AdminUserController(UserManager<Domain.Auth.User> userManager, IMediator mediator)
+    [HttpPost("{userId}/assign-role")]
+    public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
+    {
+         var request = new AssignRole.Request(userId, roleName);
+        var success = await _mediator.Send(request);
+        
+        if (success)
         {
-            _userManager = userManager;
-            _mediator = mediator;
-
+            return Ok();
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        else
         {
-            var usersWithRoles = await _userManager.Users
-            .Select(u => new
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                Roles = _userManager.GetRolesAsync(u).Result.ToList()
-            })
-           .ToListAsync();
-
-            return Ok(usersWithRoles);
+            return BadRequest("Failed to assign role.");
         }
+    }
 
-        // POST: api/admin/users/{userId}/assign-role
-        [HttpPost("{userId}/assign-role")]
-        public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUser(string userId)
+    {
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userId == currentUserId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            // Remove existing roles for the user
-            var existingRoles = await _userManager.GetRolesAsync(user);
-            if (existingRoles.Any())
-            {
-                var removeResult = await _userManager.RemoveFromRolesAsync(user, existingRoles);
-                if (!removeResult.Succeeded)
-                {
-                    return BadRequest(removeResult.Errors);
-                }
-            }
-
-            // Assign the new role to the user
-            var result = await _userManager.AddToRoleAsync(user, roleName);
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
+            return BadRequest("Cannot delete yourself.");
         }
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUser(string userId)
+        var result = await _mediator.Send(new DeleteUser.Request(userId));
+        if (result)
         {
-            // Get the current user's ID
-            var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            // Check if the user to be deleted is the same as the current user
-            if (userId == currentUserId)
-            {
-                return BadRequest("Cannot delete yourself.");
-            }
-
-            // Proceed with deletion
-            var result = await _mediator.Send(new DeleteUser.Request(userId));
-            if (result)
-            {
-                return Ok("User deleted successfully.");
-            }
-            else
-            {
-                return NotFound("User not found or deletion failed.");
-            }
+            return Ok("User deleted successfully.");
+        }
+        else
+        {
+            return NotFound("User not found or deletion failed.");
         }
     }
 }

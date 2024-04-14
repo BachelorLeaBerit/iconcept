@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Algolia.Search.Clients;
 using Algolia.Search.Http;
-using iconcept.Domain.Term;
+using iconcept.Domain.Term.DTO;
 using iconcept.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+namespace iconcept.Domain.Term.Services;
 
 public class AlgoliaService
 {

@@ -1,5 +1,7 @@
 using iconcept.Domain.Term;
-using iconcept.Domain.Term.Pipelines.Gets;
+using iconcept.Domain.Term.Pipelines.Get;
+
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 
 public class ConceptTranslationViewModel
 {

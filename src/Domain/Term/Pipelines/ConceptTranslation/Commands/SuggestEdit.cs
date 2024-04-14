@@ -1,9 +1,10 @@
 using System.Collections;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using iconcept.Domain.Term.Services;
 using iconcept.Infrastructure;
 
-namespace iconcept.Domain.Term.Pipelines.SuggestTranslation;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
 public record SuggestEditCommand : IRequest
 {

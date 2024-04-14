@@ -2,6 +2,7 @@ using System.Collections;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
+using iconcept.Domain.Term.Services;
 using Domain.Common.Utilities;
 
 namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;

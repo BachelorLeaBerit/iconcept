@@ -5,55 +5,45 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using iconcept.Domain.Auth.Pipelines;
 
-namespace iconcept.Controllers
+namespace iconcept.Controllers.Auth;
+
+[ApiController]
+[Authorize]
+[Route("api/profile")]
+public class UserProfileController : ControllerBase
 {
-    [ApiController]
-    [Authorize]
-    [Route("api/profile")]
-    public class UserProfileController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public UserProfileController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public UserProfileController(IMediator mediator)
+    [HttpGet]
+    public async Task<IActionResult> GetUserProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        var role = User.FindFirstValue(ClaimTypes.Role);
+        var firstName = User.FindFirstValue("FirstName");
+        var lastName = User.FindFirstValue("LastName");
+
+        var request = new GetUserProfile.Request(userId, email, role, firstName, lastName);
+        return await _mediator.Send(request);
+    }
+
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUser(string userId)
+    {
+        var command = new DeleteUser.Request(userId);
+        var result = await _mediator.Send(command);
+
+        if (result)
         {
-            _mediator = mediator;
+            return Ok();
         }
 
-        [HttpGet]
-        public IActionResult GetUserProfile()
-        {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var role = User.FindFirstValue(ClaimTypes.Role);
-            var FirstName = User.FindFirstValue("FirstName");
-            var LastName = User.FindFirstValue("LastName");
-
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            var Id = userIdClaim?.Value;
-
-            var userProfile = new
-            {
-                Id,
-                Email = email,
-                FirstName,
-                LastName,
-                Role = role
-            };
-
-            return Ok(userProfile);
-        }
-
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUser(string userId)
-        {
-            var command = new DeleteUser.Request(userId);
-            var result = await _mediator.Send(command);
-
-            if (result)
-            {
-                return Ok();
-            }
-
-            return BadRequest();
-        }
+        return BadRequest();
     }
 }
+

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
 using Domain.Common.Utilities;
 
-namespace iconcept.Domain.Term.Pipelines.SuggestTranslation;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
 public record SuggestTranslationCommand : IRequest<int>
 {

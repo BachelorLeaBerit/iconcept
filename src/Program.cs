@@ -17,6 +17,7 @@ using MediatR.Extensions.FluentValidation.AspNetCore;
 using FluentValidation;
 using iconcept.Domain.Auth;
 using Algolia.Search.Clients;
+using iconcept.Domain.Term.Services;
 
 
 

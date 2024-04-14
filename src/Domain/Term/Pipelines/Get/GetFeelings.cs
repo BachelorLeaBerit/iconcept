@@ -9,12 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using iconcept.Infrastructure;
 
-namespace iconcept.Domain.Term.Pipelines;
-public class GetRegionsPipeline
+namespace iconcept.Domain.Term.Pipelines.Get;
+public class GetFeelingsPipeline
 {
-    public record Request() : IRequest<List<Region>>;
+    public record Request() : IRequest<List<Feeling>>;
 
-    public class Handler : IRequestHandler<Request, List<Region>>
+    public class Handler : IRequestHandler<Request, List<Feeling>>
     {
         private readonly ConceptDbContext _db;
 
@@ -23,7 +23,7 @@ public class GetRegionsPipeline
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<List<Region>> Handle(Request request, CancellationToken cancellationToken)
-            => await _db.Regions.ToListAsync();
+        public async Task<List<Feeling>> Handle(Request request, CancellationToken cancellationToken)
+            => await _db.Feelings.ToListAsync();
     }
 }

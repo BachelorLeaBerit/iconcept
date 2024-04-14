@@ -1,9 +1,7 @@
-namespace iconcept.Domain.Term
+namespace iconcept.Domain.Term;
+public enum Status
 {
-    public enum Status
-    {
-        Approved,
-        Edited,
-        Suggested
-    }
+    Approved,
+    Edited,
+    Suggested
 }

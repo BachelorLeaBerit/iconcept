@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
 
-namespace iconcept.Domain.Term.Pipelines.SuggestTranslation;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
 public class SuggestEditCommandValidator : AbstractValidator<SuggestEditCommand>
 {

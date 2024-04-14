@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
-using iconcept.Domain.Term.Pipelines.SuggestTranslation;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.Gets;
-using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+using iconcept.Domain.Term.Pipelines.Get;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
+using iconcept.Domain.Term.DTO;
 using Microsoft.AspNetCore.Authorization;
 
-namespace iconcept.Controllers;
+namespace iconcept.Controllers.Term;
+
 [Route("api/approvesuggestion")]
 [Authorize(Roles = "Admin, Redaktør")]
 [ApiController]
@@ -28,7 +29,7 @@ public class SuggestionController : ControllerBase
     [Authorize(Roles = "Admin, Redaktør")]
     public async Task<ActionResult<IEnumerable<ConceptTranslationDto>>> GetTranslationsForApproval()
     {
-        var translations = await _mediator.Send(new Domain.Term.Pipelines.GetTranslationsForApprovalPipeline.Request());
+        var translations = await _mediator.Send(new GetTranslationsForApprovalPipeline.Request());
 
         return Ok(translations);
     }

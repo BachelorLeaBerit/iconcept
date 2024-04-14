@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using iconcept.Domain.Term;
 
 namespace iconcept.Domain.Term;
 public class ConceptTranslation

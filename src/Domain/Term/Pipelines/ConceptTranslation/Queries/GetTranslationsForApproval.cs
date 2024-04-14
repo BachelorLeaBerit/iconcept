@@ -1,5 +1,3 @@
-// FeelingPipeline.cs
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +6,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
+using iconcept.Domain.Term.DTO;
 
-using iconcept.Domain.Term;
-
-namespace iconcept.Domain.Term.Pipelines;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 public class GetTranslationsForApprovalPipeline
 {
     public record Request() : IRequest<List<ConceptTranslationDto>> { }

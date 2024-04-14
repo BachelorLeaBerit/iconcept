@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
-using iconcept.Domain.Term.Pipelines;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.ConceptTranslation;
-using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
+using iconcept.Domain.Term.Pipelines.Get;
 using Algolia.Search.Clients;
 
 namespace iconcept.Controllers

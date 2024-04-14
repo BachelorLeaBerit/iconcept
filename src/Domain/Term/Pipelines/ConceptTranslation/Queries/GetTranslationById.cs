@@ -1,5 +1,3 @@
-// FeelingPipeline.cs
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using iconcept.Domain.Term;
 using System.IO.Compression;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.Gets;
+using iconcept.Domain.Term.Pipelines.Get;
+using iconcept.Domain.Term.DTO;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
-namespace iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
+namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 public class GetTranslationByIdPipeline
 {
     public record Request(int Id) : IRequest<ConceptTranslationViewModel?> { }

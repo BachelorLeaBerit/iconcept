@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../styles/NavMenu.css';
-import handleLogout from './Auth/LogoutButton'; 
+import handleLogout from './Auth/Logout/Logout'; 
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;

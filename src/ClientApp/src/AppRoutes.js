@@ -5,9 +5,9 @@ import EditTranslation from "./components/UserPages/EditTranslation";
 import ApproveSuggestions from "./components/EditorPages/ApproveSuggestions";
 import Register from "./components/Auth/Register/Register";
 import Login from "./components/Auth/Login/Login";
-import AdminPanel from "./components/Auth/Admin/Admin";
-import LogoutButton from "./components/Auth/LogoutButton";
-import Profile from "./components/Auth/Profile";
+import Admin from "./components/Auth/Admin/Admin";
+import LogoutButton from "./components/Auth/Logout/Logout";
+import Profile from "./components/Auth/Profile/Profile";
 import EditUserRoleModal from "./components/Auth/Admin/EditRoleModal";
 
 const AppRoutes = [
@@ -41,7 +41,7 @@ const AppRoutes = [
   },
   {
     path: '/admin',
-    element: <AdminPanel />,
+    element: <Admin />,
   },
   {
     path: '/logout',

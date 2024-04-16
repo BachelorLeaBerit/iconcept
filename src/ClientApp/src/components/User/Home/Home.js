@@ -6,8 +6,8 @@ import {
   HitsPerPage,
 } from "react-instantsearch";
 import algoliasearch from "algoliasearch";
-import TranslationTable from "./Tables/TranslationTable";
-import TranslationDetailsTable from "./Tables/TranslationDetailsTable";
+import TranslationTable from "./TranslationTable";
+import TranslationDetailsTable from "../../Tables/TranslationDetailsTable";
 import "instantsearch.css/themes/algolia.css";
 import "@algolia/autocomplete-theme-classic";
 import Autocomplete from "./AutoComplete";

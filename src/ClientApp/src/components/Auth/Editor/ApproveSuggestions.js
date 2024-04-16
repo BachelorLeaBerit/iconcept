@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ApproveSuggestionsForm from "../Forms/ApproveSuggestionForm";
+import ApproveSuggestionsForm from "./ApproveSuggestionForm";
 
-function ApproveSuggestions() {
+const ApproveSuggestions = () => {
   const [translations, setTranslation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateTrigger, setUpdateTrigger] = useState(false);
@@ -10,13 +10,13 @@ function ApproveSuggestions() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          console.log('Token not found. User not authenticated.');
+          console.log("Token not found. User not authenticated.");
           return;
         }
 
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         const response = await axios.get(`api/approvesuggestion/forApproval`);
         setTranslation(response.data);

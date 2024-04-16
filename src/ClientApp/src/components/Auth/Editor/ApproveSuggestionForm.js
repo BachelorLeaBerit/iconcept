@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import TranslationDetailsTable from "../Tables/TranslationDetailsTable";
+import TranslationDetailsTable from "../../Tables/TranslationDetailsTable";
 
 function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   const [isOpen, setIsOpen] = useState(false);

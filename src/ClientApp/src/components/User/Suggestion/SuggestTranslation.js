@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SuggestTranslationForm from "../Forms/SuggestTranslationForm";
+import SuggestTranslationForm from "./SuggestTranslationForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

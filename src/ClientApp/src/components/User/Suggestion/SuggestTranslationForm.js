@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select/creatable";
-import { ValidateForm } from "../../utils/Validation/SuggestCtValidation";
+import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
 
 const SuggestTranslationForm = ({ data, onSubmit }) => {
   const { feelings, religions, regions, countries } = data;

@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import { dateFormatter } from "../../utils/Helpers/dateFormatter";
 
 const TranslationDetailsTable = ({ translation, onChange }) => {
-  const [formData, setFormData] = useState(
-    {
+  const [formData, setFormData] = useState({
     norwegianDefinition: translation.norwegianDefinition,
     translation: translation.translation,
     Id: translation.id,
     context: translation.context,
     comment: translation.comment,
-    editorEmail: translation.editorEmail
-    }
-  );
+    editorEmail: translation.editorEmail,
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,9 +25,16 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
 
   const toEdit = (id) => {
     let Id = parseInt(id);
-    navigate(`/editTranslation/${Id}`)
-}
-  
+    navigate(`/editTranslation/${Id}`);
+  };
+
+  let formattedDate;
+  try {
+    formattedDate = dateFormatter(translation.lastModified);
+  } catch (error) {
+    console.error(error.message);
+  }
+
   return (
     <table
       className="table table-striped table-bordered"
@@ -39,15 +44,23 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
         <tr className="table-info">
           <th>Begrep</th>
           {!(translation.status === 2 || translation.status === 1) ? (
-             <td style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-             <span style={{ marginRight: 'auto' }}>{translation.termName}</span>
-             <Button onClick={() => toEdit(translation.objectID)}>
-               <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
-             </Button>
-           </td>
-            ) : (
-              <td>{translation.termName}</td>  
-            )}
+            <td
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ marginRight: "auto" }}>
+                {translation.termName}
+              </span>
+              <Button onClick={() => toEdit(translation.objectID)}>
+                <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
+              </Button>
+            </td>
+          ) : (
+            <td>{translation.termName}</td>
+          )}
         </tr>
         <tr>
           <th>Norsk definisjon</th>
@@ -66,7 +79,8 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
         </tr>
         <tr>
           <th>Konseptoversettelse</th>
-          <td>{translation.status === 2 ? (
+          <td>
+            {translation.status === 2 ? (
               <input
                 type="text"
                 name="translation"
@@ -75,7 +89,8 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
               />
             ) : (
               translation.translation
-            )}</td>
+            )}
+          </td>
         </tr>
         {translation.status === 1 && (
           <tr className="table-danger">
@@ -86,15 +101,13 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
         <tr>
           <th>Følelser</th>
           <td>
-            {translation.feelings
-              ? translation.feelings
-                  .join(", ")
-              : "N/A"}
+            {translation.feelings ? translation.feelings.join(", ") : "N/A"}
           </td>
         </tr>
         <tr>
           <th>Kontekst</th>
-          <td>{translation.status === 2 ? (
+          <td>
+            {translation.status === 2 ? (
               <input
                 type="text"
                 name="context"
@@ -103,39 +116,31 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
               />
             ) : (
               translation.context
-            )}</td>
+            )}
+          </td>
         </tr>
         <tr>
           <th>Religioner</th>
           <td>
-            {translation.religions
-              ? translation.religions
-                  .join(", ")
-              : "N/A"}
+            {translation.religions ? translation.religions.join(", ") : "N/A"}
           </td>
         </tr>
         <tr>
           <th>Land</th>
           <td>
-            {translation.countries
-              ? translation.countries
-                  .join(", ")
-              : "N/A"}
+            {translation.countries ? translation.countries.join(", ") : "N/A"}
           </td>
         </tr>
         <tr>
           <th>Region</th>
           <td>
-            {translation.regions
-              ? translation.regions
-                  .join(", ")
-              : "N/A"}
+            {translation.regions ? translation.regions.join(", ") : "N/A"}
           </td>
         </tr>
         <tr>
           <th>Kommentar</th>
           <td>
-          {translation.status === 2 ? (
+            {translation.status === 2 ? (
               <input
                 type="text"
                 name="comment"
@@ -147,10 +152,19 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
             )}
           </td>
         </tr>
-        <tr>
-          <th>Forfatterens e-post</th>
-          <td>{translation.editorEmail}</td>
-        </tr>
+        {(translation.status === 1 || translation.status === 2) && (
+          <>
+            <tr>
+              <th>Forfatterens e-post</th>
+              <td>{translation.editorEmail}</td>
+            </tr>
+
+            <tr>
+              <th>Sist endret</th>
+              <td>{formattedDate}</td>
+            </tr>
+          </>
+        )}
       </tbody>
     </table>
   );

@@ -6,6 +6,7 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
   const [formData, setFormData] = useState({
     editedTranslation: translation.translation,
     Id: translation.id,
+    editorEmail: localStorage.getItem("email") || "",
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -65,6 +66,20 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
           />
           {errors.editedTranslation && (
             <div className="invalid-feedback">{errors.editedTranslation}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="editorEmail">Din e-post* - vil kun være synlig for admin</label>
+          <input
+            type="text"
+            className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
+            id="editorEmail"
+            value={formData.editorEmail}
+            onChange={(e) => handleTranslationChange("editorEmail", e)}
+            disabled={localStorage.getItem("email") !== null}
+          />
+          {errors.editorEmail && (
+            <div className="text-danger">{errors.editorEmail}</div>
           )}
         </div>
         <button type="submit" className="btn btn-primary">

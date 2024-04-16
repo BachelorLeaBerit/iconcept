@@ -12,11 +12,32 @@ public class ConceptTranslationViewModel
     public Status Status { get; set; }
     public DateTime LastModified { get; set; }
     public string? Comment { get; set; }
-    public List<RegionViewModel> Regions { get; set; }
-    public List<CountryViewModel> Countries { get; set; }
+    public List<RegionVm> Regions { get; set; }
+    public List<CountryVm> Countries { get; set; }
     public List<ReligionVm> Religions { get; set; }
     public List<FeelingVm> Feelings { get; set; }
     public string TermName { get; set; }
     public string? EditedTranslation { get; set; }
     public string? EditorEmail { get; set; }
+}
+
+public class RegionVm
+{
+    public string RegionName { get; set; }
+}
+
+public class CountryVm
+{
+    public string CountryName { get; set; }
+}
+
+public class FeelingVm
+{
+    public string FeelingName { get; set; }
+
+}
+
+public class ReligionVm
+{
+    public string ReligionName { get; set; }
 }

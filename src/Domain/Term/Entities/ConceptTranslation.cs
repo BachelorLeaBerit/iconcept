@@ -14,8 +14,6 @@ public class ConceptTranslation
     public string? Comment { get; set; }
     public List<Feeling> Feelings { get; set; } = [];
     public List<Country> Countries { get; set; } = [];
-    // [JsonIgnore]
-    // public Term Term {get; set;} = null!;
     public int TermId { get; set; }
     public List<Religion> Religions { get; set; } = [];
     public List<Region> Regions { get; set; } = [];

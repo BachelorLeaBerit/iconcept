@@ -7,6 +7,7 @@ function EditTranslation() {
   const { id } = useParams();
   const [translation, setTranslation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTranslation = async () => {
@@ -22,6 +23,7 @@ function EditTranslation() {
             error
           );
           setLoading(false);
+          setError("En feil oppstod.");
         });
     };
     fetchTranslation();
@@ -36,7 +38,6 @@ function EditTranslation() {
       console.log(response.data);
     } catch (error) {
       console.error("Error adding translation suggestion:", error);
-      // Handle error, maybe show an error message
     }
   };
 
@@ -45,6 +46,8 @@ function EditTranslation() {
       <h1>Foreslå endring</h1>
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <EditTranslationForm translation={translation} onSubmit={handleSubmit}/>
       )}

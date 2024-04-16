@@ -5,7 +5,7 @@ export const ValidateForm = (formData) => {
   const errors = {};
 
   const allowedCharactersRegex = /^[a-zA-Z0-9æøåÆØÅ.,!?() \n]*$/;
-  const regex = /^[a-zA-ZæøåÆØÅ]*$/;
+  const regex = /^[a-zA-ZæøåÆØÅ ]*$/;
   // Sanitize and validate Begrep field
   let termNameData = formData.termName.trim();
   let termNameLengthError = inputLengthValidation(termNameData, 50, 2);

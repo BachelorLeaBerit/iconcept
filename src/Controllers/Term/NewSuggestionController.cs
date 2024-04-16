@@ -7,8 +7,8 @@ using MediatR;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Infrastructure;
 using iconcept.Domain.Term.Pipelines.Get;
-using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 using Microsoft.AspNetCore.Authorization;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 
 namespace iconcept.Controllers.Term;
 
@@ -24,15 +24,14 @@ public class NewSuggestionController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<object>>> GetTermsReligionsCountriesRegions()
+    public async Task<ActionResult<IEnumerable<object>>> GetFeelingsReligionsCountriesRegions()
     {
-        var terms = await _mediator.Send(new GetTermsPipeline.Request());
         var feelings = await _mediator.Send(new GetFeelingsPipeline.Request());
         var religions = await _mediator.Send(new GetReligionsPipeline.Request());
         var regions = await _mediator.Send(new GetRegionsPipeline.Request());
         var countries = await _mediator.Send(new GetCountriesPipeline.Request());
 
-        var data = new { Terms = terms, Feelings = feelings, Religions = religions, Regions = regions, Countries = countries };
+        var data = new { Feelings = feelings, Religions = religions, Regions = regions, Countries = countries };
 
         return Ok(data);
     }

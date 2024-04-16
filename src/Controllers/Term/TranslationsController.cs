@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using iconcept.Infrastructure;
-using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Domain.Term.Pipelines.Get;
 using Algolia.Search.Clients;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 
 namespace iconcept.Controllers
 {
@@ -18,20 +18,10 @@ namespace iconcept.Controllers
     public class TranslationsController : ControllerBase
     {
         private readonly IMediator _mediator;
-       private readonly ISearchClient _searchClient;
-        private ISearchClient? searchClient;
 
         public TranslationsController(IMediator mediator)
         {
             _mediator = mediator;
-            _searchClient = searchClient;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTermsFeelings([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry, [FromQuery] int PageNumber, [FromQuery] int PageSize)
-        {
-            var translations = await _mediator.Send(new GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion, PageNumber, PageSize));
-            return Ok(translations);
         }
 
         [HttpGet("{id:int}")]

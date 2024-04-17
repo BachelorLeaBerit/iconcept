@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 using iconcept.Domain.Term;
 
 namespace iconcept.Infrastructure;
@@ -12,99 +16,356 @@ public class DbContextInitializer
 
     public async Task SeedAsync()
     {
-        try
+
+        if (!_conceptDbContext.Countries.Any())
         {
-            await TrySeed();
-            await _conceptDbContext.SaveChangesAsync();
+            SeedCountries();
         }
-        catch (Exception err)
+
+        if (!_conceptDbContext.Feelings.Any())
         {
-            throw new Exception("Did not work!", err);
+            SeedFeelings();
+        }
+
+        if (!_conceptDbContext.Regions.Any())
+        {
+            SeedRegions();
+        }
+
+        if (!_conceptDbContext.Religions.Any())
+        {
+            SeedReligions();
+        }
+
+        if (!_conceptDbContext.Terms.Any())
+        {
+            SeedTerms();
+        }
+
+        if (!_conceptDbContext.ConceptTranslations.Any())
+        {
+            SeedTranslations();
         }
     }
 
-    public async Task TrySeed()
+    public void SeedCountries()
     {
-        //await SeedFeelingsAsync();
-        await SeedTermAndStuff();
-    }
+        if (_conceptDbContext.Countries.Any())
+        {
+            return; // Database has already been seeded
+        }
 
-    public async Task SeedTermAndStuff()
-    {
-        if (_conceptDbContext.Terms.Any()) return;
-
-        List<Feeling> feelings = [new Feeling { FeelingName = "Glad", },
-                            new Feeling {  FeelingName = "Trist" },
-                            new Feeling {  FeelingName = "Lykkelig" },
-                            new Feeling { FeelingName = "Sint" },
-                            new Feeling { FeelingName = "Forvirret" },
-                            new Feeling { FeelingName = "Håpefull"},
-                            new Feeling { FeelingName = "Utvikling"},
-                            new Feeling { FeelingName = "Trygghet"},
-                            new Feeling { FeelingName = "Avslappet"}];
-        
-           
-        await _conceptDbContext.Terms.AddRangeAsync([
-            new Term { Id=1, TermName = "Kriminell", ConceptTranslations = [
-                new ConceptTranslation {
-                NorwegianDefinition = "En person som har gjort handlinger som kommer inn under straffeloven",
-                Context = "En som en gang er blitt stemplet som kriminell, kan ha vansker med å bli akseptert – ikke bare av storsamfunnet, men også av familien og minoritetssamfunnet.",
-                Countries = [new Country{CountryName = "Algerie, Marokko, Mauretania, Libya, Tunisia, Egypt, Sudan, Saudi-Arabia, Syria, Jordan, Yemen, Irak, Libanon"}],
-                Feelings = [feelings[2], feelings[3]], // Alvorlig for både en selv og familien. 
-                Translation = "Å være kriminell i Norge er som en som kapper av hånden og spiser haram mat.",
-                Religions = [new Religion{ReligionName = "Islam"}],
-                Regions = [new Region{RegionName = "Arabiske beltet"}],
-                LastModified = new DateTime(2007, 1, 1), // Fix: Change the value to a DateTime object
-                Status = Status.Approved,
-                
-            },
-          
-            ]},
-            new Term { Id=2, TermName = "Aksept", ConceptTranslations = [
-                new ConceptTranslation {
-                NorwegianDefinition = "Godtaking (av et tilbud, en tilstand el.)",
-                Comment = "A comment",
-                Context = "Akseptere at for eksempel barnet er døvt eller har en uopprettelig skade.",
-                Countries = [new Country{CountryName = "Algerie, Marokko, Mauretania, Libya, Tunisia, Egypt, Sudan, Saudi-Arabia, Syria, Jordan, Yemen, Irak, Libanon"}],
-                Feelings = [feelings[2], feelings[3]], // Alvorlig for både en selv og familien. 
-                Translation = "Det sies at sannheten er som en sol, og på same måte som du ikke kan dekke solen med to fingre, må du akseptere sannheten om at barnet ditt ikke kan høre. På samme måte som du ikke kan holde to vannmeloner med en hånd, må du akseptere at barnet ditt er døvt. Ikke tenk som kabk (en fugl) som gjemmer hodet i snøen eller under steinen. Eller som strutsen som når farene kommer, gjemmer hodet i sanden.",
-                Religions = [new Religion{ReligionName = "Islam"}, new Religion{ReligionName = "Kristendommen"}],
-                Regions = [new Region{RegionName = "Arabiske beltet"}, new Region{RegionName = "Kristine Afrika"}],
-                LastModified = new DateTime(2007, 1, 1), // Fix: Change the value to a DateTime object
-                Status = Status.Approved
-            },
-          
-            ]},
-            new Term {Id=3, TermName = "Barnehage", ConceptTranslations = [
-            new ConceptTranslation
+        using (var reader = new StreamReader("./Infrastructure/Seed/land.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<CountryCsvRecord>().ToList();
+            foreach (var record in records)
             {
-                NorwegianDefinition = "En pedagogisk virksomhet for barn under skolepliktig alder; vanligvis åpen 4—9 timer pr. dag ",
-                Comment = "Barnehager kan være ukjent for folk i noen land",
-                Context = "En barnehage er et sted for barn under skolealder",
-                Countries = [new Country{CountryName = "Norge"}],
-                Feelings = [feelings[6], feelings[7]],
-                Translation = "I vårt hjemland er det vanlig at andre familiemedlemmer – f.eks. en tante eller en søster, tar seg av barna når foreldrene arbeider. I Norge fungerer barnehagen nesten på samme måte. Barnehagen er som et bestemors hjem og barna er trygge som i et fuglereir.",
-                Religions = [new Religion{ReligionName = "Islam"}, new Religion{ReligionName = "Kristendommen"}],
-                Regions = [],
-                LastModified = DateTime.Now,
-                Status = Status.Approved
-            },
-            ]},
-            new Term {Id=4, TermName = "Arbeidstid i Norge", ConceptTranslations = [
-            new ConceptTranslation
-            {
-                NorwegianDefinition = "Normaltiden man jobber i Norge er på 7,5 timer ",
-                Context = "Det er lover som regulerer arbeidstiden og man må søke om dispensasjon dersom man ikke kan holde seg innenfor denne tiden.",
-                Countries = [new Country{CountryName = "Algerie, Marokko, Mauretania, Libya, Tunisia, Egypt, Sudan, Saudi-Arabia, Syria, Jordan, Yemen, Irak, Libanon"}],
-                Feelings = [feelings[6], feelings[7]],
-                Translation = "I mange land kan man jobbe så mye man orker. I Norge er det annerledes. På samme måte som Ramadan varer en måned varer en arbeidsdag 7,5 timer.",
-                Religions = [new Religion{ReligionName = "Islam"}],
-                Regions =  [new Region{RegionName = "Arabiske beltet"}],
-                LastModified = new DateTime(2003, 1, 1), // Fix: Change the value to a DateTime object
-                Status = Status.Approved
+                // Check if country already exists
+                var existingCountry = _conceptDbContext.Countries.FirstOrDefault(c => c.CountryName == record.CountryName);
+                if (existingCountry == null)
+                {
+                    // Add country if it doesn't exist
+                    var country = new Country { CountryName = record.CountryName };
+                    _conceptDbContext.Countries.Add(country);
+                }
             }
-            ]},
-        ]);
 
+            _conceptDbContext.SaveChanges();
+        }
     }
+
+    public void SeedFeelings()
+    {
+        if (_conceptDbContext.Feelings.Any())
+        {
+            return; // Database has already been seeded
+        }
+
+        using (var reader = new StreamReader("./Infrastructure/Seed/følelser.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<FeelingCsvRecord>().ToList();
+            foreach (var record in records)
+            {
+                // Check if country already exists
+                var existingFeeling = _conceptDbContext.Feelings.FirstOrDefault(f => f.FeelingName == record.FeelingName);
+                if (existingFeeling == null)
+                {
+                    // Add country if it doesn't exist
+                    var feeling = new Feeling { FeelingName = record.FeelingName };
+                    _conceptDbContext.Feelings.Add(feeling);
+                }
+            }
+
+            _conceptDbContext.SaveChanges();
+        }
+    }
+
+    public void SeedRegions()
+    {
+        if (_conceptDbContext.Regions.Any())
+        {
+            return; // Database has already been seeded
+        }
+
+        using (var reader = new StreamReader("./Infrastructure/Seed/regions.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<RegionCsvRecord>().ToList();
+            foreach (var record in records)
+            {
+                // Check if country already exists
+                var existingRegion = _conceptDbContext.Regions.FirstOrDefault(f => f.RegionName == record.RegionName);
+                if (existingRegion == null)
+                {
+                    // Add country if it doesn't exist
+                    var region = new Region { RegionName = record.RegionName };
+                    _conceptDbContext.Regions.Add(region);
+                }
+            }
+
+            _conceptDbContext.SaveChanges();
+        }
+    }
+
+
+    public void SeedReligions()
+    {
+        if (_conceptDbContext.Religions.Any())
+        {
+            return; // Database has already been seeded
+        }
+
+        using (var reader = new StreamReader("./Infrastructure/Seed/religions.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<ReligionCsvRecord>().ToList();
+            foreach (var record in records)
+            {
+                // Check if country already exists
+                var existingReligion = _conceptDbContext.Religions.FirstOrDefault(f => f.ReligionName == record.ReligionName);
+                if (existingReligion == null)
+                {
+                    // Add country if it doesn't exist
+                    var religion = new Religion { ReligionName = record.ReligionName };
+                    _conceptDbContext.Religions.Add(religion);
+                }
+            }
+
+            _conceptDbContext.SaveChanges();
+        }
+    }
+
+    public void SeedTerms()
+    {
+        if (_conceptDbContext.Terms.Any())
+        {
+            return;
+        }
+
+        using (var reader = new StreamReader("./Infrastructure/Seed/terms.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<TermCsvRecord>().ToList();
+            foreach (var record in records)
+            {
+                var existingTerm = _conceptDbContext.Terms.FirstOrDefault(t => t.TermName == record.TermName);
+                if (existingTerm == null)
+                {
+                    var term = new Term { TermName = record.TermName };
+                    _conceptDbContext.Terms.Add(term);
+                }
+            }
+
+            _conceptDbContext.SaveChanges();
+        }
+    }
+
+    public void SeedTranslations()
+    {
+        if (_conceptDbContext.ConceptTranslations.Any())
+        {
+            return;
+        }
+
+        Dictionary<int, IEnumerable<string>> Countries = new Dictionary<int, IEnumerable<string>>
+        {{1, new List<string>{"Algerie", "Marokko", "Mauritania", "Libya", "Tunisia", "Egypt", "Sudan", "Saudi-Arabia", "Syria", "Jordan", "Jemen", "Irak", "Libanon", "Bangladesh"}},
+        {2, new List<string>{"Etiopia", "Eritrea", "Mali", "Niger", "Nigeria", "Ghana","Elfenbenskysten"}},
+        {3, new List<string>{ "Iran", "Afghanistan", "Pakistan"}},
+        {4, new List<string>{"Tyrkia"}},
+        {5, new List<string>{"Polen", "Bulgaria", "Romania", "Belarus (Hviterussland)", "Ukraina", "Moldova", "Russland", "Slovenia", "Tsjekkia", "Latvia", "Litauen", "Estland"}},
+        {6, new List<string>{"Turkmenistan", "Kasakhstan", "Kirgisistan", "Tadsjikistan", "Usbekistan"}},
+        {7, new List<string>{"India", "Bangaladesh", "Sri Lanka"}},
+        {8, new List<string>{"Myanmar (Burma)", "Thailand", "Vietnam", "Malaysia"}},
+        {9, new List<string>{"Kina", "Taiwan"}}};
+
+        Dictionary<int, string> Regions = new Dictionary<int, string>
+        {{1, "Arabiske beltet"},
+        {2, "Det kristne Afrika"},
+        {3, "Persiske"},
+        {4, "De turkmenske land"},
+        {5, "Øst-Europa (Polen)"},
+        {6, "Sentralasia"},
+        {7, "Det indiske subkontinent"},
+        {8, "Sør-øst Asia"},
+        {9, "Kinesisk"}};
+
+        using (var reader = new StreamReader("./Infrastructure/Seed/konsepter.csv"))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            var records = csv.GetRecords<ConceptTranslationCsvRecord>().ToList();
+            foreach (var record in records)
+            {
+                var existingCt = _conceptDbContext.ConceptTranslations.FirstOrDefault(t => t.Translation == record.ConceptTranslation);
+                if (existingCt == null)
+                {
+                    var termId = _conceptDbContext.Terms.FirstOrDefault(t => t.TermName == record.TermName);
+                    if (termId != null)
+                    {
+
+
+                        var ct = new ConceptTranslation
+                        {
+                            TermId = termId.Id,
+                            Translation = record.ConceptTranslation,
+                            Comment = record.Comment,
+                            Context = record.Context,
+                            NorwegianDefinition = record.NorwegianDefinition,
+                            LastModified = new DateTime(record.Date, 1, 1)
+                        };
+                        _conceptDbContext.ConceptTranslations.Add(ct);
+
+                        var parts = record.Countries.Split(',').Select(part => part.Trim()).ToList();
+                        var countryNames = new List<string>();
+                        var regionNames = new List<string>();
+
+                        foreach (var part in parts)
+                        {
+                            if (int.TryParse(part, out var number))
+                            {
+                                if (Countries.TryGetValue(number, out var countryList))
+                                {
+                                    countryNames.AddRange(countryList);
+                                }
+                                // Check if the number corresponds to a region
+                                if (Regions.TryGetValue(number, out var regionName))
+                                {
+                                    regionNames.Add(regionName);
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        var matchingCountries = _conceptDbContext.Countries
+                        .Where(c => countryNames.Contains(c.CountryName))
+                        .ToList();
+
+                        ct.Countries = matchingCountries;
+
+                        var matchingRegions = _conceptDbContext.Regions
+                        .Where(r => regionNames.Contains(r.RegionName))
+                        .ToList();
+
+                        ct.Regions = matchingRegions;
+
+                        // Add feelings
+                        var feelings = record.Feeling.Split(';').Select(feeling => feeling.Trim()).ToList();
+                        var matchingFeelings = new List<Feeling>();
+
+                        foreach (var feelingName in feelings)
+                        {
+                            var existingFeeling = _conceptDbContext.Feelings.FirstOrDefault(f => f.FeelingName == feelingName);
+
+                            if (existingFeeling != null)
+                            {
+                                matchingFeelings.Add(existingFeeling);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        ct.Feelings = matchingFeelings;
+
+                        //Add religion
+                        var religions = record.Religion.Split(',').Select(religion => religion.Trim()).ToList();
+                        var matchingReligions = new List<Religion>();
+
+                        foreach (var religionName in religions)
+                        {
+                            var name = religionName;
+                            if (name != "Alle")
+                            {
+                                if (religionName == "kristen")
+                                {
+                                    name = "Kristendom";
+                                }
+                                else if (religionName == "katlsk")
+                                {
+                                    name = "Katolisisme";
+                                }
+
+                                var existingReligion = _conceptDbContext.Religions.FirstOrDefault(f => f.ReligionName == name);
+
+                                if (existingReligion != null)
+                                {
+                                    matchingReligions.Add(existingReligion);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+                        ct.Religions = matchingReligions;
+
+
+                    }
+                }
+            }
+
+            _conceptDbContext.SaveChanges();
+        }
+    }
+}
+
+public class CountryCsvRecord
+{
+    public string CountryName { get; set; }
+}
+public class FeelingCsvRecord
+{
+    public string FeelingName { get; set; }
+}
+
+public class RegionCsvRecord
+{
+    public string RegionName { get; set; }
+}
+
+public class ReligionCsvRecord
+{
+    public string ReligionName { get; set; }
+}
+
+public class TermCsvRecord
+{
+    public string TermName { get; set; }
+}
+
+public class ConceptTranslationCsvRecord
+{
+    public string TermName { get; set; }
+    public string NorwegianDefinition { get; set; }
+    public string Context { get; set; }
+    public string Comment { get; set; }
+    public string ConceptTranslation { get; set; }
+    public int Date { get; set; }
+    public string Countries { get; set; }
+    public string Feeling { get; set; }
+    public string Religion { get; set; }
 }

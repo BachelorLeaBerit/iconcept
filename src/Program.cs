@@ -96,7 +96,7 @@ else
         await initializer.SeedAsync();
 
         var algoliaService = scope.ServiceProvider.GetRequiredService<AlgoliaService>();
-        //await algoliaService.SaveRecordsToAlgoliaAsync();
+        // await algoliaService.SaveRecordsToAlgoliaAsync();
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

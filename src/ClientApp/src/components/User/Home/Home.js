@@ -11,6 +11,8 @@ import TranslationDetailsTable from "../../Tables/TranslationDetailsTable";
 import "instantsearch.css/themes/algolia.css";
 import "@algolia/autocomplete-theme-classic";
 import Autocomplete from "./AutoComplete";
+import HomeModal from "./HomeModal";
+import TranslationDetailsPhoneTable from "./TranslationsDetailsPhoneTable";
 
 const Home = () => {
   const searchClient = algoliasearch(
@@ -21,13 +23,14 @@ const Home = () => {
   const [selectedTranslation, setTranslation] = useState(null);
   const handleRowClick = (translation) => {
     setTranslation(translation);
+    setShowModal(true);
   };
 
-
+  const [showModal, setShowModal] = useState(false);
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "50%", paddingRight: "1rem" }}>
+      <div class="row">
+        <div class="col-lg-6">
           <h4 className="mt-3">Begreper</h4>
           <InstantSearch searchClient={searchClient} indexName="bachelor_index">
             <Autocomplete
@@ -46,11 +49,24 @@ const Home = () => {
           </InstantSearch>
         </div>
 
-        <div style={{ width: "50%" }}>
-          <h4 className="mt-3">Oversettelsesdetaljer</h4>
-          {selectedTranslation && (
-            <TranslationDetailsTable translation={selectedTranslation} />
-          )}
+        <div class="col-lg-6 d-none d-lg-block">
+          <div class="position-sticky top-0">
+            <h4 className="mt-3">Oversettelsesdetaljer</h4>
+            {selectedTranslation ? (
+              <TranslationDetailsTable translation={selectedTranslation} />
+            ) : (
+            <span>Trykk på en konseptoversettelse for å se detaljene...</span> )}
+          </div>
+        </div>
+
+        <div class="d-lg-none d-xl-block d-xl-none">
+          <HomeModal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            children={
+              <TranslationDetailsPhoneTable translation={selectedTranslation} />
+            }
+          />
         </div>
       </div>
     </div>

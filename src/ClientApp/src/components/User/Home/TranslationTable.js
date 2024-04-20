@@ -1,8 +1,8 @@
 import React from 'react';
 
 const TranslationTable = ( {translations, handleRowClick} ) => {
-  console.log(translations)
   return (
+    <div class="table-responsive">
     <table className="table table-hover mt-3" aria-labelledby="tableLabel">
         <thead>
           <tr>
@@ -23,6 +23,7 @@ const TranslationTable = ( {translations, handleRowClick} ) => {
           )}
         </tbody>
       </table>
+      </div>
   );
 };
 

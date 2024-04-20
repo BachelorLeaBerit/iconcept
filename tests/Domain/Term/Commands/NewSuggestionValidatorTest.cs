@@ -1,8 +1,8 @@
 using Xunit;
 using FluentValidation;
 using FluentValidation.TestHelper;
-using iconcept.Domain.Term.Pipelines.SuggestTranslation;
 using FluentValidation.Validators.UnitTestExtension.Core;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
 namespace iconcept.Tests.ConceptTranslation.Commands;
 
@@ -11,7 +11,7 @@ public class NewSuggestionValidatorTester
   readonly SuggestTranslationCommandValidator validator = new SuggestTranslationCommandValidator();
 
   [Fact]
-  public void Given_When_SuggestTranslationValidatorConstructing_Then_10ropertiesShouldhaveRule()
+  public void Given_When_SuggestTranslationValidatorConstructing_Then_10propertiesShouldhaveRule()
   {
     //Assert
     validator.ShouldHaveRulesCount(10);

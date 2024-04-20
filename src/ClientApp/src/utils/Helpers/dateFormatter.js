@@ -2,7 +2,7 @@ export function dateFormatter(dateTimeString) {
   const date = new Date(dateTimeString);
 
   if (isNaN(date.getTime())) {
-    throw new Error("Invalid DateTime format");
+    return;
   }
 
   const day = String(date.getDate()).padStart(2, "0");

@@ -36,6 +36,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
   }
 
   return (
+    <div class="table-responsive">
     <table
       className="table table-striped table-bordered"
       aria-labelledby="tableLabel"
@@ -167,6 +168,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
         )}
       </tbody>
     </table>
+    </div>
   );
 };
 

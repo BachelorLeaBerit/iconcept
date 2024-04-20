@@ -25,12 +25,10 @@ public class DbTest
 				.EnableSensitiveDataLogging()
 				.Options;
 		_connection = RelationalOptionsExtension.Extract(_contextOptions).Connection;
-		//_context = new ShopContext(_contextOptions);
 	}
 
 	public DbContextOptions<ConceptDbContext> ContextOptions => _contextOptions;
 
-	//public ShopContext Context => _context;
 
 	private static DbConnection CreateInMemoryDatabase()
 	{

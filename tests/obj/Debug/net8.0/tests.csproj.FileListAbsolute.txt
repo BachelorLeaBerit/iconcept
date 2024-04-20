@@ -196,3 +196,6 @@ C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\obj\Debug\net
 C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\obj\Debug\net8.0\tests.pdb
 C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\obj\Debug\net8.0\tests.genruntimeconfig.cache
 C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\obj\Debug\net8.0\ref\tests.dll
+C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\bin\Debug\net8.0\CsvHelper.dll
+C:\Users\Berit\Dropbox\PC\Documents\3_year\Bachelor\iconcept\tests\bin\Debug\net8.0\Moq.dll

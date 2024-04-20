@@ -59,10 +59,11 @@ builder.Services.AddDbContext<ConceptDbContext>(options =>
 builder.Services.AddScoped<DbContextInitializer>();
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-builder.Services.AddMediatR(cfg => {
+builder.Services.AddMediatR(cfg =>
+{
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-}); 
+});
 
 builder.Services.AddCors(options =>
 {
@@ -100,7 +101,7 @@ else
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        var roles = new List<string> { "Admin", "Redaktør", "Bruker"};
+        var roles = new List<string> { "Admin", "Redaktør", "Bruker" };
         foreach (var roleName in roles)
         {
             if (!await roleManager.RoleExistsAsync(roleName))
@@ -110,11 +111,11 @@ else
         }
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-        
+
         //var adminUser1 = await userManager.FindByEmailAsync("beritfrii@gmail.com");
 
         //await userManager.AddToRoleAsync(adminUser1, "Admin");
-        
+
     }
 
 }

@@ -33,6 +33,9 @@ public class ConceptDbContext :  IdentityDbContext<User>
                    .WithOne()
                    .HasForeignKey(ur => ur.UserId)
                    .IsRequired();
+        
         }
+
+        
 
 }

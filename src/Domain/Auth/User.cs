@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Identity;
 

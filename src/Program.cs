@@ -18,6 +18,10 @@ using FluentValidation;
 using iconcept.Domain.Auth;
 using Algolia.Search.Clients;
 using iconcept.Domain.Term.Services;
+using System.Text;
+using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 
 
@@ -44,7 +48,6 @@ builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDe
 //     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 // }
 
-
 builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", "b80b9704fd7a85590c852f88d8983cb8"));
 builder.Services.AddScoped<AlgoliaService>();
 
@@ -52,6 +55,14 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ConceptDbContext>()
     .AddDefaultTokenProviders()
     .AddUserManager<UserManager<User>>();
+
+
+builder.Services.Configure<IdentityOptions>(opts =>
+{
+    //opts.User.RequireUniqueEmail = true;
+    opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ@.0123456789";
+});
+
 
 builder.Services.AddDbContext<ConceptDbContext>(options =>
     options.UseSqlite($"Data Source={Path.Combine("Infrastructure", "concept.db")}"));
@@ -77,7 +88,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

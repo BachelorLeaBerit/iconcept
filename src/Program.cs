@@ -24,10 +24,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
         {
@@ -59,7 +56,6 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.Configure<IdentityOptions>(opts =>
 {
-    //opts.User.RequireUniqueEmail = true;
     opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ@.0123456789";
 });
 

@@ -20,7 +20,16 @@ export class Register extends Component {
       errors: {},
       message: "",
       redirectToLogin: false,
+      isLoggedIn: false, // Add isLoggedIn state
     };
+  }
+
+  componentDidMount() {
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.setState({ isLoggedIn: true });
+    }
   }
 
   handleChange = (e) => {
@@ -58,7 +67,7 @@ export class Register extends Component {
       }
     } catch (error) {
       console.error('Registreringsfeil:', error);
-      let errorMessage = 'En feil oppstod';
+      let errorMessage = 'E-post allerede i bruk';
     
       if (error.response) {
         errorMessage = error.response.data.message || errorMessage;
@@ -73,7 +82,15 @@ export class Register extends Component {
   }
   
   render() {
-    const { formData, errors, message, redirectToLogin } = this.state;
+    const { formData, errors, message, redirectToLogin, isLoggedIn } = this.state;
+
+    if (isLoggedIn) {
+      return (
+        <div className="container text-center">
+          <h3>Du må logge ut for å registrere ny bruker.</h3>
+        </div>
+      );
+    }
 
     if (redirectToLogin) {
       return <Navigate to="/login" />;

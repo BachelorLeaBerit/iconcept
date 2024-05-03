@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCirclePlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPlus, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../styles/NavMenu.css';
 import handleLogout from './Auth/Logout/Logout'; 
 
@@ -47,7 +47,7 @@ export class NavMenu extends Component {
                   <Link className="nav-link text-dark" to="/"><FontAwesomeIcon icon={faHouse} /></Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/suggestTranslation"><FontAwesomeIcon icon={faCirclePlus} /></Link>
+                  <Link className="nav-link" to="/suggestTranslation"><FontAwesomeIcon icon={faPlus} /></Link>
                 </li>
                 {isLoggedIn ? (
                   <>

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   InstantSearch,
@@ -6,13 +7,13 @@ import {
   HitsPerPage,
 } from "react-instantsearch";
 import algoliasearch from "algoliasearch";
-import TranslationTable from "./TranslationTable";
-import TranslationDetailsTable from "../../Tables/TranslationDetailsTable";
+import TranslationTable from "./Tables/TranslationTable";
+import TranslationDetailsTable from "./Tables/TranslationDetailsTable";
 import "instantsearch.css/themes/algolia.css";
 import "@algolia/autocomplete-theme-classic";
-import Autocomplete from "./AutoComplete";
+import Autocomplete from "./Search/AutoComplete";
 import HomeModal from "./HomeModal";
-import TranslationDetailsPhoneTable from "./TranslationsDetailsPhoneTable";
+import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
 
 const Home = () => {
   const searchClient = algoliasearch(

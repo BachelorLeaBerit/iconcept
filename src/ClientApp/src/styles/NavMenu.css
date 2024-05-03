@@ -1,5 +1,6 @@
 ﻿
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Londrina+Shadow&family=Madimi+One&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Rozha+One&display=swap');
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -10,7 +11,7 @@ a.navbar-brand {
   font-family: 'Madimi One', sans-serif;
   font-size: 45px;
   font-weight: 900;
-  color: #ffffff;
+  color: #4f5355;
 }
 
 

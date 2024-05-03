@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminTable from "./AdminTable";
 import EditUserRoleModal from "./EditRoleModal";
-import { checkAuthentication, fetchUsersData } from "./AdminService";
+import { checkAuthentication, fetchUsersData } from "./adminService";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);

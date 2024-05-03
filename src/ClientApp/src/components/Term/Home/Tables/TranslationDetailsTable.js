@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import { dateFormatter } from "../../utils/Helpers/dateFormatter";
+import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 
 const TranslationDetailsTable = ({ translation, onChange }) => {
   const [formData, setFormData] = useState({

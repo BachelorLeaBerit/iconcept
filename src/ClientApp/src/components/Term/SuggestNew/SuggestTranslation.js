@@ -52,9 +52,9 @@ function SuggestTranslation() {
 
   return (
     <div>
-      <h2>Foreslå konseptoversettelse</h2>
+      <h2>Foreslå ny konseptoversettelse</h2>
       {loading ? (
-        <p>Loading...</p>
+        <p>Laster inn...</p>
       ) : (
         <SuggestTranslationForm
           data={translationData}

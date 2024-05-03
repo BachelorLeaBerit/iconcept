@@ -1,11 +1,15 @@
 using System.Threading.Tasks;
+using CleanArchitecture.WebUI.Filters;
 using iconcept.Domain.Auth;
 using iconcept.Domain.Auth.Pipelines;
+using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static iconcept.Domain.Auth.Pipelines.RegisterUser;
 
 namespace iconcept.Controllers.Auth;
 [Route("api/register")]
+[ApiExceptionFilter]
 [ApiController]
 public class RegisterController : ControllerBase
 {
@@ -17,15 +21,15 @@ public class RegisterController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterData registerData)
+    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
     {
         try
         {
-            var result = await _mediator.Send(new RegisterUser.Request(registerData));
+            var result = await _mediator.Send(command);
             
             if (result.IsSuccess)
             {
-                return Created(nameof(Register), new RouteResponse<string>(registerData.Email, null));
+                return Created(nameof(Register), new RouteResponse<string>(command.Email, null));
             }
             else
             {

@@ -9,10 +9,12 @@ using iconcept.Infrastructure;
 using iconcept.Domain.Term.Pipelines.Get;
 using Microsoft.AspNetCore.Authorization;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
+using CleanArchitecture.WebUI.Filters;
 
 namespace iconcept.Controllers.Term;
 
 [Route("api/suggestions")]
+[ApiExceptionFilter]
 [ApiController]
 public class NewSuggestionController : ControllerBase
 {

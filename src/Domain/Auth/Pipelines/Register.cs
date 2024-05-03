@@ -1,68 +1,64 @@
-using iconcept.Domain.Auth;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+    using iconcept.Domain.Auth;
+    using MediatR;
+    using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-namespace iconcept.Domain.Auth.Pipelines;
+    namespace iconcept.Domain.Auth.Pipelines;
 
-public class RegisterUser
-{
-    public record Request(RegisterData RegisterData) : IRequest<UserResponse>;
-
-    public class Handler : IRequestHandler<Request, UserResponse>
+    public class RegisterUser
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public Handler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public record RegisterUserCommand : IRequest<UserResponse>
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            public string FirstName { get; init; }
+            public string LastName { get; init; }
+            public string Email { get; init; }
+            public string Password { get; init; }
         }
 
-        public async Task<UserResponse> Handle(Request request, CancellationToken cancellationToken)
+        public class Handler : IRequestHandler<RegisterUserCommand, UserResponse>
         {
-            if (string.IsNullOrWhiteSpace(request.RegisterData.FirstName) || request.RegisterData.FirstName.Length < 2 || request.RegisterData.FirstName.Length > 50)
+            private readonly UserManager<User> _userManager;
+            private readonly RoleManager<IdentityRole> _roleManager;
+
+            public Handler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
             {
-                return new UserResponse(false, ["Fornavn må være mellom 2 og 50 tegn langt."]);
+                _userManager = userManager;
+                _roleManager = roleManager;
             }
 
-            if (string.IsNullOrWhiteSpace(request.RegisterData.LastName) || request.RegisterData.LastName.Length < 2 || request.RegisterData.LastName.Length > 50)
+            public async Task<UserResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
-                return new UserResponse(false, ["Etternavn må være mellom 2 og 50 tegn langt."]);
-            }
+                var user = new User
+                {
+                    FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.FirstName.ToLower()),
+                    LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.LastName.ToLower()),
+                    Email = request.Email,
+                    UserName = request.Email
+                };
 
-            var user = new User
-            {
-                FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.FirstName.ToLower()),
-                LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.RegisterData.LastName.ToLower()),
-                Email = request.RegisterData.Email,
-                UserName = request.RegisterData.Email
-            };
+                var result = await _userManager.CreateAsync(user, request.Password);
+                if (!result.Succeeded)
+                {
+                    var errList = result.Errors.Select(err => err.Description).ToArray();
+                    return new UserResponse(false, errList);
+                }
 
-            var result = await _userManager.CreateAsync(user, request.RegisterData.Password);
-            if (!result.Succeeded)
-            {
-                var errList = result.Errors.Select(err => err.Description).ToArray();
-                return new UserResponse(false, errList);
-            }
+                var roleExists = await _roleManager.RoleExistsAsync("Bruker");
+                if (roleExists)
+                {
+                    await _userManager.AddToRoleAsync(user, "Bruker");
+                }
+                else
+                {
+                    return new UserResponse(false, ["Standardrollen 'Bruker' eksisterer ikke."]);
+                }
 
-            var roleExists = await _roleManager.RoleExistsAsync("Bruker");
-            if (roleExists)
-            {
-                await _userManager.AddToRoleAsync(user, "Bruker");
+                return new UserResponse(true, null);
             }
-            else
-            {
-                return new UserResponse(false, ["Standardrollen 'Bruker' eksisterer ikke."]);
-            }
-
-            return new UserResponse(true, null);
         }
     }
-}
 

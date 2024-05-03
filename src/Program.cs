@@ -49,7 +49,7 @@ builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDe
 // }
 
 builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", "b80b9704fd7a85590c852f88d8983cb8"));
-builder.Services.AddScoped<AlgoliaService>();
+builder.Services.AddScoped<SearchServiceManager>();
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ConceptDbContext>()
@@ -106,7 +106,7 @@ else
         var initializer = scope.ServiceProvider.GetRequiredService<DbContextInitializer>();
         await initializer.SeedAsync();
 
-        var algoliaService = scope.ServiceProvider.GetRequiredService<AlgoliaService>();
+        var algoliaService = scope.ServiceProvider.GetRequiredService<SearchServiceManager>();
         // await algoliaService.SaveRecordsToAlgoliaAsync();
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

@@ -14,12 +14,12 @@ using Newtonsoft.Json.Linq;
 
 namespace iconcept.Domain.Term.Services;
 
-public class AlgoliaService
+public class SearchServiceManager
 {
     private readonly ISearchClient _searchClient;
     private readonly ConceptDbContext _db;
 
-    public AlgoliaService(ISearchClient searchClient, ConceptDbContext dbContext)
+    public SearchServiceManager(ISearchClient searchClient, ConceptDbContext dbContext)
     {
         _searchClient = searchClient ?? throw new ArgumentNullException(nameof(searchClient));
         _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));

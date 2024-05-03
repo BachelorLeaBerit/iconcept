@@ -16,8 +16,8 @@ public record SuggestEditCommand : IRequest
 public class SuggestEditHandler : IRequestHandler<SuggestEditCommand>
 {
     private readonly ConceptDbContext _db;
-    private readonly AlgoliaService _algoliaService;
-    public SuggestEditHandler(ConceptDbContext db, AlgoliaService algoliaService)
+    private readonly SearchServiceManager _algoliaService;
+    public SuggestEditHandler(ConceptDbContext db, SearchServiceManager algoliaService)
     {
         _db = db;
         _algoliaService = algoliaService;

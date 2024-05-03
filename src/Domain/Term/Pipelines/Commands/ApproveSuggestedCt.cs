@@ -20,8 +20,8 @@ public record ApproveSuggestedCtCommand : IRequest
 public class ApproveSuggestedCtHandler : IRequestHandler<ApproveSuggestedCtCommand>
 {
     private readonly ConceptDbContext _db;
-    private readonly AlgoliaService _algoliaService;
-    public ApproveSuggestedCtHandler(ConceptDbContext db, AlgoliaService algoliaService)
+    private readonly SearchServiceManager _algoliaService;
+    public ApproveSuggestedCtHandler(ConceptDbContext db, SearchServiceManager algoliaService)
     {
         _db = db;
         _algoliaService = algoliaService;

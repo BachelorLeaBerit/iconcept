@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using iconcept.Domain.Auth;
 
-namespace iconcept.Domain.Auth.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines.Commands;
 public class AssignRole
 {
     public record Request(string UserId, string RoleName) : IRequest<bool>;

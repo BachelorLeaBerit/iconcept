@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace iconcept.Domain.Auth.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines.Queries;
 public class GetUsers
 {
     public record Request : IRequest<List<object>>;

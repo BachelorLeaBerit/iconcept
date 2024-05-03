@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using iconcept.Domain.Auth.Pipelines;
+using iconcept.Domain.Auth.Pipelines.Commands;
+using iconcept.Domain.Auth.Pipelines.Queries;
 using MediatR;
 using System.Security.Claims;
 

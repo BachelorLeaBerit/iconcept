@@ -2,7 +2,7 @@ using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.Auth.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines.Commands;
 public class LoginUser
 {
     public record Request(LoginData LoginData) : IRequest<UserResponse>;

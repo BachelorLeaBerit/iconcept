@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using iconcept.Domain.Auth.Pipelines;
+using iconcept.Domain.Auth.Pipelines.Commands  ;
+using iconcept.Domain.Auth.Pipelines.Queries;
 
 namespace iconcept.Controllers.Auth;
 

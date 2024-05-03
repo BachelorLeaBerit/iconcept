@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 import AdminTable from "./AdminTable";
 import EditUserRoleModal from "./EditRoleModal";
 import { checkAuthentication, fetchUsersData } from "./AdminService";
@@ -12,6 +11,7 @@ const Admin = () => {
   const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
   const [showModal, setShowModal] = useState(false);
   const userId = localStorage.getItem("id");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     checkAuthentication(setLoggedIn, setLoading);
@@ -41,8 +41,12 @@ const Admin = () => {
     }
   };
 
-  if (!loggedIn) {
-    return <Navigate to="/login" />;
+  if (loggedIn === false || !role || role !== "Admin") {
+    return (
+      <div className="container text-center">
+        <h3>Du har ikke tilgang til denne siden.</h3>
+      </div>
+    );
   }
 
   return (

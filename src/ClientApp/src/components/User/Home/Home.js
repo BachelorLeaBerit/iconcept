@@ -55,7 +55,7 @@ const Home = () => {
             {selectedTranslation ? (
               <TranslationDetailsTable translation={selectedTranslation} />
             ) : (
-            <span>Trykk på en konseptoversettelse for å se detaljene...</span> )}
+            <span>Trykk på en konseptoversettelse for å se detaljene</span> )}
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using iconcept.Domain.Auth.Pipelines;
+using iconcept.Domain.Auth.Pipelines.Commands;
 using Microsoft.AspNetCore.Authorization;
 
 namespace iconcept.Controllers.Auth;

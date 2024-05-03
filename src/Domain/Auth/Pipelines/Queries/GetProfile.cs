@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace iconcept.Domain.Auth.Pipelines;
+namespace iconcept.Domain.Auth.Pipelines.Queries;
 
 public class GetUserProfile
 {

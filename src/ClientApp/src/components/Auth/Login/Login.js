@@ -1,4 +1,3 @@
-// Login.js
 import React, { Component } from 'react';
 import axios from 'axios';
 import LoginForm from './LoginForm';
@@ -13,8 +12,31 @@ class Login extends Component {
         password: ''
       },
       message: '',
+      isLoggedIn: false, 
+      countdown: 5,
     };
   }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.setState({ isLoggedIn: true });
+      this.startCountdown();
+    }
+  }
+
+  startCountdown = () => {
+    this.countdownInterval = setInterval(() => {
+      this.setState(prevState => ({
+        countdown: prevState.countdown - 1,
+      }), () => {
+        if (this.state.countdown === 0) {
+          clearInterval(this.countdownInterval);
+          window.location.href = '/';
+        }
+      });
+    }, 1000);
+  };
 
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +67,16 @@ class Login extends Component {
   };
 
   render() {
-    const { formData, message } = this.state;
+    const { formData, message, isLoggedIn, countdown } = this.state;
+
+    if (isLoggedIn) {
+      return (
+        <div className="container text-center">
+          <h2>Du er allerede logget inn.</h2>
+          <p>Du blir omdirigert til hjemmesiden om {countdown} sekunder.</p>
+        </div>
+      );
+    }
 
     return (
       <div className="container d-flex justify-content-center align-items-center vh-80 mt-5">

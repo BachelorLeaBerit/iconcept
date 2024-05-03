@@ -1,49 +1,43 @@
-using System.Threading.Tasks;
-using iconcept.Domain.Auth;
-using iconcept.Domain.Auth.Pipelines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using iconcept.Domain.Auth.Pipelines.Commands;
+using iconcept.Domain.Auth;
 
-namespace iconcept.Controllers.Auth;
-[Route("api/register")]
-[ApiController]
-public class RegisterController : ControllerBase
+namespace iconcept.Controllers.Auth
 {
-    private readonly IMediator _mediator;
-
-    public RegisterController(IMediator mediator)
+    [Route("api/register")]
+    [ApiController]
+    public class RegisterController : ControllerBase
     {
-        _mediator = mediator;
-    }
+        private readonly IMediator _mediator;
 
-    [HttpPost]
-    public async Task<IActionResult> Register(RegisterData registerData)
-    {
-        try
+        public RegisterController(IMediator mediator)
         {
-            var result = await _mediator.Send(new RegisterUser.Request(registerData));
-            
-            if (result.IsSuccess)
+            _mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterData registerData)
+        {
+            try
             {
-                return Created(nameof(Register), new RouteResponse<string>(registerData.Email, null));
-            }
-            else
-            {
-                if (result.Errors.Any())
+                // Proceed with user registration
+                var result = await _mediator.Send(new RegisterUser.Request(registerData));
+
+                if (result.IsSuccess)
                 {
-                    var validationErrors = result.Errors.ToArray();
-                    return BadRequest(new RouteResponse<string>(null, validationErrors));
+                    return Created(nameof(Register), new { message = "Registrering vellykket" });
                 }
                 else
                 {
-                    return BadRequest(new RouteResponse<string>(null, new[] { "Registration failed" }));
+                    return BadRequest(new { message = "Registrering mislyktes", errors = result.Errors });
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            return BadRequest(new RouteResponse<string>(null, new[] { "An error occurred while processing your request" }));
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest(new { message = "En feil oppstod under registrering." });
+            }
         }
     }
 }

@@ -14,9 +14,27 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false,
-      role: localStorage.getItem('role') 
+      role: localStorage.getItem('role')
     };
   }
+
+  componentDidMount() {
+    // Listen for changes in localStorage and update state accordingly
+    window.addEventListener('storage', this.handleStorageChange);
+  }
+
+  componentWillUnmount() {
+    // Remove the event listener when the component unmounts
+    window.removeEventListener('storage', this.handleStorageChange);
+  }
+
+  handleStorageChange = () => {
+    // Update state when localStorage changes
+    this.setState({
+      isLoggedIn: localStorage.getItem('token') ? true : false,
+      role: localStorage.getItem('role')
+    });
+  };
 
   toggleNavbar = () => {
     this.setState({
@@ -65,7 +83,7 @@ export class NavMenu extends Component {
                       <Link className="nav-link" to="/profile"><FontAwesomeIcon icon={faUser} /></Link>
                     </li>
                     <li className="nav-item">
-                      <button className="nav-link text-dark btn btn-light btn-sm" onClick={this.handleLogout}> Logg ut</button>
+                      <button className="nav-link text-light btn btn-secondary btn-sm" onClick={this.handleLogout}> Logg ut</button>
                     </li>
                   </>
                 ) : (

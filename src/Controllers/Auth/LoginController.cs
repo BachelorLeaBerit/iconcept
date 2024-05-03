@@ -35,8 +35,10 @@ public class LoginController : ControllerBase
 
                 var responseData = new
                 {
-                    Email = user.Email,
-                    Role = role.FirstOrDefault()
+                    user.Email,
+                    firstName = user.FirstName,
+                    lastName = user.LastName,
+                    role
                 };
                 return Ok(new RouteResponse<object>(responseData, result.Errors));
             }

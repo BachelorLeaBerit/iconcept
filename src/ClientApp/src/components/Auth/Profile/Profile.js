@@ -5,21 +5,33 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
     const [userProfile, setUserProfile] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setLoggedIn(false);
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await axios.get('/api/profile', {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                        Authorization: `Bearer ${token}`
                     }
                 });
-                const { email, role, id } = response.data; 
+                const { email, role, id, firstName, lastName } = response.data; 
                 localStorage.setItem('role', role);
-                localStorage.setItem('id', response.data.id);
+                localStorage.setItem('id', id);
                 localStorage.setItem('email', email);
-                console.log('Logged in as:', email, role, id);
+                localStorage.setItem('firstName', firstName);
+                localStorage.setItem('lastName', lastName);
+                console.log('Response:', response); 
+
+
                 setUserProfile(response.data);
                 setLoading(false);
             } catch (error) {
@@ -49,14 +61,14 @@ const Profile = () => {
         }
     };
 
+    if (!loggedIn) {
+        return <h3 className="d-flex justify-content-center">Du må logge inn for å se brukerprofil.</h3>;
+    }
+
     if (loading) {
         return <div className="d-flex justify-content-center">Laster inn...</div>;
     }
-
-    if (!userProfile) {
-        return <div className="d-flex justify-content-center">Error: Unable to fetch user profile data</div>;
-    }
-
+    
     return (
         <div className="d-flex justify-content-center">
             <div>

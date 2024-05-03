@@ -55,7 +55,7 @@ const RegisterForm = ({ formData, errors, message, handleChange, handleSubmit })
             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
           <div className="text-center">
-            <button type="submit" className="btn btn-warning">Registrer</button>
+            <button type="submit" className="btn btn-success">Registrer</button>
           </div>
         </form>
         {message && <p className="mt-3">{message}</p>}

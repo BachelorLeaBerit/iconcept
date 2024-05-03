@@ -57,7 +57,10 @@ class Login extends Component {
       if (response.status === 200) {
         window.location.href = '/profile';
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('id', response.data.id);
+        localStorage.setItem('role', response.data.role);
+        localStorage.setItem('lastName', response.data.lastName);
+        localStorage.setItem('firstName', response.data.firstName);
+        
       } else {
         this.setState({ message: 'Ikke gyldig logg inn' });
       }

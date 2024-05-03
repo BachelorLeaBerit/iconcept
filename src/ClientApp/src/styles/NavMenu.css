@@ -11,7 +11,7 @@ a.navbar-brand {
   font-family: 'Madimi One', sans-serif;
   font-size: 45px;
   font-weight: 900;
-  color: #4f5355;
+  color: #425c69;
 }
 
 
@@ -19,6 +19,10 @@ a.navbar-brand {
   html {
     font-size: 16px;
   }
+}
+
+header {
+  background-color: #f1f2f2;
 }
 
 .box-shadow {

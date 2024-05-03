@@ -21,12 +21,11 @@ export class Register extends Component {
       message: "",
       redirectToLogin: false,
       isLoggedIn: false,
-      emailError: "", // Add emailError state
+      emailError: "",
     };
   }
 
   componentDidMount() {
-    // Check if user is already logged in
     const token = localStorage.getItem('token');
     if (token) {
       this.setState({ isLoggedIn: true });
@@ -54,7 +53,6 @@ export class Register extends Component {
     }
 
     try {
-      // Register user
       const registerResponse = await axios.post(`api/register`, formData);
 
       if (registerResponse.status === 201) {

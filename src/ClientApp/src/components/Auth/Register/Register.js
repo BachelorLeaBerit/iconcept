@@ -20,7 +20,8 @@ export class Register extends Component {
       errors: {},
       message: "",
       redirectToLogin: false,
-      isLoggedIn: false, // Add isLoggedIn state
+      isLoggedIn: false,
+      emailError: "", // Add emailError state
     };
   }
 
@@ -53,36 +54,40 @@ export class Register extends Component {
     }
 
     try {
-      const response = await axios.post(`api/register`, formData, {
+      // Register user
+      const registerResponse = await axios.post(`api/register`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      if (response.status === 201) {
-        this.setState({ message: `Registrering vellykket`, redirectToLogin: true });
+      if (registerResponse.status === 201) {
+        this.setState({ message: "Registrering vellykket", redirectToLogin: true });
       } else {
-        const errorMessage = response.data.errors ? response.data.errors.join(', ') : 'Registrering mislyktes';
+        const errorMessage = registerResponse.data.errors ? registerResponse.data.errors.join(', ') : "Registrering mislyktes / E-post brukes allerede";
         this.setState({ message: errorMessage });
       }
     } catch (error) {
       console.error('Registreringsfeil:', error);
-      let errorMessage = 'E-post allerede i bruk';
-    
+      let errorMessage = 'En feil oppstod';
+
       if (error.response) {
         errorMessage = error.response.data.message || errorMessage;
+        if (error.response.data.errors && error.response.data.errors.email) {
+          this.setState({ emailError: error.response.data.errors.email });
+        }
       } else if (error.request) {
         errorMessage = 'Ingen svar fra serveren';
       } else {
         errorMessage = error.message || errorMessage;
       }
-    
+
       this.setState({ message: errorMessage });
     }
   }
-  
+
   render() {
-    const { formData, errors, message, redirectToLogin, isLoggedIn } = this.state;
+    const { formData, errors, message, redirectToLogin, isLoggedIn, emailError } = this.state;
 
     if (isLoggedIn) {
       return (
@@ -97,13 +102,16 @@ export class Register extends Component {
     }
 
     return (
-      <RegisterForm
-        formData={formData}
-        errors={errors}
-        message={message}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-      />
+      <div>
+        {emailError && <div className="alert alert-danger">{emailError}</div>}
+        <RegisterForm
+          formData={formData}
+          errors={errors}
+          message={message}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+      </div>
     );
   }
 }

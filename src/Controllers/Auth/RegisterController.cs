@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using iconcept.Domain.Auth;
-using iconcept.Domain.Auth.Pipelines;
+using iconcept.Domain.Auth.Pipelines.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

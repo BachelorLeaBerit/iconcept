@@ -11,8 +11,8 @@ public record EditNotApprovedCommand(int Id) : IRequest;
 public class EditNotApprovedCommandHandler : IRequestHandler<EditNotApprovedCommand>
 {
     private readonly ConceptDbContext _db;
-    private readonly AlgoliaService _algoliaService;
-    public EditNotApprovedCommandHandler(ConceptDbContext db, AlgoliaService algoliaService)
+    private readonly SearchServiceManager _algoliaService;
+    public EditNotApprovedCommandHandler(ConceptDbContext db, SearchServiceManager algoliaService)
     {
         _db = db;
         _algoliaService = algoliaService;

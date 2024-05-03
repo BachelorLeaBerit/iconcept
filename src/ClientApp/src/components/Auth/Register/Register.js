@@ -12,10 +12,10 @@ export class Register extends Component {
 
     this.state = {
       formData: {
-        FirstName: "",
-        LastName: "",
-        Email: "",
-        Password: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
       },
       errors: {},
       message: "",
@@ -55,11 +55,7 @@ export class Register extends Component {
 
     try {
       // Register user
-      const registerResponse = await axios.post(`api/register`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const registerResponse = await axios.post(`api/register`, formData);
 
       if (registerResponse.status === 201) {
         this.setState({ message: "Registrering vellykket", redirectToLogin: true });

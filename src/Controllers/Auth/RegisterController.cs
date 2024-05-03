@@ -2,36 +2,39 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using iconcept.Domain.Auth.Pipelines.Commands;
 using iconcept.Domain.Auth;
+using CleanArchitecture.WebUI.Filters;
+using iconcept.Domain.Auth.Pipelines;
 
 namespace iconcept.Controllers.Auth
 {
     [Route("api/register")]
+    [ApiExceptionFilter]
     [ApiController]
     public class RegisterController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         public RegisterController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterData registerData)
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
             try
             {
-                // Proceed with user registration
-                var result = await _mediator.Send(new RegisterUser.Request(registerData));
+                var result = await _mediator.Send(command);
 
                 if (result.IsSuccess)
                 {
-                    return Created(nameof(Register), new { message = "Registrering vellykket" });
+                    return Created(nameof(Register), new RouteResponse<string>(command.Email, null));
                 }
+
                 else
                 {
                     return BadRequest(new { message = "Registrering mislyktes", errors = result.Errors });
                 }
+
             }
             catch (Exception ex)
             {

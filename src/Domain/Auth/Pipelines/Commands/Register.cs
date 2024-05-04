@@ -1,9 +1,11 @@
 using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,10 +24,13 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public RegisterUserHandler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    private IOptions<IdentityOptions> _options;
+
+    public RegisterUserHandler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> options)
     {
         _userManager = userManager;
         _roleManager = roleManager;
+        _options = options;
     }
 
     public async Task<UserResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -45,6 +50,19 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
             return new UserResponse(false, errList);
         }
 
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.GivenName, user.FirstName),
+            new Claim(ClaimTypes.Surname, user.LastName)
+        };
+
+        var identityResult = await _userManager.AddClaimsAsync(user, claims);
+        if (!identityResult.Succeeded)
+        {
+            // Handle claim addition failure
+            return new UserResponse(false, identityResult.Errors.Select(err => err.Description).ToArray());
+        }
+    
         var roleExists = await _roleManager.RoleExistsAsync("Bruker");
         if (roleExists)
         {

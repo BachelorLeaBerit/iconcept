@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using iconcept.Domain.Auth.Pipelines.Commands  ;
 using iconcept.Domain.Auth.Pipelines.Queries;
+using iconcept.Domain.Auth.Pipelines.Commands;
 
 namespace iconcept.Controllers.Auth;
-
 [ApiController]
 [Authorize]
 [Route("api/profile")]
@@ -23,14 +22,12 @@ public class UserProfileController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetUserProfile()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var role = User.FindFirstValue(ClaimTypes.Role);
-        var firstName = User.FindFirstValue("FirstName");
-        var lastName = User.FindFirstValue("LastName");
+        var userClaims = HttpContext.User;
 
-        var request = new GetUserProfile.Request(userId, email, role, firstName, lastName);
-        return await _mediator.Send(request);
+        var request = new GetUserProfile.Request(userClaims);
+        var response = await _mediator.Send(request);
+
+        return response;
     }
 
     [HttpDelete("{userId}")]
@@ -47,4 +44,3 @@ public class UserProfileController : ControllerBase
         return BadRequest();
     }
 }
-

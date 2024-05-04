@@ -49,7 +49,6 @@ export class NavMenu extends Component {
 
   render() {
     const { isLoggedIn, role } = this.state;
-    console.log("Role:", role);
 
     return (
       <header>

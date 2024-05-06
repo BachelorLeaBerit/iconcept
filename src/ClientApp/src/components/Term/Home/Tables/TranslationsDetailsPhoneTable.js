@@ -1,15 +1,31 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const TranslationDetailsPhoneTable = ({ translation }) => {
+const TranslationDetailsPhoneTable = ({ translation, showDeleteBtn, resetResetTranslationPage }) => {
   const navigate = useNavigate();
   const toEdit = (id) => {
     let Id = parseInt(id);
     navigate(`/editTranslation/${Id}`);
   };
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Er du sikker på at du vil slette konseptoversettelsen?"
+    );
+    if (confirmed) {
+      try {
+        let deleteRes = await axios.delete(`/api/translations/${translation.objectID}`);
+        resetResetTranslationPage();
+      } catch (error) {
+        console.error("Error deleting translation:", error);
+      }
+    }
+  };
+
   return (
     <div>
       <table
@@ -32,6 +48,11 @@ const TranslationDetailsPhoneTable = ({ translation }) => {
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
               </Button>
+              {showDeleteBtn && (
+                <Button color="danger" onClick={handleDelete} >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </Button>
+              )}
             </td>
           </tr>
           <tr>

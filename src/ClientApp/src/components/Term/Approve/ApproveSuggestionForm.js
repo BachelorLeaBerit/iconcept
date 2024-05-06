@@ -21,7 +21,6 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   };
 
   const handleApprove = async () => {
-    console.log(editedData);
     const confirmed = window.confirm("Are you sure you want to approve?");
     if (confirmed) {
       try {
@@ -37,7 +36,7 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Are you sure you want to delete?");
+    const confirmed = window.confirm("Er du sikker på at du vil slette konseptoversettelsen?");
     if (confirmed) {
       try {
         if (translation.status === 2) {

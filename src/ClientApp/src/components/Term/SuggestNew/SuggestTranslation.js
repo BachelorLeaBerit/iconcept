@@ -39,7 +39,7 @@ function SuggestTranslation() {
     })
     .then (function(response){
       if (window.confirm("Vellykket innsending av forslag! Ønsker du å sende inn et nytt forslag?")) {
-        window.location.reload();
+        
       }
       else {
         navigate("/");

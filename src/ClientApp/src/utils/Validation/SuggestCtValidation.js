@@ -20,7 +20,7 @@ export const ValidateForm = (formData) => {
 
   // Sanitize and validate Konseptoversettelse field
   let translationData = formData.translation.trim();
-  let translationLengthError = inputLengthValidation(translationData, 500, 10);
+  let translationLengthError = inputLengthValidation(translationData, 500, 50);
   let translationRegexError = regexValidation(translationData, allowedCharactersRegex)
   if (!translationData) {
     errors.translation = "Må inneholde en konseptoversettelse!";
@@ -32,7 +32,7 @@ export const ValidateForm = (formData) => {
 
   // Sanitize and validate Kommentar field
   let max = 300;
-  let min = 10;
+  let min = 50;
 
   let contextData = formData.context.trim();
   let contextLengthError = inputLengthValidation(contextData, max, min);

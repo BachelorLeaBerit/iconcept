@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
 
+const defaultForm = {
+  termName: "",
+  countries: [],
+  religions: [],
+  feelings: [],
+  regions: [],
+  context: "",
+  norwegianDefinition: "",
+  translation: "",
+  comment: "",
+  editorEmail: localStorage.getItem("email") || "",
+}
+
 const SuggestTranslationForm = ({ data, onSubmit }) => {
   const { feelings, religions, regions, countries } = data;
 
-  const [formData, setFormData] = useState({
-    termName: "",
-    countries: [],
-    religions: [],
-    feelings: [],
-    regions: [],
-    context: "",
-    norwegianDefinition: "",
-    translation: "",
-    comment: "",
-    editorEmail: localStorage.getItem("email") || "",
-  });
+  const [formData, setFormData] = useState(defaultForm);
   const [errors, setErrors] = useState({});
 
   const handleChange = (name, value) => {
@@ -40,6 +42,8 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
     console.log(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       onSubmit(formData);
+      setFormData(defaultForm);
+
     } else {
       setErrors(validationErrors);
     }

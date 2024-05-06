@@ -10,6 +10,7 @@ using iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 using iconcept.Domain.Term.Pipelines.Get;
 using Algolia.Search.Clients;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iconcept.Controllers
 {
@@ -28,6 +29,14 @@ namespace iconcept.Controllers
         public async Task<ActionResult<ConceptTranslationViewModel>> GetTranslation(int id)
         {
             return await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
+        }
+
+        [Authorize(Roles = "Admin, Redaktør")]
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteTranslation(int id)
+        {
+            await _mediator.Send(new DeleteTranslationCommand(id));
+            return NoContent();
         }
     }
 }

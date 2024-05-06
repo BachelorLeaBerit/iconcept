@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "reactstrap";
+import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
@@ -24,6 +23,12 @@ const TranslationDetailsTable = ({
   });
   const navigate = useNavigate();
   const [text, setText] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setUserRole(role);
+  }, []);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -72,8 +77,9 @@ const TranslationDetailsTable = ({
     console.error(error.message);
   }
 
+  console.log("Role:", userRole)
   return (
-    <div class="table-responsive">
+    <div className="table-responsive">
       <table
         className="table table-striped table-bordered"
         aria-labelledby="tableLabel"
@@ -95,23 +101,24 @@ const TranslationDetailsTable = ({
                       {translation.termName}
                     </Highlight>
                   </span>
-                  <Button onClick={() => toEdit(translation.objectID)}>
+                  <button className="btn btn-primary" onClick={() => toEdit(translation.objectID)}>
                     <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
-                  </Button>
-                  {showDeleteBtn && (
-                    <Button color="danger" onClick={handleDelete}>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  )}
+                  </button>
+                  
+                  {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
+                    <button className="btn btn-danger" onClick={handleDelete}>
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                    </button>
+                    )}
                 </>
               ) : (
                 <>
                   <span style={{ marginRight: "auto" }}>
                     {translation.termName}
                   </span>
-                  <Button onClick={() => setText(true)}>
+                  <button className="btn btn-primary" onClick={() => setText(true)}>
                     <FontAwesomeIcon icon={faPenToSquare} />
-                  </Button>
+                  </button>
                 </>
               )}
             </td>

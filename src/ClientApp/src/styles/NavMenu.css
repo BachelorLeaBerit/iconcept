@@ -44,7 +44,7 @@ header {
 .tooltip-container .tooltiptext {
   visibility: hidden;
   width: 800px;
-  height: 180px;
+  height: 200px;
   background-color: #858585e8;
   color: #fff;
   text-align: center;

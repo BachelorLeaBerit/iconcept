@@ -62,6 +62,16 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
             return new UserResponse(false, identityResult.Errors.Select(err => err.Description).ToArray());
         }
 
+        var roleExists = await _roleManager.RoleExistsAsync("Bruker");
+            if (roleExists)
+            {
+                await _userManager.AddToRoleAsync(user, "Bruker");
+            }
+            else
+            {
+                return new UserResponse(false, ["Standardrollen 'Bruker' eksisterer ikke."]);
+            }
+
         return new UserResponse(true, null);
     }
 }

@@ -101,12 +101,12 @@ const TranslationDetailsTable = ({
                       {translation.termName}
                     </Highlight>
                   </span>
-                  <button className="btn btn-primary" onClick={() => toEdit(translation.objectID)}>
+                  <button className="btn btn-light" onClick={() => toEdit(translation.objectID)}>
                     <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
                   </button>
                   
                   {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
-                    <button className="btn btn-danger" onClick={handleDelete}>
+                    <button className="btn btn-outline-danger" onClick={handleDelete} style={{ marginLeft: '0.5rem' }}>
                     <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                     )}
@@ -116,7 +116,7 @@ const TranslationDetailsTable = ({
                   <span style={{ marginRight: "auto" }}>
                     {translation.termName}
                   </span>
-                  <button className="btn btn-primary" onClick={() => setText(true)}>
+                  <button className="btn btn-info" onClick={() => setText(true)}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
                 </>

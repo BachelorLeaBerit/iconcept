@@ -78,7 +78,7 @@ const Profile = () => {
   <div className="profile-container">
     <h3 className="profile-heading"> <i class="bi bi-person-vcard-fill"></i> Brukerprofil </h3>
     {userProfile.role.includes('Admin') && (
-      <Link to="/admin" className="btn btn-warning"> Link til Admin-side </Link>
+      <Link to="/admin" className="btn btn-link mb-3"> Klikk her for ADMIN-side </Link>
     )}
     <div className="profile-details">
       <div className="profile-item">

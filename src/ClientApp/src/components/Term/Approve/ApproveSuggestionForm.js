@@ -56,7 +56,7 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   return (
     <>
       <button
-        className="btn btn-primary"
+        className="btn btn-outline-dark"
         onClick={toggle}
         style={{ marginBottom: "1rem" }}
       >

@@ -30,11 +30,10 @@ header {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-/* NavMenu.css */
 .tooltip-container {
   position: relative;
   display: inline-block;
-  margin-left: 5px; /* Adjust as needed */
+  margin-left: 5px;
 }
 
 .tooltip-container .question-icon {
@@ -43,8 +42,8 @@ header {
 
 .tooltip-container .tooltiptext {
   visibility: hidden;
-  width: 800px;
-  height: 200px;
+  max-width: 90vw;
+  width: auto;
   background-color: #858585e8;
   color: #fff;
   text-align: center;
@@ -52,7 +51,7 @@ header {
   padding: 5px;
   position: absolute;
   z-index: 1;
-  top: calc(100% + 5px); /* Position below the icon */
+  top: calc(100% + 5px);
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;

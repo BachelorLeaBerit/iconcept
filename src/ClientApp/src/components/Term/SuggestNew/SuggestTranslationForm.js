@@ -194,7 +194,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             <div className="text-danger">{errors.norwegianDefinition}</div>
           )}
         </div>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label htmlFor="editorEmail">Din e-post* - vil kun være synlig for admin</label>
           <input
             type="text"
@@ -211,7 +211,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
 
         <button
           type="submit"
-          className="btn mb-3"
+          className="btn mb-5"
           style={{ backgroundColor: "#BFEA7C", color: "black" }}
         >
           Send inn forslag til godkjenning

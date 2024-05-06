@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
+import '../../../styles/Profile.css';
 
 const Profile = () => {
     const [userProfile, setUserProfile] = useState(null);
@@ -33,6 +34,7 @@ const Profile = () => {
 
 
                 setUserProfile(response.data);
+                console.log('Rolleeeeee:', role);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -70,16 +72,35 @@ const Profile = () => {
     }
     
     return (
-        <div className="d-flex justify-content-center">
-            <div>
-                <h2>Brukerprofil</h2>
-                <p><strong>Fornavn: </strong> {userProfile.firstName}</p>
-                <p><strong>Etternavn: </strong> {userProfile.lastName}</p>
-                <p><strong>E-post: </strong> {userProfile.email}</p>
-                <p><strong>Din rolle: </strong> {userProfile.role}</p>
-                <button className="btn btn-danger" onClick={() => handleDeleteUser(userProfile.id)}>Slett bruker</button>
-            </div>
-        </div>
+        <div className="container">
+  <div className="profile-container">
+    <h3 className="profile-heading"> <i class="bi bi-person-vcard-fill"></i> Brukerprofil </h3>
+    {userProfile.role === 'Admin' && (
+      <Link to="/admin" className="btn btn-warning">Admin-side</Link>
+    )}
+    <div className="profile-details">
+      <div className="profile-item">
+        <strong>Fornavn:</strong>
+        <p>{userProfile.firstName}</p>
+      </div>
+      <div className="profile-item">
+        <strong>Etternavn:</strong>
+        <p>{userProfile.lastName}</p>
+      </div>
+      <div className="profile-item">
+        <strong>E-post:</strong>
+        <p>{userProfile.email}</p>
+      </div>
+      <div className="profile-item">
+        <strong>Din tilgangsrolle:</strong>
+        <p>{userProfile.role}</p>
+      </div>
+    </div>
+    <button className="btn btn-danger delete-btn" onClick={() => handleDeleteUser(userProfile.id)}>Slett bruker</button>
+  </div>
+</div>
+
+      
     );
 };
 

@@ -40,7 +40,7 @@ public class AdminController : ControllerBase
     [HttpPost("{userId}/assign-role")]
     public async Task<IActionResult> AssignRole(string userId, [FromBody] string roleName)
     {
-         var request = new AssignRole.Request(userId, roleName);
+        var request = new AssignRole.Request(userId, roleName);
         var success = await _mediator.Send(request);
         
         if (success)

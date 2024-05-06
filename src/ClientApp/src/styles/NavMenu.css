@@ -1,5 +1,6 @@
 ﻿
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Londrina+Shadow&family=Madimi+One&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Rozha+One&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 a.navbar-brand {
   white-space: normal;
@@ -29,3 +30,36 @@ header {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+/* NavMenu.css */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px; /* Adjust as needed */
+}
+
+.tooltip-container .question-icon {
+  cursor: pointer;
+}
+
+.tooltip-container .tooltiptext {
+  visibility: hidden;
+  width: 800px;
+  height: 180px;
+  background-color: #858585e8;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 5px); /* Position below the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

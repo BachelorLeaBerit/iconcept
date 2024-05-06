@@ -108,6 +108,7 @@ else
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
         var roles = new List<string> { "Admin", "Redaktør", "Bruker" };
+
         foreach (var roleName in roles)
         {
             if (!await roleManager.RoleExistsAsync(roleName))
@@ -117,11 +118,11 @@ else
         }
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    
+        var adminUser1 = await userManager.FindByEmailAsync("admin@gmail.com");
+        await userManager.RemoveFromRoleAsync(adminUser1, "Bruker");
+        await userManager.AddToRoleAsync(adminUser1, "Admin");
         
-        // var adminUser1 = await userManager.FindByEmailAsync("admin@gmail.com");
-
-        // await userManager.AddToRoleAsync(adminUser1, "Admin");
-
     }
 
 }

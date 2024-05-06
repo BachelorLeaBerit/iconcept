@@ -23,7 +23,6 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
 {
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-
     private IOptions<IdentityOptions> _options;
 
     public RegisterUserHandler(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> options)
@@ -61,16 +60,6 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
         {
             // Handle claim addition failure
             return new UserResponse(false, identityResult.Errors.Select(err => err.Description).ToArray());
-        }
-    
-        var roleExists = await _roleManager.RoleExistsAsync("Bruker");
-        if (roleExists)
-        {
-            await _userManager.AddToRoleAsync(user, "Bruker");
-        }
-        else
-        {
-            return new UserResponse(false, ["Standardrollen 'Bruker' eksisterer ikke."]);
         }
 
         return new UserResponse(true, null);

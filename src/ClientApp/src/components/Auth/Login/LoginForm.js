@@ -1,4 +1,3 @@
-// LoginForm.js
 import React from 'react';
 
 const LoginForm = ({ formData, handleChange, handleSubmit }) => {
@@ -7,7 +6,7 @@ const LoginForm = ({ formData, handleChange, handleSubmit }) => {
       <div className="mb-3">
         <label htmlFor="email" className="form-label">E-post</label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="email"
           name="email"

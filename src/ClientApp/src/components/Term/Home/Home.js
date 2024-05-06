@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   InstantSearch,
   useHits,
@@ -14,8 +13,13 @@ import "@algolia/autocomplete-theme-classic";
 import Autocomplete from "./Search/AutoComplete";
 import HomeModal from "./HomeModal";
 import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
+import axios from "axios";
 
 const Home = () => {
+  const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+  const role = localStorage.getItem("role");
+  let showDeleteBtn = false;
+  
   const searchClient = algoliasearch(
     "P5EELNNK48",
     "2f296b2c05e3f1e67d580832f292f0d3"
@@ -26,6 +30,40 @@ const Home = () => {
     setTranslation(translation);
     setShowModal(true);
   };
+
+  const handleResetTranslation = () => {
+    setTranslation(null);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.log("Token not found. User not authenticated.");
+          return;
+        }
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loggedIn === true || role || role === "Admin") {
+    showDeleteBtn = true;
+  }
 
   const [showModal, setShowModal] = useState(false);
   return (
@@ -53,22 +91,33 @@ const Home = () => {
         <div class="col-lg-6 d-none d-lg-block">
           <div class="position-sticky top-0">
             <h4 className="mt-3">Oversettelsesdetaljer</h4>
-            {selectedTranslation ? (
-              <TranslationDetailsTable translation={selectedTranslation} />
+            {selectedTranslation != null ? (
+              <TranslationDetailsTable
+                translation={selectedTranslation}
+                showDeleteBtn={showDeleteBtn}
+                resetResetTranslationPage={handleResetTranslation}
+              />
             ) : (
-            <span>Trykk på en konseptoversettelse for å se detaljene</span> )}
+              <span>Trykk på en konseptoversettelse for å se detaljene</span>
+            )}
           </div>
         </div>
 
-        <div class="d-lg-none d-xl-block d-xl-none">
-          <HomeModal
-            isOpen={showModal}
-            onClose={() => setShowModal(false)}
-            children={
-              <TranslationDetailsPhoneTable translation={selectedTranslation} />
-            }
-          />
-        </div>
+        {selectedTranslation != null ? (
+          <div class="d-lg-none d-xl-block d-xl-none">
+            <HomeModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              children={
+                <TranslationDetailsPhoneTable
+                  translation={selectedTranslation}
+                  showDeleteBtn={showDeleteBtn}
+                  resetResetTranslationPage={handleResetTranslation}
+                />
+              }
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

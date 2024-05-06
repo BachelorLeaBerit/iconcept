@@ -16,11 +16,11 @@ public record SuggestEditCommand : IRequest
 public class SuggestEditHandler : IRequestHandler<SuggestEditCommand>
 {
     private readonly ConceptDbContext _db;
-    private readonly SearchServiceManager _algoliaService;
-    public SuggestEditHandler(ConceptDbContext db, SearchServiceManager algoliaService)
+    private readonly SearchServiceManager _searchService;
+    public SuggestEditHandler(ConceptDbContext db, SearchServiceManager searchService)
     {
         _db = db;
-        _algoliaService = algoliaService;
+        _searchService = searchService;
     }
 
     public async Task Handle(SuggestEditCommand request, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ public class SuggestEditHandler : IRequestHandler<SuggestEditCommand>
         translation.Status = Status.Edited;
         translation.EditorEmail = request.EditorEmail;
         await _db.SaveChangesAsync();
-        await _algoliaService.DeleteRecord(request.Id.ToString());
+        await _searchService.DeleteRecord(request.Id.ToString());
         return;
     }
 }

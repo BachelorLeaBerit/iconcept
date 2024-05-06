@@ -43,7 +43,7 @@ const ApproveSuggestions = () => {
     setUpdateTrigger((prev) => !prev);
   };
 
-  if (loggedIn === false || !role || role !== "Admin" || role !== "Editor") {
+  if (loggedIn === false || !role || role === "Bruker") {
     return (
       <div className="container text-center">
         <h3>Du har ikke tilgang til denne siden.</h3>

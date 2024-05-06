@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
+import { Highlight } from "react-instantsearch";
+import axios from "axios";
+import DetailsTableCell from "./DetailsTableCell";
 
-const TranslationDetailsTable = ({ translation, onChange }) => {
+const TranslationDetailsTable = ({
+  translation,
+  onChange,
+  showDeleteBtn,
+  resetResetTranslationPage,
+}) => {
   const [formData, setFormData] = useState({
     norwegianDefinition: translation.norwegianDefinition,
     translation: translation.translation,
@@ -15,6 +23,7 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
     editorEmail: translation.editorEmail,
   });
   const navigate = useNavigate();
+  const [text, setText] = useState(false);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -28,6 +37,34 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
     navigate(`/editTranslation/${Id}`);
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Er du sikker på at du vil slette konseptoversettelsen?"
+    );
+    if (confirmed) {
+      try {
+        let deleteRes = await axios.delete(
+          `/api/translations/${translation.objectID}`
+        );
+        resetResetTranslationPage();
+      } catch (error) {
+        console.error("Error deleting translation:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutsideTable = (event) => {
+      if (!event.target.closest("table")) {
+        setText(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutsideTable);
+    return () => {
+      document.removeEventListener("click", handleClickOutsideTable);
+    };
+  }, []);
+
   let formattedDate;
   try {
     formattedDate = dateFormatter(translation.lastModified);
@@ -37,14 +74,13 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
 
   return (
     <div class="table-responsive">
-    <table
-      className="table table-striped table-bordered"
-      aria-labelledby="tableLabel"
-    >
-      <tbody>
-        <tr className="table-info">
-          <th>Begrep</th>
-          {!(translation.status === 2 || translation.status === 1) ? (
+      <table
+        className="table table-striped table-bordered"
+        aria-labelledby="tableLabel"
+      >
+        <tbody>
+          <tr className="table-info">
+            <th>Begrep</th>
             <td
               style={{
                 display: "flex",
@@ -52,122 +88,127 @@ const TranslationDetailsTable = ({ translation, onChange }) => {
                 alignItems: "center",
               }}
             >
-              <span style={{ marginRight: "auto" }}>
-                {translation.termName}
-              </span>
-              <Button onClick={() => toEdit(translation.objectID)}>
-                <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
-              </Button>
+              {!(translation.status === 2 || translation.status === 1) ? (
+                <>
+                  <span style={{ marginRight: "auto" }}>
+                    <Highlight attribute="termName" hit={translation}>
+                      {translation.termName}
+                    </Highlight>
+                  </span>
+                  <Button onClick={() => toEdit(translation.objectID)}>
+                    <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
+                  </Button>
+                  {showDeleteBtn && (
+                    <Button color="danger" onClick={handleDelete}>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </Button>
+                  )}
+                </>
+              ) : (
+                <>
+                  <span style={{ marginRight: "auto" }}>
+                    {translation.termName}
+                  </span>
+                  <Button onClick={() => setText(true)}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Button>
+                </>
+              )}
             </td>
-          ) : (
-            <td>{translation.termName}</td>
-          )}
-        </tr>
-        <tr>
-          <th>Norsk definisjon</th>
-          <td>
-            {translation.status === 2 ? (
-              <input
-                type="text"
-                name="norwegianDefinition"
-                value={formData.norwegianDefinition}
-                onChange={handleChange}
-              />
-            ) : (
-              translation.norwegianDefinition
-            )}
-          </td>
-        </tr>
-        <tr>
-          <th>Konseptoversettelse</th>
-          <td>
-            {translation.status === 2 ? (
-              <input
-                type="text"
-                name="translation"
-                value={formData.translation}
-                onChange={handleChange}
-              />
-            ) : (
-              translation.translation
-            )}
-          </td>
-        </tr>
-        {translation.status === 1 && (
-          <tr className="table-danger">
-            <th>Redigert oversettelse</th>
-            <td>{translation.editedTranslation}</td>
           </tr>
-        )}
-        <tr>
-          <th>Følelser</th>
-          <td>
-            {translation.feelings ? translation.feelings.join(", ") : "N/A"}
-          </td>
-        </tr>
-        <tr>
-          <th>Kontekst</th>
-          <td>
-            {translation.status === 2 ? (
-              <input
-                type="text"
-                name="context"
-                value={formData.context}
-                onChange={handleChange}
-              />
-            ) : (
-              translation.context
-            )}
-          </td>
-        </tr>
-        <tr>
-          <th>Religioner</th>
-          <td>
-            {translation.religions ? translation.religions.join(", ") : "N/A"}
-          </td>
-        </tr>
-        <tr>
-          <th>Land</th>
-          <td>
-            {translation.countries ? translation.countries.join(", ") : "N/A"}
-          </td>
-        </tr>
-        <tr>
-          <th>Region</th>
-          <td>
-            {translation.regions ? translation.regions.join(", ") : "N/A"}
-          </td>
-        </tr>
-        <tr>
-          <th>Kommentar</th>
-          <td>
-            {translation.status === 2 ? (
-              <input
-                type="text"
-                name="comment"
-                value={formData.comment}
-                onChange={handleChange}
-              />
-            ) : (
-              translation.comment
-            )}
-          </td>
-        </tr>
-        {(translation.status === 1 || translation.status === 2) && (
-          <>
-            <tr>
-              <th>Forfatterens e-post</th>
-              <td>{translation.editorEmail}</td>
+          <DetailsTableCell
+            header={"Norsk definisjon"}
+            translation={translation}
+            formData={formData.norwegianDefinition}
+            name={"norwegianDefinition"}
+            handleChange={handleChange}
+            text={text}
+            setText={setText}
+          ></DetailsTableCell>
+          <DetailsTableCell
+            header={"Konseptoversettelse"}
+            translation={translation}
+            formData={formData.translation}
+            name={"translation"}
+            handleChange={handleChange}
+            text={text}
+            setText={setText}
+          ></DetailsTableCell>
+          {translation.status === 1 && (
+            <tr className="table-danger">
+              <th>Redigert oversettelse</th>
+              <td>{translation.editedTranslation}</td>
             </tr>
+          )}
+          <tr>
+            <th>Følelser</th>
+            <td>
+              <Highlight attribute="feelings" hit={translation}>
+                {translation.feelings ? translation.feelings.join(", ") : "N/A"}
+              </Highlight>
+            </td>
+          </tr>
+          <DetailsTableCell
+            header={"Kontekst"}
+            translation={translation}
+            formData={formData.context}
+            name={"context"}
+            handleChange={handleChange}
+            text={text}
+            setText={setText}
+          ></DetailsTableCell>
+          <tr>
+            <th>Religioner</th>
+            <td>
+              <Highlight attribute="religions" hit={translation}>
+                {translation.religions
+                  ? translation.religions.join(", ")
+                  : "N/A"}
+              </Highlight>
+            </td>
+          </tr>
+          <tr>
+            <th>Land</th>
+            <td>
+              <Highlight attribute="countries" hit={translation}>
+                {translation.countries
+                  ? translation.countries.join(", ")
+                  : "N/A"}
+              </Highlight>
+            </td>
+          </tr>
+          <tr>
+            <th>Region</th>
+            <td>
+              <Highlight attribute="regions" hit={translation}>
+                {translation.regions ? translation.regions.join(", ") : "N/A"}
+              </Highlight>
+            </td>
+          </tr>
+          <DetailsTableCell
+            header={"Kommentar"}
+            translation={translation}
+            formData={formData.comment}
+            name={"comment"}
+            handleChange={handleChange}
+            text={text}
+            setText={setText}
+          ></DetailsTableCell>
+          {(translation.status === 1 || translation.status === 2) && (
+            <>
+              <tr>
+                <th>Forfatterens e-post</th>
+                <td>{translation.editorEmail}</td>
+              </tr>
 
-            <tr>
-              <th>Sist endret</th>
-              <td>{formattedDate}</td>
-            </tr>
-          </>
-        )}
-      </tbody>
-    </table>
+              <tr>
+                <th>Sist endret</th>
+                <td>{formattedDate}</td>
+              </tr>
+            </>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

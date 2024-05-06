@@ -55,6 +55,10 @@ const AppRoutes = [
     path: '/editUserRole',
     element: <EditUserRoleModal />,
   },
+  {
+    path: '*',
+    element: <div>Siden eksisterer ikke.</div>
+  }
   
 ];
 

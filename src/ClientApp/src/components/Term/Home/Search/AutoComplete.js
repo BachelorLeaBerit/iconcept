@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useMemo, useState, createElement, Fragment } from "react";
 import { render } from "react-dom";
 
-import { usePagination, useSearchBox } from "react-instantsearch";
+import { usePagination, useSearchBox, useInstantSearch } from "react-instantsearch";
 import { autocomplete } from "@algolia/autocomplete-js";
 import { createLocalStorageRecentSearchesPlugin } from "@algolia/autocomplete-plugin-recent-searches";
 import "@algolia/autocomplete-theme-classic";
@@ -18,6 +18,7 @@ export function Autocomplete({
   const [instantSearchUiState, setInstantSearchUiState] = useState({
     query: query
   });
+
 
   const plugins = useMemo(() => {
     const recentSearches = createLocalStorageRecentSearchesPlugin({

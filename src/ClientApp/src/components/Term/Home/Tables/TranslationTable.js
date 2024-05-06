@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
+import { Highlight } from "react-instantsearch";
 
-const TranslationTable = ( {translations, handleRowClick} ) => {
+const TranslationTable = ({ translations, handleRowClick }) => {
   return (
     <div class="table-responsive">
-    <table className="table table-hover mt-3" aria-labelledby="tableLabel">
+      <table className="table table-hover mt-3" aria-labelledby="tableLabel">
         <thead>
           <tr>
             <th>Konsept</th>
@@ -11,19 +12,26 @@ const TranslationTable = ( {translations, handleRowClick} ) => {
           </tr>
         </thead>
         <tbody>
-          {translations.map(translation =>
-            <tr key={translation.id} onClick={() => handleRowClick(translation)}>
+          {translations.map((translation) => (
+            <tr
+              key={translation.id}
+              onClick={() => handleRowClick(translation)}
+            >
               <td>
+                <Highlight attribute="termName" hit={translation}>
                   {translation.termName}
+                </Highlight>
               </td>
               <td>
-                {translation.context}
+                <Highlight attribute="context" hit={translation}>
+                  {translation.context}
+                </Highlight>
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
-      </div>
+    </div>
   );
 };
 

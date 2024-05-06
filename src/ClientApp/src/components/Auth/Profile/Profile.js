@@ -32,9 +32,9 @@ const Profile = () => {
                 localStorage.setItem('lastName', lastName);
                 console.log('Response:', response); 
 
-
+                console.log('Rolle 1:', role);
                 setUserProfile(response.data);
-                console.log('Rolleeeeee:', role);
+                console.log('Rolleeeeee 2:', role);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -70,13 +70,15 @@ const Profile = () => {
     if (loading) {
         return <div className="d-flex justify-content-center">Laster inn...</div>;
     }
+    console.log('User Profile:', userProfile);
+
     
     return (
         <div className="container">
   <div className="profile-container">
     <h3 className="profile-heading"> <i class="bi bi-person-vcard-fill"></i> Brukerprofil </h3>
-    {userProfile.role === 'Admin' && (
-      <Link to="/admin" className="btn btn-warning">Admin-side</Link>
+    {userProfile.role.includes('Admin') && (
+      <Link to="/admin" className="btn btn-warning"> Link til Admin-side </Link>
     )}
     <div className="profile-details">
       <div className="profile-item">

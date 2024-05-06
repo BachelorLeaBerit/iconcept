@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "reactstrap";
+import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const TranslationDetailsPhoneTable = ({ translation, showDeleteBtn, resetResetTranslationPage }) => {
+const TranslationDetailsPhoneTable = ({
+  translation,
+  showDeleteBtn,
+  resetResetTranslationPage,
+}) => {
+  const userRole = localStorage.getItem("role");
   const navigate = useNavigate();
+
   const toEdit = (id) => {
     let Id = parseInt(id);
     navigate(`/editTranslation/${Id}`);
@@ -18,7 +23,9 @@ const TranslationDetailsPhoneTable = ({ translation, showDeleteBtn, resetResetTr
     );
     if (confirmed) {
       try {
-        let deleteRes = await axios.delete(`/api/translations/${translation.objectID}`);
+        let deleteRes = await axios.delete(
+          `/api/translations/${translation.objectID}`
+        );
         resetResetTranslationPage();
       } catch (error) {
         console.error("Error deleting translation:", error);
@@ -27,7 +34,7 @@ const TranslationDetailsPhoneTable = ({ translation, showDeleteBtn, resetResetTr
   };
 
   return (
-    <div>
+    <div className="table-responsive">
       <table
         className="table table-striped table-bordered"
         aria-labelledby="tableLabel"
@@ -42,16 +49,17 @@ const TranslationDetailsPhoneTable = ({ translation, showDeleteBtn, resetResetTr
                 <br />
                 <span>{translation.termName}</span>
               </div>
-              <Button
+              <button
+                className="btn btn-primary"
                 onClick={() => toEdit(translation.objectID)}
                 style={{ marginLeft: "auto" }}
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
-              </Button>
-              {showDeleteBtn && (
-                <Button color="danger" onClick={handleDelete} >
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </Button>
+              </button>
+              {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
+                <button className="btn btn-danger" onClick={handleDelete}>
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                </button>
               )}
             </td>
           </tr>

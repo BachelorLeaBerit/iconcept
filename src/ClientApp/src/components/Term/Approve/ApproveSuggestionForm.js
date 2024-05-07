@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import '../../../styles/Term.css';
+
 
 import TranslationDetailsTable from "../Home/Tables/TranslationDetailsTable";
 
@@ -56,9 +58,8 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   return (
     <>
       <button
-        className="btn btn-outline-dark"
+        className="btn btn-outline-dark btnapprove"
         onClick={toggle}
-        style={{ marginBottom: "1rem" }}
       >
         {translation.termName}
       </button>

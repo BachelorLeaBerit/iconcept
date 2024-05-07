@@ -6,6 +6,7 @@ import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
 import axios from "axios";
 import DetailsTableCell from "./DetailsTableCell";
+import '../../../../styles/Term.css';
 
 const TranslationDetailsTable = ({
   translation,
@@ -87,16 +88,10 @@ const TranslationDetailsTable = ({
         <tbody>
           <tr className="table-info">
             <th>Begrep</th>
-            <td
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <td className="tdtrans">
               {!(translation.status === 2 || translation.status === 1) ? (
                 <>
-                  <span style={{ marginRight: "auto" }}>
+                  <span className="spantrans">
                     <Highlight attribute="termName" hit={translation}>
                       {translation.termName}
                     </Highlight>
@@ -106,14 +101,14 @@ const TranslationDetailsTable = ({
                   </button>
                   
                   {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
-                    <button className="btn btn-outline-danger" onClick={handleDelete} style={{ marginLeft: '0.5rem' }}>
+                    <button className="btn btn-outline-danger btnhandledelete" onClick={handleDelete}>
                     <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                     )}
                 </>
               ) : (
                 <>
-                  <span style={{ marginRight: "auto" }}>
+                  <span className="spantermname">
                     {translation.termName}
                   </span>
                   <button className="btn btn-info" onClick={() => setText(true)}>

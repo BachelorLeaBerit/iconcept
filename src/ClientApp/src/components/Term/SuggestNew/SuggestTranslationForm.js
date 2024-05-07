@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
+import '../../../styles/Term.css';
 
 const defaultForm = {
   termName: "",
@@ -215,8 +216,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
 
         <button
           type="submit"
-          className="btn mb-5"
-          style={{ backgroundColor: "#BFEA7C", color: "black" }}
+          className="btn mb-5 btnsendforslag"
         >
           Send inn forslag til godkjenning
         </button>

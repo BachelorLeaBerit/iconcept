@@ -15,6 +15,7 @@ export class NavMenu extends Component {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
+      firstName: localStorage.getItem('firstName'), // Add firstName to state
     };
   }
 
@@ -34,6 +35,7 @@ export class NavMenu extends Component {
     this.setState({
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
+      firstName: localStorage.getItem('firstName'), // Update firstName in state
     });
   };
 
@@ -45,11 +47,11 @@ export class NavMenu extends Component {
 
   handleLogout = async () => {
     await handleLogout();
-    this.setState({ isLoggedIn: false, role: null });
+    this.setState({ isLoggedIn: false, role: null, firstName: null }); // Reset firstName when logging out
   };
 
   render() {
-    const { isLoggedIn, role } = this.state;
+    const { isLoggedIn, role, firstName } = this.state; // Destructure firstName from state
 
     return (
       <header>
@@ -97,7 +99,7 @@ export class NavMenu extends Component {
                       </li>
                     )}
                     <li className="nav-item">
-                      <span className="nav-link text-dark">Velkommen, {localStorage.getItem('firstName')}!</span>
+                      <span className="nav-link text-dark">Velkommen, {firstName}!</span> {/* Use firstName from state */}
                     </li>
                     <li className="nav-item">
                       <Link className="nav-link" to="/profile">

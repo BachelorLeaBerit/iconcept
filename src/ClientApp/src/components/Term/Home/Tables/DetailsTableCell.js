@@ -1,4 +1,5 @@
 import { Highlight } from "react-instantsearch";
+import '../../../../styles/Term.css';
 
 const DetailsTableCell = ({
   header,
@@ -16,7 +17,6 @@ const DetailsTableCell = ({
         {translation.status === 2 ? (
           text ? (
             <textarea
-              style={{ width: "100%" }}
               type="text"
               name={name}
               value={formData}

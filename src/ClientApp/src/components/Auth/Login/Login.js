@@ -52,17 +52,17 @@ class Login extends Component {
     e.preventDefault();
     try {
       const response = await axios.post('/api/login', this.state.formData);
-      console.log('Response:', response);
 
       if (response.status === 200) {
         window.location.href = '/profile';
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('role', response.data.role);
+        localStorage.setItem('email', response.data.email);
         localStorage.setItem('lastName', response.data.lastName);
         localStorage.setItem('firstName', response.data.firstName);
         
       } else {
-        this.setState({ message: 'Ikke gyldig logg inn' });
+        this.setState({ message: 'Ikke gyldig logg-inn' });
       }
     } catch (error) {
       this.setState({ message: 'Feil e-post eller passord' });

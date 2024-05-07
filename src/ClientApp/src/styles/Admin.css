@@ -1,0 +1,33 @@
+
+
+.h2admin {
+    text-align: center;
+}
+
+.btnchangeUserRole {
+    background-color: #ffb732;
+}
+
+.btndeleteUser {
+    background-color: #FF6969;
+}
+
+.modaldiv {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+.modal-content {
+    padding: 20px;
+    width: 400px;
+}
+
+h5 {
+    margin-bottom: 20px;
+}
+
+.labelradio {
+    margin-bottom: 10px;
+    display: block;
+}

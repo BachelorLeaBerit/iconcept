@@ -60,17 +60,17 @@ export class NavMenu extends Component {
                 iConsept
               </Link>
               <div className="tooltip-container">
-  <FontAwesomeIcon icon={faQuestionCircle} className="question-icon" />
-  <span className="tooltiptext">
-    iConsept er en nettside for konseptoversettelser.
-    <p className="space"> </p>
-    Den overordnede målsetningen med nettsiden er å øke kvalitet og effektivitet av integreringsarbeidet av fremmedkulturelle ved å gjøre bruk av konseptoversettelser.
-    <p className="space"> </p>
-    En konseptoversettelse er en oversettelse av et begrep ved hjelp av kulturelt forankrede metaforer slik at det gir mening og skaper en relevant emosjonell reaksjon hos mottakeren.
-    <p className="space"> </p>
-    <p>© Copyright, LMHH & BHF </p>
-  </span>
-</div>
+                <FontAwesomeIcon icon={faQuestionCircle} className="question-icon" />
+                <span className="tooltiptext">
+                  iConsept er en nettside for konseptoversettelser.
+                  <p className="space"> </p>
+                  Den overordnede målsetningen med nettsiden er å øke kvalitet og effektivitet av integreringsarbeidet av fremmedkulturelle ved å gjøre bruk av konseptoversettelser.
+                  <p className="space"> </p>
+                  En konseptoversettelse er en oversettelse av et begrep ved hjelp av kulturelt forankrede metaforer slik at det gir mening og skaper en relevant emosjonell reaksjon hos mottakeren.
+                  <p className="space"> </p>
+                  <p> © Copyright, LMHH & BHF </p>
+                </span>
+              </div>
             </div>
             <button className="navbar-toggler" type="button" onClick={this.toggleNavbar}>
               <span className="navbar-toggler-icon"></span>

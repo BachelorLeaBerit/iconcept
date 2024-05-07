@@ -3,12 +3,13 @@ import axios from "axios";
 import AdminTable from "./AdminTable";
 import EditUserRoleModal from "./EditRoleModal";
 import { checkAuthentication, fetchUsersData } from "./adminService";
+import "../../../styles/Admin.css";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+  const [loggedIn, setLoggedIn] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const userId = localStorage.getItem("id");
   const role = localStorage.getItem("role");
@@ -30,13 +31,16 @@ const Admin = () => {
     if (confirmed) {
       try {
         await axios.delete(`/api/admin/${userIdToDelete}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
         });
         setUsers(users.filter((user) => user.id !== userIdToDelete));
       } catch (error) {
-        console.error("Error deleting user:", error);
+        if (error.response) {
+          console.error("Server Error:", error.response.data);
+        } else if (error.request) {
+          console.error("No Response:", error.request);
+        } else {
+          console.error("Error:", error.message);
+        }
       }
     }
   };
@@ -51,7 +55,7 @@ const Admin = () => {
 
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}>Admin</h2>
+      <h2 className="h2admin">Admin</h2>
       <h4>Alle brukere</h4>
       <AdminTable
         users={users}

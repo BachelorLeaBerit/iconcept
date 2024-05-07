@@ -17,6 +17,7 @@ public class ConceptDbContext :  IdentityDbContext<User>
     public DbSet<Religion> Religions { get; set; }
     public DbSet<Term> Terms { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -33,9 +34,15 @@ public class ConceptDbContext :  IdentityDbContext<User>
                    .WithOne()
                    .HasForeignKey(ur => ur.UserId)
                    .IsRequired();
-        
-        }
 
         
+        modelBuilder.Entity<User>()
+        .Property(u => u.FirstName)
+        .IsRequired();
+
+    modelBuilder.Entity<User>()
+        .Property(u => u.LastName)
+        .IsRequired();
+    }
 
 }

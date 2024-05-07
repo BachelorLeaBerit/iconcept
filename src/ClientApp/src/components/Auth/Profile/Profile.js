@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../../../styles/Profile.css';
 
 const Profile = () => {
     const [userProfile, setUserProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+    const [loggedIn, setLoggedIn] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,22 +19,9 @@ const Profile = () => {
             }
 
             try {
-                const response = await axios.get('/api/profile', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const { email, role, id, firstName, lastName } = response.data; 
-                localStorage.setItem('role', role);
-                localStorage.setItem('id', id);
-                localStorage.setItem('email', email);
-                localStorage.setItem('firstName', firstName);
-                localStorage.setItem('lastName', lastName);
-                console.log('Response:', response); 
-
-                console.log('Rolle 1:', role);
+                const response = await axios.get('/api/profile');
+                localStorage.setItem('firstName', response.data.firstName);
                 setUserProfile(response.data);
-                console.log('Rolleeeeee 2:', role);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -43,6 +30,7 @@ const Profile = () => {
 
         fetchProfile();
 
+    
     }, []);
 
     const handleDeleteUser = async (Id) => {
@@ -50,12 +38,8 @@ const Profile = () => {
         if (confirmed) {
             try {
                 await axios.delete(`/api/profile/${Id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
                 });
                 localStorage.removeItem('token');
-                localStorage.removeItem('userId');
                 navigate('/');
             } catch (error) {
                 console.error('Error deleting user:', error);

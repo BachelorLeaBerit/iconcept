@@ -1,8 +1,6 @@
-using System.Text.RegularExpressions;
 using FluentValidation;
-using iconcept.Domain.Auth.Pipelines;
 
-namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
+namespace iconcept.Domain.Auth.Pipelines.Commands;
 
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {

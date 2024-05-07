@@ -1,4 +1,3 @@
-using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,16 +26,16 @@ public class LoginUser
                 };
             if (user is null)
             {
-                return new UserResponse(false, err.ToArray());
+                return new UserResponse(false, [.. err]);
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, request.LoginData.Password, false, false);
             if (!result.Succeeded)
             {
-                return new UserResponse(false, err.ToArray());
+                return new UserResponse(false, [.. err]);
             }
 
-            return new UserResponse(result.Succeeded, Array.Empty<string>());
+            return new UserResponse(result.Succeeded, []);
         }
     }
 }

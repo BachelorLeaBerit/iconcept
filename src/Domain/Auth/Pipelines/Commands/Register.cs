@@ -1,15 +1,11 @@
-using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace iconcept.Domain.Auth.Pipelines;
+
+namespace iconcept.Domain.Auth.Pipelines.Commands;
 
 public record RegisterUserCommand : IRequest<UserResponse>
 {
@@ -51,14 +47,13 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserResp
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.GivenName, user.FirstName),
-            new Claim(ClaimTypes.Surname, user.LastName)
+            new(ClaimTypes.GivenName, user.FirstName),
+            new(ClaimTypes.Surname, user.LastName)
         };
 
         var identityResult = await _userManager.AddClaimsAsync(user, claims);
         if (!identityResult.Succeeded)
         {
-            // Handle claim addition failure
             return new UserResponse(false, identityResult.Errors.Select(err => err.Description).ToArray());
         }
 

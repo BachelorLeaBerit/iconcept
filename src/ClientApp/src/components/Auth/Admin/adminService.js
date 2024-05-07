@@ -5,18 +5,15 @@ export const checkAuthentication = (setLoggedIn, setLoading) => {
   if (!token) {
     setLoggedIn(false);
     setLoading(false);
-    console.log("User not authenticated");
   }
 };
 
 export const fetchUsersData = async (userId, setUsers, setLoading) => {
   try {
-    const response = await axios.get("/api/admin", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+    const fetchUsersresponse = await axios.get("/api/admin", {
     });
-    const filteredUsers = response.data.filter((user) => user.id !== userId);
+    
+    const filteredUsers = fetchUsersresponse.data.filter((user) => user.id !== userId);
     setUsers(filteredUsers);
     setLoading(false);
   } catch (error) {

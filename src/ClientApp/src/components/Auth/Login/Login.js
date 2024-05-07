@@ -51,15 +51,15 @@ class Login extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', this.state.formData);
+      const loginresponse = await axios.post('/api/login', this.state.formData);
 
-      if (response.status === 200) {
+      if (loginresponse.status === 200) {
         window.location.href = '/profile';
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('role', response.data.role);
-        localStorage.setItem('email', response.data.email);
-        localStorage.setItem('lastName', response.data.lastName);
-        localStorage.setItem('firstName', response.data.firstName);
+        localStorage.setItem('token', loginresponse.data.token);
+        localStorage.setItem('role', loginresponse.data.role);
+        localStorage.setItem('email', loginresponse.data.email);
+        localStorage.setItem('lastName', loginresponse.data.lastName);
+        localStorage.setItem('firstName', loginresponse.data.firstName);
         
       } else {
         this.setState({ message: 'Ikke gyldig logg-inn' });

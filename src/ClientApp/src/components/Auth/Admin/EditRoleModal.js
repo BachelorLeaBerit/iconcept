@@ -48,7 +48,7 @@ const EditRoleModal = ({ user, closeModal, fetchUsers }) => {
             {" " + role}
           </label>
         ))}
-        <button className="btn btn-primary" onClick={assignRole}>
+        <button className="btn btn-danger" onClick={assignRole}>
           Endre rolle
         </button>
       </div>

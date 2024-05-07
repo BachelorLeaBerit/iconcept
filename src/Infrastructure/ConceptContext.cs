@@ -36,13 +36,13 @@ public class ConceptDbContext :  IdentityDbContext<User>
                    .IsRequired();
 
         
-        modelBuilder.Entity<User>()
-        .Property(u => u.FirstName)
-        .IsRequired();
+                modelBuilder.Entity<User>()
+                .Property(u => u.FirstName)
+                .IsRequired();
 
-    modelBuilder.Entity<User>()
-        .Property(u => u.LastName)
-        .IsRequired();
+                modelBuilder.Entity<User>()
+                .Property(u => u.LastName)
+                .IsRequired();
     }
 
 }

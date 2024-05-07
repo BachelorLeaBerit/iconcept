@@ -19,9 +19,11 @@ const Profile = () => {
             }
 
             try {
-                const response = await axios.get('/api/profile');
-                localStorage.setItem('firstName', response.data.firstName);
-                setUserProfile(response.data);
+                const profileresponse = await axios.get('/api/profile');
+                localStorage.setItem('firstName', profileresponse.data.firstName);
+                localStorage.setItem('role', profileresponse.data.role);
+                localStorage.setItem('email', profileresponse.data.email);
+                setUserProfile(profileresponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -30,7 +32,6 @@ const Profile = () => {
 
         fetchProfile();
 
-    
     }, []);
 
     const handleDeleteUser = async (Id) => {

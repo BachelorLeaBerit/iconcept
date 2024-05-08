@@ -54,32 +54,27 @@ export class Register extends Component {
 
     try {
       const registerResponse = await axios.post(`api/register`, formData);
-
+    
       if (registerResponse.status === 201) {
         this.setState({ message: "Registrering vellykket", redirectToLogin: true });
       } else {
-        const errorMessage = registerResponse.data.errors ? registerResponse.data.errors.join(', ') : "Registrering mislyktes / E-post brukes allerede";
+        const errorMessage = registerResponse.data.errors ? registerResponse.data.errors.join(', ') : "Registrering mislyktes";
         this.setState({ message: errorMessage });
       }
     } catch (error) {
       console.error('Registreringsfeil:', error);
+    
       let errorMessage = 'En feil oppstod';
-
+    
       if (error.response) {
         errorMessage = error.response.data.message || errorMessage;
-        if (error.response.data.errors && error.response.data.errors.email) {
-          this.setState({ emailError: error.response.data.errors.email });
-        }
       } else if (error.request) {
         errorMessage = 'Ingen svar fra serveren';
-      } else {
-        errorMessage = error.message || errorMessage;
       }
-
+    
       this.setState({ message: errorMessage });
     }
   }
-
   render() {
     const { formData, errors, message, redirectToLogin, isLoggedIn, emailError } = this.state;
 

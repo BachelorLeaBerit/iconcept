@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPlus, faHouse, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHouse, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import '../styles/NavMenu.css';
 import handleLogout from './Auth/Logout/Logout';
 
@@ -15,25 +15,15 @@ export class NavMenu extends Component {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
+      firstName: localStorage.getItem('firstName'),
     };
   }
 
-  componentDidMount() {
-    // Listen for changes in localStorage and update state accordingly
-    window.addEventListener('storage', this.handleStorageChange);
-    console.log('Role:', this.state.role);
-  }
-
-  componentWillUnmount() {
-    // Remove the event listener when the component unmounts
-    window.removeEventListener('storage', this.handleStorageChange);
-  }
-
   handleStorageChange = () => {
-    // Update state when localStorage changes
     this.setState({
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
+      firstName: localStorage.getItem('firstName'),
     });
   };
 
@@ -45,11 +35,11 @@ export class NavMenu extends Component {
 
   handleLogout = async () => {
     await handleLogout();
-    this.setState({ isLoggedIn: false, role: null });
+    this.setState({ isLoggedIn: false, role: null, firstName: null });
   };
 
   render() {
-    const { isLoggedIn, role } = this.state;
+    const { isLoggedIn, role, firstName } = this.state;
 
     return (
       <header>
@@ -57,19 +47,19 @@ export class NavMenu extends Component {
           <div className="container">
             <div className="d-flex align-items-center">
               <Link className="navbar-brand mr-2" to="/">
-                iKonsept
+                iConsept
               </Link>
               <div className="tooltip-container">
                 <FontAwesomeIcon icon={faQuestionCircle} className="question-icon" />
                 <span className="tooltiptext">
-                iKonsept er en nettside for konseptoversettelser.
-                <p class="space"> </p>
-                Den overordnede målsetningen med nettsiden er å øke kvalitet og effektivitet av integreringsarbeidet av fremmedkulturelle ved å gjøre bruk av konseptoversettelser.
-                <p class="space"> </p>
-                En konseptoversettelse er en oversettelse av et begrep ved hjelp av kulturelt forankrede metaforer slik at det gir mening og skaper en relevant emosjonell reaksjon hos mottakeren.
-                <p class="space"> </p>
-                <p>© Copyright, LMHH & BHF </p>
-                  </span>
+                  iConsept er en nettside for konseptoversettelser.
+                  <p className="space"> </p>
+                  Den overordnede målsetningen med nettsiden er å øke kvalitet og effektivitet av integreringsarbeidet av fremmedkulturelle ved å gjøre bruk av konseptoversettelser.
+                  <p className="space"> </p>
+                  En konseptoversettelse er en oversettelse av et begrep ved hjelp av kulturelt forankrede metaforer slik at det gir mening og skaper en relevant emosjonell reaksjon hos mottakeren.
+                  <p className="space"> </p>
+                  <p> © Copyright, LMHH & BHF </p>
+                </span>
               </div>
             </div>
             <button className="navbar-toggler" type="button" onClick={this.toggleNavbar}>
@@ -89,15 +79,8 @@ export class NavMenu extends Component {
                 </li>
                 {isLoggedIn ? (
                   <>
-                    {((role === 'Redaktør') || (role === 'Admin')) && (
-                      <li className="nav-item">
-                        <Link className="nav-link" to="/approveSuggestions">
-                          <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
-                        </Link>
-                      </li>
-                    )}
                     <li className="nav-item">
-                      <span className="nav-link text-dark">Velkommen, {localStorage.getItem('firstName')}!</span>
+                      <span className="nav-link text-dark">Velkommen, {firstName}!</span>
                     </li>
                     <li className="nav-item">
                       <Link className="nav-link" to="/profile">
@@ -132,3 +115,5 @@ export class NavMenu extends Component {
     );
   }
 }
+
+export default NavMenu;

@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using iconcept.Domain.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,20 +21,20 @@ public class GetUsers
             var usersWithRoles = await _userManager.Users
                 .Select(u => new
                 {
-                    Id = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
+                    u.Id,
+                    u.FirstName,
+                    u.LastName,
+                    u.Email,
                     Roles = _userManager.GetRolesAsync(u).Result.ToList()
                 })
                 .ToListAsync();
 
             var usersAsObjects = usersWithRoles.Select(u => new
             {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
+                u.Id,
+                u.FirstName,
+                u.LastName,
+                u.Email,
                 Roles = (object)u.Roles
             }).ToList<object>();
 

@@ -68,7 +68,7 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
-      <div class="row">
+      <div class="row mb-5">
         <div class="col-lg-6">
           <h4 className="mt-3">Begreper</h4>
           <InstantSearch searchClient={searchClient} indexName="bachelor_index">

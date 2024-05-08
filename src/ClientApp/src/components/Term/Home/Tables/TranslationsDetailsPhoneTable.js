@@ -4,6 +4,9 @@ import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
+import '../../../../styles/Term.css';
+
+
 
 const TranslationDetailsPhoneTable = ({
   translation,
@@ -42,8 +45,8 @@ const TranslationDetailsPhoneTable = ({
       >
         <tbody>
           <tr className="table-info">
-            <td style={{ display: "flex", alignItems: "center" }}>
-              <div style={{ flex: "1" }}>
+            <td className="tdone">
+              <div className="tdtwo">
                 <strong>
                   <u>Begrep</u>
                 </strong>
@@ -51,9 +54,8 @@ const TranslationDetailsPhoneTable = ({
                 <span>{translation.termName}</span>
               </div>
               <button
-                className="btn btn-primary"
+                className="btn btn-primary btnobjectid"
                 onClick={() => toEdit(translation.objectID)}
-                style={{ marginLeft: "auto" }}
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>

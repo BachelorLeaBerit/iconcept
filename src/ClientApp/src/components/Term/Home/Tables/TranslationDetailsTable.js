@@ -7,6 +7,7 @@ import { Highlight } from "react-instantsearch";
 import axios from "axios";
 import DetailsTableCell from "./DetailsTableCell";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
+import '../../../../styles/Term.css';
 
 const TranslationDetailsTable = ({
   translation,
@@ -88,22 +89,16 @@ const TranslationDetailsTable = ({
         <tbody>
           <tr className="table-info">
             <th>Begrep</th>
-            <td
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <td className="tdtrans">
               {!(translation.status === 2 || translation.status === 1) ? (
                 <>
-                  <span style={{ marginRight: "auto" }}>
+                  <span className="spantrans">
                     <Highlight attribute="termName" hit={translation}>
                       {translation.termName}
                     </Highlight>
                   </span>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-light"
                     onClick={() => toEdit(translation.objectID)}
                   >
                     <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
@@ -118,17 +113,15 @@ const TranslationDetailsTable = ({
                           console.error("Error deleting translation:", error)
                         } // Pass a callback to handle deletion error
                       />
+
                     )}
                 </>
               ) : (
                 <>
-                  <span style={{ marginRight: "auto" }}>
+                  <span className="spantermname">
                     {translation.termName}
                   </span>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => setText(true)}
-                  >
+                  <button className="btn btn-info" onClick={() => setText(true)}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
                 </>

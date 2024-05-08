@@ -1,0 +1,45 @@
+
+.btnapprove {
+    margin-bottom: 1rem;
+}
+
+
+textarea {
+    width: 100%;
+}
+
+.tdtrans {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spantrans {
+    margin-right: auto;
+}
+
+.btnhandledelete {
+    margin-left: 0.5rem;
+}
+
+.spantermname {
+    margin-right: auto;
+}
+
+.tdone {
+    display: flex;
+    align-items: center;
+}
+
+.tdtwo {
+    flex: 1;
+}
+
+.btnobjectid {
+    margin-left: auto;
+}
+
+.btnsendforslag {
+    background-color: #BFEA7C;
+    color: black;
+}

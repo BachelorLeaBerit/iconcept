@@ -38,8 +38,7 @@ const AdminTable = ({
                     </td>
                     <td>
                       <button
-                        className="btn"
-                        style={{ backgroundColor: "#FDA403" }}
+                        className="btn btnchangeUserRole"
                         onClick={() => handleEditUserRole(user)}
                       >
                         Endre rolle
@@ -47,8 +46,7 @@ const AdminTable = ({
                     </td>
                     <td>
                       <button
-                        className="btn"
-                        style={{ backgroundColor: "#FF6969" }}
+                        className="btn btndeleteUser"
                         onClick={() => handleDeleteUser(user.id)}
                       >
                         Slett bruker

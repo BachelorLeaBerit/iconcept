@@ -3,12 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
 import './styles/custom.css';
+import { AuthProvider } from './components/Auth/AuthContext';
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
     return (
+      <AuthProvider>
       <Layout>
         <Routes>
           {AppRoutes.map((route, index) => {
@@ -17,6 +19,7 @@ export default class App extends Component {
           })}
         </Routes>
       </Layout>
+      </AuthProvider>
     );
   }
 }

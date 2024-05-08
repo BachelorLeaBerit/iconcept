@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
 import '../../../styles/Term.css';
-import { AuthContext } from "../../Auth/AuthContext"; // Import AuthContext
+import { AuthContext } from "../../Auth/AuthContext";
 
 const defaultForm = {
   termName: "",
@@ -14,12 +14,12 @@ const defaultForm = {
   norwegianDefinition: "",
   translation: "",
   comment: "",
-  editorEmail: "", // Remove the localStorage call here
+  editorEmail: "", 
 }
 
 const SuggestTranslationForm = ({ data, onSubmit }) => {
   const { feelings, religions, regions, countries } = data;
-  const { profile } = useContext(AuthContext); // Fetch profile from AuthContext
+  const { profile } = useContext(AuthContext);
 
   const [formData, setFormData] = useState(defaultForm);
   const [errors, setErrors] = useState({});
@@ -206,9 +206,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             type="text"
             className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
             id="editorEmail"
-            value={profile?.email || formData.editorEmail} // Use editor's email from profile if logged in, otherwise use form data
+            value={profile?.email || formData.editorEmail} 
             onChange={(e) => handleChange("editorEmail", e)}
-            disabled={profile?.email} // Disable editing of email if logged in
+            disabled={profile?.email}
           />
           {errors.editorEmail && (
             <div className="text-danger">{errors.editorEmail}</div>

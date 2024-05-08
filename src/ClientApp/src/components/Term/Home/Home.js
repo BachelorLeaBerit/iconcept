@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   InstantSearch,
   useHits,
@@ -14,10 +14,11 @@ import Autocomplete from "./Search/AutoComplete";
 import HomeModal from "./HomeModal";
 import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
 import axios from "axios";
+import { AuthContext } from "../../Auth/AuthContext";
 
 const Home = () => {
-  const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
-  const role = localStorage.getItem("role");
+  const [loggedIn, setLoggedIn] = useState(true);
+  const { profile } = useContext(AuthContext);
   let showDeleteBtn = false;
   
   const searchClient = algoliasearch(
@@ -61,7 +62,7 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if (loggedIn === true || role || role === "Admin") {
+  if (loggedIn === true || profile.role || profile.role.includes("Admin") || profile.role.includes("Redaktør")) {
     showDeleteBtn = true;
   }
 

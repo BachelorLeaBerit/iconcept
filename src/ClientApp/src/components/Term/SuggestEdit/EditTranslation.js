@@ -45,7 +45,7 @@ function EditTranslation() {
     <div>
       <h1>Foreslå endring</h1>
       {loading ? (
-        <p>Loading...</p>
+        <p>Laster inn...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (

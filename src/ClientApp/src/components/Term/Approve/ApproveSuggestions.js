@@ -79,7 +79,7 @@ const ApproveSuggestions = () => {
       </div>
       <div className="col-md-6">
         {loading ? (
-          <p>Loading...</p>
+          <p>Laster inn...</p>
         ) : (
           <>
             <h4>Forslag til redigering av konseptoversettelser</h4>

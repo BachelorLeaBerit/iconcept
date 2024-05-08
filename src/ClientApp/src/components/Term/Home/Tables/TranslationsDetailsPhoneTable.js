@@ -1,40 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
-
-
+import { AuthContext } from "../../../Auth/AuthContext";
 
 const TranslationDetailsPhoneTable = ({
   translation,
-  showDeleteBtn,
   resetResetTranslationPage,
 }) => {
-  const userRole = localStorage.getItem("role");
   const navigate = useNavigate();
+  const { profile } = useContext(AuthContext);
 
   const toEdit = (id) => {
     let Id = parseInt(id);
     navigate(`/editTranslation/${Id}`);
-  };
-
-  const handleDelete = async () => {
-    const confirmed = window.confirm(
-      "Er du sikker på at du vil slette konseptoversettelsen?"
-    );
-    if (confirmed) {
-      try {
-        let deleteRes = await axios.delete(
-          `/api/translations/${translation.objectID}`
-        );
-        resetResetTranslationPage();
-      } catch (error) {
-        console.error("Error deleting translation:", error);
-      }
-    }
   };
 
   return (
@@ -54,19 +35,18 @@ const TranslationDetailsPhoneTable = ({
                 <span>{translation.termName}</span>
               </div>
               <button
-                className="btn btn-primary btnobjectid"
+                className="btn btn-secondary btnobjectid"
                 onClick={() => toEdit(translation.objectID)}
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
-              {showDeleteBtn &&
-                (userRole === "Admin" || userRole === "Redaktør") && (
-                  <DeleteTranslationButton
+                  {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
+                    <DeleteTranslationButton
                     translationId={translation.objectID}
-                    onDelete={resetResetTranslationPage} // Pass a callback to handle successful deletion
+                    onDelete={resetResetTranslationPage} 
                     onError={(error) =>
                       console.error("Error deleting translation:", error)
-                    } // Pass a callback to handle deletion error
+                    } 
                   />
                 )}
             </td>

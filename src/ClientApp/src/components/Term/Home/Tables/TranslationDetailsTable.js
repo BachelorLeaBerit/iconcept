@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
-import axios from "axios";
 import DetailsTableCell from "./DetailsTableCell";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
+import { AuthContext } from "../../../Auth/AuthContext";
 
 const TranslationDetailsTable = ({
   translation,
   onChange,
-  showDeleteBtn,
   resetResetTranslationPage,
 }) => {
   const [formData, setFormData] = useState({
@@ -25,12 +24,7 @@ const TranslationDetailsTable = ({
   });
   const navigate = useNavigate();
   const [text, setText] = useState(false);
-  const [userRole, setUserRole] = useState(null);
-
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    setUserRole(role);
-  }, []);
+  const { profile } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -79,7 +73,6 @@ const TranslationDetailsTable = ({
     console.error(error.message);
   }
 
-  console.log("Role:", userRole);
   return (
     <div className="table-responsive">
       <table
@@ -104,17 +97,15 @@ const TranslationDetailsTable = ({
                     <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
                   </button>
 
-                  {showDeleteBtn &&
-                    (userRole === "Admin" || userRole === "Redaktør") && (
-                      <DeleteTranslationButton
-                        translationId={translation.objectID}
-                        onDelete={resetResetTranslationPage} // Pass a callback to handle successful deletion
-                        onError={(error) =>
+                  {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
+                  <DeleteTranslationButton
+                      translationId={translation.objectID}
+                      onDelete={resetResetTranslationPage}
+                      onError={(error) =>
                           console.error("Error deleting translation:", error)
-                        } // Pass a callback to handle deletion error
-                      />
-
-                    )}
+                      }
+                  />
+              )}
                 </>
               ) : (
                 <>

@@ -14,16 +14,12 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false,
-      role: localStorage.getItem('role'),
-      firstName: localStorage.getItem('firstName'),
     };
   }
 
   handleStorageChange = () => {
     this.setState({
       isLoggedIn: localStorage.getItem('token') ? true : false,
-      role: localStorage.getItem('role'),
-      firstName: localStorage.getItem('firstName'),
     });
   };
 
@@ -39,7 +35,7 @@ export class NavMenu extends Component {
   };
 
   render() {
-    const { isLoggedIn, role, firstName } = this.state;
+    const { isLoggedIn } = this.state;
 
     return (
       <header>
@@ -79,9 +75,6 @@ export class NavMenu extends Component {
                 </li>
                 {isLoggedIn ? (
                   <>
-                    <li className="nav-item">
-                      <span className="nav-link text-dark">Velkommen, {firstName}!</span>
-                    </li>
                     <li className="nav-item">
                       <Link className="nav-link" to="/profile">
                         <i class="bi bi-person-circle fs-5"></i>

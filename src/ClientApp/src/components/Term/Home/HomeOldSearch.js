@@ -51,7 +51,7 @@ export class HomeOldSearch extends Component {
     if (loading) {
       return (
         <p>
-          <em>Loading...</em>
+          <em>Laster inn...</em>
         </p>
       );
     }
@@ -111,7 +111,6 @@ export class HomeOldSearch extends Component {
             {selectedTranslation != null ? (
               <TranslationDetailsTable
                 translation={selectedTranslation}
-                // showDeleteBtn={showDeleteBtn}
               />
             ) : (
               <span>Trykk på en konseptoversettelse for å se detaljene</span>

@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import '../../../../styles/Term.css';
 
 const DeleteTranslationButton = ({ translationId, onDelete, onError }) => {
   const handleDelete = async () => {
@@ -19,7 +20,7 @@ const DeleteTranslationButton = ({ translationId, onDelete, onError }) => {
     }
   };
   return (
-    <button onClick={handleDelete} className="btn btn-danger">
+    <button onClick={handleDelete} className="btn btn-outline-danger btnhandledelete">
       <FontAwesomeIcon icon={faTrashAlt} />
     </button>
   );

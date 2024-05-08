@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ValidateEditForm } from "../../../utils/Validation/EditValidation";
+import { AuthContext } from "../../Auth/AuthContext";
 
 const EditTranslationForm = ({ translation, onSubmit }) => {
   const [formData, setFormData] = useState({
     editedTranslation: translation.translation,
     Id: translation.id,
-    editorEmail: localStorage.getItem("email") || "",
+    editorEmail: "",
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const { profile } = useContext(AuthContext);
+
 
   const handleTranslationChange = (e) => {
     const name = e.target.name;
@@ -68,22 +71,26 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
             <div className="invalid-feedback">{errors.editedTranslation}</div>
           )}
         </div>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label htmlFor="editorEmail">Din e-post* - vil kun være synlig for admin</label>
           <input
             type="text"
             className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
             id="editorEmail"
-            value={formData.editorEmail}
-            name="editorEmail"
-            onChange={(e) => handleTranslationChange( e)}
-            disabled={localStorage.getItem("email") !== null}
+            value={profile?.email || formData.editorEmail} 
+            onChange={(e) => {
+              const { value } = e.target;
+              const name = e.target.name || "editorEmail";
+              handleTranslationChange({ target: { name, value }});
+            }}
+            disabled={profile?.email}
           />
+
           {errors.editorEmail && (
             <div className="text-danger">{errors.editorEmail}</div>
           )}
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-warning">
           Send inn forslag
         </button>
       </form>

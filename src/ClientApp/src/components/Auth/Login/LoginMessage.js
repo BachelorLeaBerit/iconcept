@@ -1,4 +1,3 @@
-// LoginMessage.js
 import React from 'react';
 
 const LoginMessage = ({ message }) => {

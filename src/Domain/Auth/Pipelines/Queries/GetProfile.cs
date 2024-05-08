@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Security.Claims;
 
 namespace iconcept.Domain.Auth.Pipelines.Queries
@@ -39,7 +36,7 @@ namespace iconcept.Domain.Auth.Pipelines.Queries
 
                 var userProfile = new
                 {
-                    Id = user.Id,
+                    user.Id,
                     Email = email,
                     FirstName = firstName,
                     LastName = lastName,

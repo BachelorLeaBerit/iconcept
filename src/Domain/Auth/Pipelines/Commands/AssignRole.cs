@@ -1,8 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System.Threading;
-using System.Threading.Tasks;
-using iconcept.Domain.Auth;
 
 namespace iconcept.Domain.Auth.Pipelines.Commands;
 public class AssignRole
@@ -34,7 +31,6 @@ public class AssignRole
                     return false;
                 }
             }
-
             var result = await _userManager.AddToRoleAsync(user, request.RoleName);
             return result.Succeeded;
         }

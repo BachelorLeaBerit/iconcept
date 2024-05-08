@@ -1,9 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using iconcept.Domain.Auth.Pipelines.Commands;
-using iconcept.Domain.Auth;
 using CleanArchitecture.WebUI.Filters;
-using iconcept.Domain.Auth.Pipelines;
 
 namespace iconcept.Controllers.Auth
 {

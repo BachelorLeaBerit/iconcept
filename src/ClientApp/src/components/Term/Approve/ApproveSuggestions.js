@@ -55,7 +55,7 @@ const ApproveSuggestions = () => {
     <div className="row">
       <div className="col-md-6">
         {loading ? (
-          <p>Loading...</p>
+          <p>Laster inn...</p>
         ) : (
           <>
             <h4>Nye foreslåtte konseptoversettelser</h4>

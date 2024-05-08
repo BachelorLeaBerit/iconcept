@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 
 const TranslationDetailsPhoneTable = ({
   translation,
@@ -56,11 +57,16 @@ const TranslationDetailsPhoneTable = ({
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
-              {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
-                <button className="btn btn-danger" onClick={handleDelete}>
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
-              )}
+              {showDeleteBtn &&
+                (userRole === "Admin" || userRole === "Redaktør") && (
+                  <DeleteTranslationButton
+                    translationId={translation.objectID}
+                    onDelete={resetResetTranslationPage} // Pass a callback to handle successful deletion
+                    onError={(error) =>
+                      console.error("Error deleting translation:", error)
+                    } // Pass a callback to handle deletion error
+                  />
+                )}
             </td>
           </tr>
           <tr>

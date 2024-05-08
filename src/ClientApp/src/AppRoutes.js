@@ -9,11 +9,13 @@ import Admin from "./components/Auth/Admin/Admin";
 import LogoutButton from "./components/Auth/Logout/Logout";
 import Profile from "./components/Auth/Profile/Profile";
 import EditUserRoleModal from "./components/Auth/Admin/EditRoleModal";
+import { HomeOldSearch } from "./components/Term/Home/HomeOldSearch";
+import OldHomeComp from "./components/Term/Home/OldHomeComp";
 
 const AppRoutes = [
   {
     index: true,
-    element: <Home />
+    element: <Home/>
   },
   {
     path: '/translation/:id',

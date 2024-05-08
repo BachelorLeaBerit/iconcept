@@ -62,7 +62,7 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
             className={"form-control" + (errors.editedTranslation ? " is-invalid" : "")}
             value={formData.editedTranslation}
             name="editedTranslation"
-            onChange={handleTranslationChange}
+            onChange={(e) => handleTranslationChange(e)}
           />
           {errors.editedTranslation && (
             <div className="invalid-feedback">{errors.editedTranslation}</div>
@@ -75,7 +75,8 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
             className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
             id="editorEmail"
             value={formData.editorEmail}
-            onChange={(e) => handleTranslationChange("editorEmail", e)}
+            name="editorEmail"
+            onChange={(e) => handleTranslationChange( e)}
             disabled={localStorage.getItem("email") !== null}
           />
           {errors.editorEmail && (

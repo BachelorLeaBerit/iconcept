@@ -3,7 +3,7 @@ import { inputLengthValidation } from "../Helpers/inputLengthValidation";
 
 export const ValidateEditForm = (formData) => {
   const errors = {};
-  const allowedCharactersRegex = /^[a-zA-Z0-9æøåÆØÅ.,!?()\- ]*$/;
+  const allowedCharactersRegex = /^[a-zA-Z0-9æøåÆØÅ:;.,!?()\- \n]*$/;
 
   let translationData = formData.editedTranslation.trim();
   let lengthErrorMsg = inputLengthValidation(translationData, 500, 10);

@@ -119,7 +119,7 @@ else
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     
-        var adminUser1 = await userManager.FindByEmailAsync("admin@gmail.com");
+        var adminUser1 = await userManager.FindByEmailAsync("beritfrii@gmail.com");
         await userManager.RemoveFromRoleAsync(adminUser1, "Bruker");
         await userManager.AddToRoleAsync(adminUser1, "Admin");
         

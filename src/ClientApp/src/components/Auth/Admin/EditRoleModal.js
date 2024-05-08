@@ -24,20 +24,22 @@ const EditRoleModal = ({ user, closeModal, fetchUsers }) => {
   };
 
   return (
-    <div className="modal modaldiv">
+    <div className="modal" style={{ padding: "10px", borderRadius: "8px" }}>
       <div
-        className="modal-content">
+        className="modal-content"
+        style={{ padding: "20px", width: "400px" }}
+      >
         <span className="close" onClick={closeModal}>
           &times;
         </span>
-        <h5>
+        <h5 style={{ marginBottom: "20px" }}>
           Endre brukerrolle for{" "}
           <strong>
             {user.firstName} {user.lastName}
           </strong>
         </h5>
         {["Admin", "Redaktør", "Bruker"].map((role) => (
-          <label key={role} className="labelradio">
+          <label key={role} style={{ display: "block", marginBottom: "10px" }}>
             <input
               type="radio"
               name="role"
@@ -48,7 +50,7 @@ const EditRoleModal = ({ user, closeModal, fetchUsers }) => {
             {" " + role}
           </label>
         ))}
-        <button className="btn btn-danger" onClick={assignRole}>
+        <button className="btn btn-primary" onClick={assignRole}>
           Endre rolle
         </button>
       </div>

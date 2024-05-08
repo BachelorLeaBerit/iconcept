@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPlus, faHouse, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHouse, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import '../styles/NavMenu.css';
 import handleLogout from './Auth/Logout/Logout';
 
@@ -15,27 +15,15 @@ export class NavMenu extends Component {
       collapsed: true,
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
-      firstName: localStorage.getItem('firstName'), // Add firstName to state
+      firstName: localStorage.getItem('firstName'),
     };
   }
 
-  componentDidMount() {
-    // Listen for changes in localStorage and update state accordingly
-    window.addEventListener('storage', this.handleStorageChange);
-    console.log('Role:', this.state.role);
-  }
-
-  componentWillUnmount() {
-    // Remove the event listener when the component unmounts
-    window.removeEventListener('storage', this.handleStorageChange);
-  }
-
   handleStorageChange = () => {
-    // Update state when localStorage changes
     this.setState({
       isLoggedIn: localStorage.getItem('token') ? true : false,
       role: localStorage.getItem('role'),
-      firstName: localStorage.getItem('firstName'), // Update firstName in state
+      firstName: localStorage.getItem('firstName'),
     });
   };
 
@@ -47,11 +35,11 @@ export class NavMenu extends Component {
 
   handleLogout = async () => {
     await handleLogout();
-    this.setState({ isLoggedIn: false, role: null, firstName: null }); // Reset firstName when logging out
+    this.setState({ isLoggedIn: false, role: null, firstName: null });
   };
 
   render() {
-    const { isLoggedIn, role, firstName } = this.state; // Destructure firstName from state
+    const { isLoggedIn, role, firstName } = this.state;
 
     return (
       <header>
@@ -91,15 +79,8 @@ export class NavMenu extends Component {
                 </li>
                 {isLoggedIn ? (
                   <>
-                    {((role === 'Redaktør') || (role === 'Admin')) && (
-                      <li className="nav-item">
-                        <Link className="nav-link" to="/approveSuggestions">
-                          <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
-                        </Link>
-                      </li>
-                    )}
                     <li className="nav-item">
-                      <span className="nav-link text-dark">Velkommen, {firstName}!</span> {/* Use firstName from state */}
+                      <span className="nav-link text-dark">Velkommen, {firstName}!</span>
                     </li>
                     <li className="nav-item">
                       <Link className="nav-link" to="/profile">
@@ -134,3 +115,5 @@ export class NavMenu extends Component {
     );
   }
 }
+
+export default NavMenu;

@@ -1,22 +1,27 @@
 import axios from "axios";
 
 export const checkAuthentication = (setLoggedIn, setLoading) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setLoggedIn(false);
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error("Error checking authentication:", error);
     setLoggedIn(false);
     setLoading(false);
   }
 };
 
-export const fetchUsersData = async (userId, setUsers, setLoading) => {
+export const fetchUsersData = async (setUsers, setLoading) => {
   try {
-    const fetchUsersresponse = await axios.get("/api/admin", {
-    });
-    
-    const filteredUsers = fetchUsersresponse.data.filter((user) => user.id !== userId);
-    setUsers(filteredUsers);
+    const fetchUsersresponse = await axios.get("/api/admin", {});
+    setUsers(fetchUsersresponse.data);
     setLoading(false);
   } catch (error) {
     console.error("Error fetching users:", error);
+    setUsers([]);
+    setLoading(false);
   }
 };

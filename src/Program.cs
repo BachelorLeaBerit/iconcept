@@ -36,16 +36,20 @@ builder.Services.AddSwaggerGen();
 var IsDevelopment = builder.Environment.IsDevelopment();
 
 var connection = string.Empty;
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
+    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+}
+else
+{
+    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+}
 
-builder.Configuration.AddEnvironmentVariables().AddJsonFile($"appsettings.{(IsDevelopment ? "Development." : "")}json");
-// connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+builder.Services.AddDbContext<ConceptDbContext>(options =>
+    options.UseSqlServer(connection));
 
-// else
-// {
-//     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
-// }
-
-builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", "b80b9704fd7a85590c852f88d8983cb8"));
+builder.Services.AddSingleton<ISearchClient>(new SearchClient("P5EELNNK48", builder.Configuration["AlgoliaAdminKey"]));
 builder.Services.AddScoped<SearchServiceManager>();
 
 builder.Services.AddIdentity<User, IdentityRole>()
@@ -60,8 +64,8 @@ builder.Services.Configure<IdentityOptions>(opts =>
 });
 
 
-builder.Services.AddDbContext<ConceptDbContext>(options =>
-    options.UseSqlite($"Data Source={Path.Combine("Infrastructure", "concept.db")}"));
+// builder.Services.AddDbContext<ConceptDbContext>(options =>
+//     options.UseSqlite($"Data Source={Path.Combine("Infrastructure", "concept.db")}"));
 
 builder.Services.AddScoped<DbContextInitializer>();
 

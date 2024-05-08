@@ -44,7 +44,7 @@ public class SearchServiceManager
                 Religions = ct.Religions.Select(r => r.ReligionName).ToList(),
                 Feelings = ct.Feelings.Select(f => f.FeelingName).ToList(),
                 TermName = _db.Terms.FirstOrDefault(term => term.Id == ct.TermId)!.TermName,
-                Comment = ct.Comment
+                Comment = ct.Comment,
             })
             .ToListAsync();
         bool autoGenerateObjectIDIfNotExist = false;

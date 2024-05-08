@@ -6,6 +6,7 @@ import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
 import axios from "axios";
 import DetailsTableCell from "./DetailsTableCell";
+import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
 
 const TranslationDetailsTable = ({
@@ -43,21 +44,21 @@ const TranslationDetailsTable = ({
     navigate(`/editTranslation/${Id}`);
   };
 
-  const handleDelete = async () => {
-    const confirmed = window.confirm(
-      "Er du sikker på at du vil slette konseptoversettelsen?"
-    );
-    if (confirmed) {
-      try {
-        let deleteRes = await axios.delete(
-          `/api/translations/${translation.objectID}`
-        );
-        resetResetTranslationPage();
-      } catch (error) {
-        console.error("Error deleting translation:", error);
-      }
-    }
-  };
+  // const handleDelete = async () => {
+  //   const confirmed = window.confirm(
+  //     "Er du sikker på at du vil slette konseptoversettelsen?"
+  //   );
+  //   if (confirmed) {
+  //     try {
+  //       let deleteRes = await axios.delete(
+  //         `/api/translations/${translation.objectID}`
+  //       );
+  //       resetResetTranslationPage();
+  //     } catch (error) {
+  //       console.error("Error deleting translation:", error);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const handleClickOutsideTable = (event) => {
@@ -78,7 +79,7 @@ const TranslationDetailsTable = ({
     console.error(error.message);
   }
 
-  console.log("Role:", userRole)
+  console.log("Role:", userRole);
   return (
     <div className="table-responsive">
       <table
@@ -96,14 +97,23 @@ const TranslationDetailsTable = ({
                       {translation.termName}
                     </Highlight>
                   </span>
-                  <button className="btn btn-light" onClick={() => toEdit(translation.objectID)}>
+                  <button
+                    className="btn btn-light"
+                    onClick={() => toEdit(translation.objectID)}
+                  >
                     <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
                   </button>
-                  
-                  {showDeleteBtn && ( userRole === 'Admin' || userRole === 'Redaktør' ) && (
-                    <button className="btn btn-outline-danger btnhandledelete" onClick={handleDelete}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                    </button>
+
+                  {showDeleteBtn &&
+                    (userRole === "Admin" || userRole === "Redaktør") && (
+                      <DeleteTranslationButton
+                        translationId={translation.objectID}
+                        onDelete={resetResetTranslationPage} // Pass a callback to handle successful deletion
+                        onError={(error) =>
+                          console.error("Error deleting translation:", error)
+                        } // Pass a callback to handle deletion error
+                      />
+
                     )}
                 </>
               ) : (

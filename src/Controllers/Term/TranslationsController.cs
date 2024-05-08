@@ -11,6 +11,7 @@ using iconcept.Domain.Term.Pipelines.Get;
 using Algolia.Search.Clients;
 using iconcept.Domain.Term.Pipelines.ConceptTranslation.Queries;
 using Microsoft.AspNetCore.Authorization;
+using iconcept.Domain.Term.Pipelines.ConceptTranslations.Queries;
 
 namespace iconcept.Controllers
 {
@@ -29,6 +30,13 @@ namespace iconcept.Controllers
         public async Task<ActionResult<ConceptTranslationViewModel>> GetTranslation(int id)
         {
             return await _mediator.Send(new GetTranslationByIdPipeline.Request(id));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ConceptTranslationViewModel>>> GetTranslation([FromQuery] string? searchTerm, [FromQuery] string? searchRegion, [FromQuery] string? searchCountry)
+        {
+            var translations = await _mediator.Send(new GetTranslationsPipeline.Request(searchTerm, searchCountry, searchRegion));
+            return Ok(translations);
         }
 
         [Authorize(Roles = "Admin, Redaktør")]

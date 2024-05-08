@@ -44,10 +44,10 @@ public class GetTranslationByIdPipeline
                     EditedTranslation = t.EditedTranslation,
                     Status = t.Status,
                     LastModified = t.LastModified,
-                    Regions = t.Regions.Select(r => new RegionVm{ RegionName = r.RegionName}).ToList(),
-                    Countries = t.Countries.Select(c => new CountryVm{ CountryName = c.CountryName }).ToList(),
-                    Feelings = t.Feelings.Select(f => new FeelingVm {FeelingName = f.FeelingName}).ToList(),
-                    Religions = t.Religions.Select(rl => new ReligionVm { ReligionName = rl.ReligionName}).ToList(),
+                    Regions = t.Regions.Select(r => r.RegionName).ToList(),
+                    Countries = t.Countries.Select(c => c.CountryName).ToList(),
+                    Feelings = t.Feelings.Select(f => f.FeelingName).ToList(),
+                    Religions = t.Religions.Select(rl => rl.ReligionName).ToList(),
                     TermName = _db.Terms.FirstOrDefault(term => term.Id == t.TermId)!.TermName,
                     EditorEmail = t.EditorEmail
                 })

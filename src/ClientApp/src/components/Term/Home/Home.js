@@ -125,6 +125,9 @@ const Home = () => {
 
 const CustomHits = ({ handleRowClick }) => {
   const { hits } = useHits();
+  if (hits.length === 0) {
+    return (<span>Ingen resultat funnet.</span>);
+  }
   return (
     <TranslationTable translations={hits} handleRowClick={handleRowClick} />
   );

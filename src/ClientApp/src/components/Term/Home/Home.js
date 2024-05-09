@@ -17,7 +17,7 @@ import axios from "axios";
 import { AuthContext } from "../../Auth/AuthContext";
 
 const Home = () => {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn] = useState(true);
   const { profile } = useContext(AuthContext);
   let showDeleteBtn = false;
   
@@ -75,8 +75,7 @@ const Home = () => {
           <InstantSearch searchClient={searchClient} indexName="bachelor_index">
             <Autocomplete
               placeholder="Søk etter konseptoversettelser..."
-              detachedMediaQuery="none"
-              openOnFocus
+              className="autocomplete"
             />
             <CustomHits handleRowClick={handleRowClick} />
             <HitsPerPage

@@ -40,7 +40,8 @@ export function Autocomplete({
   useEffect(() => {
     setQuery(instantSearchUiState.query);
     setPage(0);
-  }, [instantSearchUiState]);
+  }, [instantSearchUiState, setQuery, setPage]);
+
 
   useEffect(() => {
     if (!autocompleteContainer.current) {
@@ -69,7 +70,8 @@ export function Autocomplete({
     });
 
     return () => autocompleteInstance.destroy();
-  }, [plugins]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <div className={className} ref={autocompleteContainer} />;
 }

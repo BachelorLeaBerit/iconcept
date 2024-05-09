@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
@@ -37,22 +37,6 @@ const TranslationDetailsTable = ({
     let Id = parseInt(id);
     navigate(`/editTranslation/${Id}`);
   };
-
-  // const handleDelete = async () => {
-  //   const confirmed = window.confirm(
-  //     "Er du sikker på at du vil slette konseptoversettelsen?"
-  //   );
-  //   if (confirmed) {
-  //     try {
-  //       let deleteRes = await axios.delete(
-  //         `/api/translations/${translation.objectID}`
-  //       );
-  //       resetResetTranslationPage();
-  //     } catch (error) {
-  //       console.error("Error deleting translation:", error);
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     const handleClickOutsideTable = (event) => {

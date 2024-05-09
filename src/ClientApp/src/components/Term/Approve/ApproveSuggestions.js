@@ -6,7 +6,7 @@ const ApproveSuggestions = () => {
   const [translations, setTranslation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateTrigger, setUpdateTrigger] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+  const [loggedIn] = useState(true); // Track user authentication status
   const role = localStorage.getItem("role");
 
   useEffect(() => {

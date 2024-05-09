@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import TranslationTable from "./Tables/TranslationTable";
@@ -8,11 +8,10 @@ import HomeModal from "./HomeModal";
 import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
 
 const OldHomeComp = () => {
-  const [loggedIn, setLoggedIn] = useState(true); // Track user authentication status
+  const [loggedIn] = useState(true); // Track user authentication status
   const role = localStorage.getItem("role");
   let showDeleteBtn = false;
   const [translations, setTranslations] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCountry, setSearchCountry] = useState("");
   const [searchRegion, setSearchRegion] = useState("");
@@ -45,10 +44,9 @@ const OldHomeComp = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [handleSearch]);
 
   const handleSearch = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(
         `api/translations?searchTerm=${searchTerm}&searchRegion=${searchRegion}&searchCountry=${searchCountry}`
@@ -67,7 +65,6 @@ const OldHomeComp = () => {
     } catch (error) {
       console.error("Error fetching translation data:", error);
     } finally {
-      setLoading(false);
     }
   };
 

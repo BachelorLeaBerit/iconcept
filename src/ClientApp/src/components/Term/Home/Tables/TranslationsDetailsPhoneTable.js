@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
-import '../../../../styles/Term.css';
+import "../../../../styles/Term.css";
 import { AuthContext } from "../../../Auth/AuthContext";
 import EditTranslationButton from "../Buttons/EditCTButton";
 
@@ -11,13 +8,7 @@ const TranslationDetailsPhoneTable = ({
   translation,
   resetResetTranslationPage,
 }) => {
-  const navigate = useNavigate();
   const { profile } = useContext(AuthContext);
-
-  const toEdit = (id) => {
-    let Id = parseInt(id);
-    navigate(`/editTranslation/${Id}`);
-  };
 
   return (
     <div className="table-responsive">
@@ -35,16 +26,17 @@ const TranslationDetailsPhoneTable = ({
                 <br />
                 <span>{translation.termName}</span>
               </div>
-              <EditTranslationButton translation={translation}/>
-                  {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
-                    <DeleteTranslationButton
-                    translationId={translation.objectID}
-                    onDelete={resetResetTranslationPage} 
-                    onError={(error) =>
-                      console.error("Error deleting translation:", error)
-                    } 
-                  />
-                )}
+              <EditTranslationButton translation={translation} />
+              {(profile.role.includes("Admin") ||
+                profile.role.includes("Redaktør")) && (
+                <DeleteTranslationButton
+                  translationId={translation.objectID}
+                  onDelete={resetResetTranslationPage}
+                  onError={(error) =>
+                    console.error("Error deleting translation:", error)
+                  }
+                />
+              )}
             </td>
           </tr>
           <tr>

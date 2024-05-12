@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using iconcept.Infrastructure;
 using Domain.Common.Utilities;
+using src.Domain.Term.Entities;
 
 namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
@@ -74,7 +75,6 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
                 }
                 regions.Add(region);
             }
-
         }
 
         var feelings = new List<Feeling>();
@@ -108,7 +108,6 @@ public class SuggestTranslationHandler : IRequestHandler<SuggestTranslationComma
                 }
                 religions.Add(religion);
             }
-
         }
 
         var entity = new Domain.Term.ConceptTranslation

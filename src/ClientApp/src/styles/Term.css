@@ -43,3 +43,8 @@ textarea {
     background-color: #BFEA7C;
     color: black;
 }
+
+.algolia-logo {
+    width: 70px;
+    height: auto;
+  }

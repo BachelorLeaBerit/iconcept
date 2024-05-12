@@ -1,10 +1,10 @@
 using System.Text.Json.Serialization;
+using src.Domain.Term.Entities;
 
 namespace iconcept.Domain.Term;
-public class ConceptTranslation
+public class ConceptTranslation : BaseEntity
 {
 
-    public int Id { get; set; }
     public string? NorwegianDefinition { get; set; }
     public string? Context { get; set; }
     public string Translation { get; set; }

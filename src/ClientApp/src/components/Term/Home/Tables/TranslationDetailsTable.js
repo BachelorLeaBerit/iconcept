@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/Helpers/dateFormatter";
 import { Highlight } from "react-instantsearch";
 import DetailsTableCell from "./DetailsTableCell";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
 import { AuthContext } from "../../../Auth/AuthContext";
+import EditTranslationButton from "../Buttons/EditCTButton";
 
 const TranslationDetailsTable = ({
   translation,
@@ -22,7 +22,6 @@ const TranslationDetailsTable = ({
     comment: translation.comment,
     editorEmail: translation.editorEmail,
   });
-  const navigate = useNavigate();
   const [text, setText] = useState(false);
   const { profile } = useContext(AuthContext);
 
@@ -31,11 +30,6 @@ const TranslationDetailsTable = ({
     const value = e.target.value;
     setFormData({ ...formData, [name]: value });
     onChange({ name, value });
-  };
-
-  const toEdit = (id) => {
-    let Id = parseInt(id);
-    navigate(`/editTranslation/${Id}`);
   };
 
   useEffect(() => {
@@ -74,12 +68,7 @@ const TranslationDetailsTable = ({
                       {translation.termName}
                     </Highlight>
                   </span>
-                  <button
-                    className="btn btn-light"
-                    onClick={() => toEdit(translation.objectID)}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} /> Foreslå endring
-                  </button>
+                  <EditTranslationButton translation={translation}></EditTranslationButton>
 
                   {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
                   <DeleteTranslationButton

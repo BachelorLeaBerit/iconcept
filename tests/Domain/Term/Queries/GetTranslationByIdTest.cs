@@ -11,16 +11,16 @@ namespace Tests.Domain.Term.Queries;
 
 public class GetTranslationByIdTests : DbTest
 {
+    private readonly ConceptDbContext _context;
     public GetTranslationByIdTests(ITestOutputHelper output) : base(output)
     {
+        _context = new ConceptDbContext(ContextOptions);
+        _context.Database.EnsureCreated();
     }
 
     [Fact]
     public async Task GetTranslationById_ShouldReturnTranslationAsync()
     {
-        using var context = new ConceptDbContext(ContextOptions);
-        await context.Database.MigrateAsync();
-
         var term = new iconcept.Domain.Term.Term { Id = 1, TermName = "A term" };
 
         var translation = new ConceptTranslation
@@ -30,13 +30,13 @@ public class GetTranslationByIdTests : DbTest
             TermId = 1
         };
 
-        await context.Terms.AddAsync(term);
-        await context.ConceptTranslations.AddAsync(translation);
-        await context.SaveChangesAsync();
+        await _context.Terms.AddAsync(term);
+        await _context.ConceptTranslations.AddAsync(translation);
+        await _context.SaveChangesAsync();
 
         var query = new GetTranslationByIdPipeline.Request(1);
 
-        var handler = new GetTranslationByIdPipeline.Handler(context);
+        var handler = new GetTranslationByIdPipeline.Handler(_context);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -47,8 +47,6 @@ public class GetTranslationByIdTests : DbTest
     [Fact]
     public async Task GetTranslationByWrongId_ShouldReturnError()
     {
-        using var context = new ConceptDbContext(ContextOptions);
-        await context.Database.MigrateAsync();
 
         var term = new iconcept.Domain.Term.Term { Id = 1, TermName = "A term" };
 
@@ -59,13 +57,13 @@ public class GetTranslationByIdTests : DbTest
             TermId = 1
         };
 
-        await context.Terms.AddAsync(term);
-        await context.ConceptTranslations.AddAsync(translation);
-        await context.SaveChangesAsync();
+        await _context.Terms.AddAsync(term);
+        await _context.ConceptTranslations.AddAsync(translation);
+        await _context.SaveChangesAsync();
 
         var query = new GetTranslationByIdPipeline.Request(2);
 
-        var handler = new GetTranslationByIdPipeline.Handler(context);
+        var handler = new GetTranslationByIdPipeline.Handler(_context);
 
         var exception = await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(query, CancellationToken.None));
 

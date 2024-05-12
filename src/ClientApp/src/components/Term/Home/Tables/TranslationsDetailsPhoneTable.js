@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
 import { AuthContext } from "../../../Auth/AuthContext";
+import EditTranslationButton from "../Buttons/EditCTButton";
 
 const TranslationDetailsPhoneTable = ({
   translation,
@@ -34,12 +35,7 @@ const TranslationDetailsPhoneTable = ({
                 <br />
                 <span>{translation.termName}</span>
               </div>
-              <button
-                className="btn btn-secondary btnobjectid"
-                onClick={() => toEdit(translation.objectID)}
-              >
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </button>
+              <EditTranslationButton translation={translation}/>
                   {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
                     <DeleteTranslationButton
                     translationId={translation.objectID}

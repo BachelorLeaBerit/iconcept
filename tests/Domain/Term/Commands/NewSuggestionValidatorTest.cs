@@ -22,7 +22,7 @@ public class NewSuggestionValidatorTester
   {
     var model = new SuggestTranslationCommand
     {
-      Translation = "akskalskaløsknkdoafp aodka fkop",
+      Translation = "Concept translation with a lot characters, as it requires a lot",
       EditorEmail = "email@email.com",
       TermName = null
     };
@@ -35,31 +35,30 @@ public class NewSuggestionValidatorTester
   {
     var model = new SuggestTranslationCommand
     {
-      Translation = "akskalskaløsknkdoafp aodka fkop",
+      Translation = "Consept translation with enough characters",
       EditorEmail = "email@email.com",
       TermName = "termname",
-      Countries = ["heihei"]
+      Countries = ["country"]
     };
     var result = validator.TestValidate(model);
     result.ShouldNotHaveValidationErrorFor(ct => ct.Countries);
   }
 
   [Theory]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "x" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "xxxxxxxxxxxxxxxxxxxxx" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "x@" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "xxxxxxxxxxxxxxxxxxx@" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "x@xxxxxxxxxxxxxxxxxx" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "xxxxxxxxxx$xxxxxxxxx" })]
-  [InlineData("TermName", "Konsepttranslation with enough characters.", "email@email.com", new string[] { "123" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "x" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "x@" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "xxxxxxxxxxxxxxxxxxx@" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "x@xxxxxxxxxxxxxxxxxx" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "xxxxxxxxxx$xxxxxxxxx" })]
+  [InlineData("TermName", "Konsepttranslation with more than enough characters.", "email@email.com", new string[] { "123" })]
   public void Should_return_error_for_Countries(string termName, string translation, string editorEmail, string[] countries)
   {
     var model = new SuggestTranslationCommand
     {
-        TermName = termName,
-        Translation = translation,
-        EditorEmail = editorEmail,
-        Countries = countries.ToList()
+      TermName = termName,
+      Translation = translation,
+      EditorEmail = editorEmail,
+      Countries = countries.ToList()
     };
     var result = validator.TestValidate(model);
     result.ShouldHaveValidationErrorFor(ct => ct.Countries);

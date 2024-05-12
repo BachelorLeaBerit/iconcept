@@ -3,6 +3,7 @@ using iconcept.Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Xunit.Abstractions;
 
 namespace iconcept.tests.Helpers;

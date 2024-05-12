@@ -7,12 +7,12 @@ namespace iconcept.Domain.Term.Pipelines.ConceptTranslation.Commands;
 
 public record DeleteTranslationCommand(int Id) : IRequest;
 
-public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTranslationCommand>
+public class DeleteTranslationHandler : IRequestHandler<DeleteTranslationCommand>
 {
     private readonly ConceptDbContext _db;
     private readonly SearchServiceManager _searchService;
 
-    public DeleteTodoItemCommandHandler(ConceptDbContext db, SearchServiceManager searchService)
+    public DeleteTranslationHandler(ConceptDbContext db, SearchServiceManager searchService)
     {
         _db = db;
         _searchService = searchService;

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MediatR;
 
 namespace iconcept.Infrastructure;
-public class ConceptDbContext :  IdentityDbContext<User>
+public class ConceptDbContext : IdentityDbContext<User>
 {
     public ConceptDbContext(DbContextOptions configuration) : base(configuration)
     {
@@ -35,14 +35,14 @@ public class ConceptDbContext :  IdentityDbContext<User>
                    .HasForeignKey(ur => ur.UserId)
                    .IsRequired();
 
-        
-                modelBuilder.Entity<User>()
-                .Property(u => u.FirstName)
-                .IsRequired();
 
-                modelBuilder.Entity<User>()
-                .Property(u => u.LastName)
-                .IsRequired();
+        modelBuilder.Entity<User>()
+        .Property(u => u.FirstName)
+        .IsRequired();
+
+        modelBuilder.Entity<User>()
+        .Property(u => u.LastName)
+        .IsRequired();
     }
 
 }

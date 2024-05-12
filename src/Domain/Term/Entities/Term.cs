@@ -1,7 +1,9 @@
-namespace iconcept.Domain.Term;
-public class Term {
+using src.Domain.Term.Entities;
 
-    public int Id { get; set; }
+namespace iconcept.Domain.Term;
+public class Term : BaseEntity
+{
+
     public string TermName { get; set; }
     public ICollection<ConceptTranslation> ConceptTranslations { get; set;} = new List<ConceptTranslation>();
 }

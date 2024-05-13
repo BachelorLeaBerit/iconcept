@@ -6,7 +6,7 @@ export const ValidateEditForm = (formData) => {
   const allowedCharactersRegex = /^[a-zA-Z0-9æøåÆØÅ:;.,!?()\- \n]*$/;
 
   let translationData = formData.editedTranslation.trim();
-  let lengthErrorMsg = inputLengthValidation(translationData, 500, 10);
+  let lengthErrorMsg = inputLengthValidation(translationData, 700, 10);
   let regexErrorMsg = regexValidation(translationData, allowedCharactersRegex);
   if (!translationData) {
     errors.editedTranslation = "Må inneholde en konseptoversettelse!";

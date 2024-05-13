@@ -70,7 +70,7 @@ const TranslationDetailsTable = ({
                   </span>
                   <EditTranslationButton translation={translation}></EditTranslationButton>
 
-                  {(profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
+                  {profile && (profile.role.includes("Admin") || profile.role.includes("Redaktør")) && (
                   <DeleteTranslationButton
                       translationId={translation.objectID}
                       onDelete={resetResetTranslationPage}
@@ -85,9 +85,11 @@ const TranslationDetailsTable = ({
                   <span className="spantermname">
                     {translation.termName}
                   </span>
-                  <button className="btn btn-info" onClick={() => setText(true)}>
+                  {translation.status===2 ? (
+                  <button className="btn btn-info" onClick={(e) => { e.preventDefault(); setText(true)}}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
+                  ) : null}
                 </>
               )}
             </td>

@@ -27,18 +27,27 @@ public class GetUsers
                     u.FirstName,
                     u.LastName,
                     u.Email,
-                    Roles = _userManager.GetRolesAsync(u).Result.ToList()
+                    User = u 
                 })
                 .ToListAsync();
 
-            var usersAsObjects = usersWithRoles.Select(u => new
+            var usersAsObjects = new List<object>();
+
+            foreach (var user in usersWithRoles)
             {
-                u.Id,
-                u.FirstName,
-                u.LastName,
-                u.Email,
-                Roles = (object)u.Roles
-            }).ToList<object>();
+                var roles = await _userManager.GetRolesAsync(user.User);
+
+                var userObject = new
+                {
+                    user.Id,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    Roles = (object)roles
+                };
+
+                usersAsObjects.Add(userObject);
+            }
 
             return usersAsObjects;
         }

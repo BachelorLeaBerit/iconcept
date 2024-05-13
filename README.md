@@ -21,17 +21,20 @@ Frontend: The frontend of the website is built using React.js, providing a dynam
 Backend: The backend is developed using .NET, providing robust APIs for handling user authentication, concept suggestions, and all of the other functionalities.
 
 Database: Azure SQL is used to store user data, concept suggestions, and other information.
+
 Styling: The website's styling is done using CSS and Bootstrap for a modern and visually appealing look.
 
 ## To access the website follow this link:
 
 https://iconsept.azurewebsites.net
 
-To access admin-access:
-E-post: admin@admin.com
-Passord: Admin1234!
+To get admin-access:
 
-##To run the tests, follow these steps:
+E-post: admin@admin.com
+
+Passord: Admin1234! (We are aware that this is not a very secure password)
+
+# To run the tests, follow these steps:
 
 1. Navigate to the "tests"-folder
 2. Run "dotnet test"

@@ -7,6 +7,8 @@ using iconcept.Controllers.Auth;
 using iconcept.Domain.Auth.Pipelines.Commands;
 using iconcept.Domain.Auth.Pipelines.Queries;
 using MediatR;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace iconcept.tests.Controllers
@@ -50,6 +52,44 @@ namespace iconcept.tests.Controllers
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
+        [Fact]
+        public async Task DeleteUser_ReturnsBadRequestResult_WhenCurrentAdminUserIsDeleted()
+        {
+            // Arrange
+            var mediatorMock = new Mock<IMediator>();
+            var controller = new AdminController(null, mediatorMock.Object);
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+            new Claim(ClaimTypes.NameIdentifier, "userId")
+            }));
+            controller.ControllerContext = new ControllerContext { HttpContext = httpContext };
+
+            var result = await controller.DeleteUser("userId");
+
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteUser_ReturnsNotFoundResult_WhenUnsuccessful()
+        {
+            var mediatorMock = new Mock<IMediator>();
+            mediatorMock.Setup(m => m.Send(It.IsAny<DeleteUser.Request>(), default))
+                        .ReturnsAsync(false);
+            var controller = new AdminController(null, mediatorMock.Object);
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+            new Claim(ClaimTypes.NameIdentifier, "someUserId")
+            }));
+            controller.ControllerContext = new ControllerContext { HttpContext = httpContext };
+
+            var result = await controller.DeleteUser("userId");
+
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
 
     }
 }

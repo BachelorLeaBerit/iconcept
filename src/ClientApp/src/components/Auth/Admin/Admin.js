@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AdminTable from "./AdminTable";
 import EditUserRoleModal from "./EditRoleModal";
-import { AuthContext } from "../AuthContext"; 
+import { AuthContext } from "../../../context/AuthContext";
 import { fetchUsersData } from "./adminService";
 import "../../../styles/Admin.css";
 

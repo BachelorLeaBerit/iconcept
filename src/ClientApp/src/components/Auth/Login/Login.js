@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import LoginForm from './LoginForm';
 import LoginMessage from './LoginMessage';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 function Login() {
   const [formData, setFormData] = useState({

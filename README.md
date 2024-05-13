@@ -23,17 +23,15 @@ Backend: The backend is developed using .NET, providing robust APIs for handling
 Database: Azure SQL is used to store user data, concept suggestions, and other information.
 Styling: The website's styling is done using CSS and Bootstrap for a modern and visually appealing look.
 
-## Getting Started
+## To access the website follow this link:
 
-To run the project locally, follow these steps:
+https://iconsept.azurewebsites.net
 
-1. Clone this repository to your local machine
-2. Navigate to the project directory (src)
-3. Install the necessary dependencies using ....
-4. Run command "dotnet run" in terminal
-5. Access the website in your web browser and start exploring it!
+To access admin-access:
+E-post: admin@admin.com
+Passord: Admin1234!
 
-To run the tests, follow these steps:
+##To run the tests, follow these steps:
 
 1. Navigate to the "tests"-folder
 2. Run "dotnet test"

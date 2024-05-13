@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
 import "../../../styles/Term.css";
-import { AuthContext } from "../../Auth/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const defaultForm = {
   termName: "",

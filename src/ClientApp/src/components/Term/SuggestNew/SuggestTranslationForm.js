@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Select from "react-select/creatable";
 import { ValidateForm } from "../../../utils/Validation/SuggestCtValidation";
-import '../../../styles/Term.css';
+import "../../../styles/Term.css";
 import { AuthContext } from "../../Auth/AuthContext";
 
 const defaultForm = {
@@ -14,14 +14,18 @@ const defaultForm = {
   norwegianDefinition: "",
   translation: "",
   comment: "",
-  editorEmail: "", 
-}
+  editorEmail: "",
+};
 
 const SuggestTranslationForm = ({ data, onSubmit }) => {
   const { feelings, religions, regions, countries } = data;
   const { profile } = useContext(AuthContext);
 
-  const [formData, setFormData] = useState(defaultForm);
+  const initialEditorEmail = profile?.email || "";
+  const [formData, setFormData] = useState({
+    ...defaultForm,
+    editorEmail: initialEditorEmail,
+  });
   const [errors, setErrors] = useState({});
 
   const handleChange = (name, value) => {
@@ -42,7 +46,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = ValidateForm(formData);
-    console.log(validationErrors);
+    console.log(formData);
     if (Object.keys(validationErrors).length === 0) {
       onSubmit(formData);
       setFormData(defaultForm);
@@ -63,7 +67,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             value={formData.termName || ""}
             onChange={(e) => handleChange("termName", e)}
           />
-          {errors.termName && <div className="text-danger">{errors.termName}</div>}
+          {errors.termName && (
+            <div className="text-danger">{errors.termName}</div>
+          )}
         </div>
         <div className="row">
           <div className="form-group col-md-6">
@@ -85,7 +91,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
-            {errors.countries && <div className="text-danger">{errors.countries}</div>}
+            {errors.countries && (
+              <div className="text-danger">{errors.countries}</div>
+            )}
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="regions">Region</label>
@@ -106,7 +114,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
-            {errors.regions && <div className="text-danger">{errors.regions}</div>}
+            {errors.regions && (
+              <div className="text-danger">{errors.regions}</div>
+            )}
           </div>
         </div>
         <div className="row">
@@ -129,7 +139,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
-            {errors.religions && <div className="text-danger">{errors.religions}</div>}
+            {errors.religions && (
+              <div className="text-danger">{errors.religions}</div>
+            )}
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="feelings">Følelse</label>
@@ -150,13 +162,17 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
               }))}
               placeholder="Velg"
             />
-            {errors.feelings && <div className="text-danger">{errors.feelings}</div>}
+            {errors.feelings && (
+              <div className="text-danger">{errors.feelings}</div>
+            )}
           </div>
         </div>
         <div className="form-group">
           <label htmlFor="translation">Konseptoversettelse*</label>
           <textarea
-            className={"form-control" + (errors.translation ? " is-invalid" : "")}
+            className={
+              "form-control" + (errors.translation ? " is-invalid" : "")
+            }
             id="translation"
             value={formData.translation || ""}
             onChange={(e) => handleChange("translation", e)}
@@ -174,7 +190,9 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             value={formData.context || ""}
             onChange={(e) => handleChange("context", e)}
           />
-          {errors.context && <div className="text-danger">{errors.context}</div>}
+          {errors.context && (
+            <div className="text-danger">{errors.context}</div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="comment">Kommentar</label>
@@ -185,13 +203,17 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             value={formData.comment || ""}
             onChange={(e) => handleChange("comment", e)}
           />
-          {errors.comment && <div className="text-danger">{errors.comment}</div>}
+          {errors.comment && (
+            <div className="text-danger">{errors.comment}</div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="norwegianDefinition">Norsk definisjon</label>
           <input
             type="text"
-            className={"form-control" + (errors.norwegianDefinition ? " is-invalid" : "")}
+            className={
+              "form-control" + (errors.norwegianDefinition ? " is-invalid" : "")
+            }
             id="norwegianDefinition"
             value={formData.norwegianDefinition || ""}
             onChange={(e) => handleChange("norwegianDefinition", e)}
@@ -201,12 +223,16 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
           )}
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="editorEmail">Din e-post* - vil kun være synlig for admin</label>
+          <label htmlFor="editorEmail">
+            Din e-post* - vil kun være synlig for admin
+          </label>
           <input
             type="text"
-            className={"form-control" + (errors.editorEmail ? " is-invalid" : "")}
+            className={
+              "form-control" + (errors.editorEmail ? " is-invalid" : "")
+            }
             id="editorEmail"
-            value={profile?.email || formData.editorEmail} 
+            value={profile?.email || formData.editorEmail}
             onChange={(e) => handleChange("editorEmail", e)}
             disabled={profile?.email}
           />
@@ -214,10 +240,7 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
             <div className="text-danger">{errors.editorEmail}</div>
           )}
         </div>
-        <button
-          type="submit"
-          className="btn mb-5 btnsendforslag"
-        >
+        <button type="submit" className="btn mb-5 btnsendforslag">
           Send inn forslag til godkjenning
         </button>
       </form>

@@ -101,7 +101,7 @@ export const ValidateForm = (formData) => {
     let feelingName = feeling.trim();
     let feelingLengthError = inputLengthValidation(feelingName, maxChar, minChar)
     // eslint-disable-next-line no-useless-escape
-    let feelingRegexError = regexValidation(feelingName, /^[a-zA-ZamaÆØÅ();:., \-\– \n]*$/);
+    let feelingRegexError = regexValidation(feelingName, /^[a-zA-ZæøåÆØÅ();:., \-\– \n]*$/);
     if (feelingLengthError !== "") {
       errors.feelings += `${feelingName}: ` + feelingLengthError;
     } else if (feelingRegexError !== "") {

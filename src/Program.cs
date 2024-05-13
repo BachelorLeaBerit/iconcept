@@ -33,6 +33,8 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 var IsDevelopment = builder.Environment.IsDevelopment();
 
 var connection = string.Empty;

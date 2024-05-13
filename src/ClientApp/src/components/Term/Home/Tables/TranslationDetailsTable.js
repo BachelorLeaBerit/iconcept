@@ -6,7 +6,7 @@ import { Highlight } from "react-instantsearch";
 import DetailsTableCell from "./DetailsTableCell";
 import DeleteTranslationButton from "../Buttons/DeleteCTButton";
 import '../../../../styles/Term.css';
-import { AuthContext } from "../../../Auth/AuthContext";
+import { AuthContext } from "../../../../context/AuthContext";
 import EditTranslationButton from "../Buttons/EditCTButton";
 
 const TranslationDetailsTable = ({

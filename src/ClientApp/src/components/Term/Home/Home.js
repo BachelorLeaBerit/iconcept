@@ -14,7 +14,7 @@ import Autocomplete from "./Search/AutoComplete";
 import HomeModal from "./HomeModal";
 import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
 import axios from "axios";
-import { AuthContext } from "../../Auth/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Home = () => {
   const [loggedIn] = useState(true);

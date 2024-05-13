@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ValidateEditForm } from "../../../utils/Validation/EditValidation";
-import { AuthContext } from "../../Auth/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const EditTranslationForm = ({ translation, onSubmit }) => {
   const [formData, setFormData] = useState({

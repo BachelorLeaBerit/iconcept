@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
 import './styles/custom.css';
-import { AuthProvider } from './components/Auth/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 
 export default class App extends Component {
   static displayName = App.name;

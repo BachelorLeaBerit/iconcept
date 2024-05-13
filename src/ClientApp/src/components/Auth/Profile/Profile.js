@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import '../../../styles/Profile.css';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const handleDeleteUser = async (Id) => {
-    const confirmed = window.confirm("Are you sure you want to delete your user?");
+    const confirmed = window.confirm("Er du sikker på at du vil slette brukeren din?");
     if (confirmed) {
         try {
             await axios.delete(`/api/profile/${Id}`, {

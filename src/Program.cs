@@ -22,6 +22,7 @@ using System.Text;
 using Microsoft.Extensions.WebEncoders;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using iconcept.Domain.Auth.Entities;
 
 
 var builder = WebApplication.CreateBuilder(args);

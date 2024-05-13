@@ -3,6 +3,8 @@ using iconcept.Domain.Auth.Pipelines.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using iconcept.Domain.Auth.Entities;
+
 
 namespace iconcept.Controllers.Auth;
 

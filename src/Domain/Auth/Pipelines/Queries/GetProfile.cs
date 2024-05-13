@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
 using System.Security.Claims;
+using iconcept.Domain.Auth.Entities;
+
 
 namespace iconcept.Domain.Auth.Pipelines.Queries
 {

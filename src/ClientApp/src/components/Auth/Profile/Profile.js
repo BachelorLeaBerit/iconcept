@@ -12,12 +12,14 @@ const Profile = () => {
     const confirmed = window.confirm("Er du sikker på at du vil slette brukeren din?");
     if (confirmed) {
       try {
-        const Id = profile.userId;
-        await axios.delete(`/api/profile/${Id}`, {
+        console.log(profile);
+        const userId = profile.id;
+        await axios.delete(`/api/profile/${userId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
+        console.log(profile.userId);
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         navigate('/');

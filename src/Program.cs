@@ -122,31 +122,53 @@ else
         }
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    
-        //var adminUser1 = await userManager.FindByEmailAsync("admin@gmail.com");
-        //await userManager.RemoveFromRoleAsync(adminUser1, "Bruker");
-        //await userManager.AddToRoleAsync(adminUser1, "Admin");
-        
+
+        var adminUser = await userManager.FindByEmailAsync("admin@admin.com");
+
+        if (adminUser == null)
+        {
+            adminUser = new User
+            {
+                UserName = "admin@admin.com",
+                Email = "admin@admin.com",
+                FirstName = "Admin",
+                LastName = "Admin",
+            };
+
+            var result = await userManager.CreateAsync(adminUser, "Admin1234!");
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine($"Error: {error.Description}");
+                }
+            }
+        }
     }
 
-}
+    }
 
-app.UseCors();
+    app.UseCors();
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
 
-app.UseRouting();
+    app.UseRouting();
 
-app.UseAuthorization();
+    app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");
-app.MapControllers();
+    app.MapFallbackToFile("index.html");
+    app.MapControllers();
 
-app.Run();
+    app.Run();
 
 

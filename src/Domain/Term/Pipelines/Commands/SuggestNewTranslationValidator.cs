@@ -14,23 +14,23 @@ public class SuggestTranslationCommandValidator : AbstractValidator<SuggestTrans
             .NotEmpty()
             .Matches(ValidCharactersPattern);
 
-        RuleFor(ct => ct.Translation).Length(50, 500)
+        RuleFor(ct => ct.Translation).Length(50, 700)
             .NotEmpty()
             .Matches(ValidCharactersPattern);
 
         RuleFor(ct => ct.Comment)
             .NotEmpty().When(ct => !string.IsNullOrWhiteSpace(ct.Comment))
-            .Length(50, 300).When(ct => !string.IsNullOrWhiteSpace(ct.Comment))
+            .Length(20, 300).When(ct => !string.IsNullOrWhiteSpace(ct.Comment))
             .Matches(ValidCharactersPattern);
 
         RuleFor(ct => ct.NorwegianDefinition)
             .NotEmpty().When(ct => !string.IsNullOrWhiteSpace(ct.NorwegianDefinition))
-            .Length(50, 300).When(ct => !string.IsNullOrWhiteSpace(ct.NorwegianDefinition))
+            .Length(20, 300).When(ct => !string.IsNullOrWhiteSpace(ct.NorwegianDefinition))
             .Matches(ValidCharactersPattern);
 
         RuleFor(ct => ct.Context)
             .NotEmpty().When(ct => !string.IsNullOrWhiteSpace(ct.Context))
-            .Length(50, 300).When(ct => !string.IsNullOrWhiteSpace(ct.Context))
+            .Length(20, 300).When(ct => !string.IsNullOrWhiteSpace(ct.Context))
             .Matches(ValidCharactersPattern);
 
         RuleFor(ct => ct.EditorEmail).EmailAddress();

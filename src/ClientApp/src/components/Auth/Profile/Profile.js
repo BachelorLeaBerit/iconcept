@@ -19,10 +19,9 @@ const Profile = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
-        console.log(profile.userId);
         localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        navigate('/');
+        localStorage.removeItem('id');
+        window.location.href = '/';
       } catch (error) {
         console.error('Error deleting user:', error);
       }

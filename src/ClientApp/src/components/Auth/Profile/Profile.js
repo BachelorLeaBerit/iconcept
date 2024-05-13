@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import '../../../styles/Profile.css';
 import axios from 'axios';
 
 const Profile = () => {
   const { profile, loading } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleDeleteUser = async () => {
     const confirmed = window.confirm("Er du sikker på at du vil slette brukeren din?");
@@ -19,10 +18,9 @@ const Profile = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
-        console.log(profile.userId);
         localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        navigate('/');
+        localStorage.removeItem('id');
+        window.location.href = '/';
       } catch (error) {
         console.error('Error deleting user:', error);
       }

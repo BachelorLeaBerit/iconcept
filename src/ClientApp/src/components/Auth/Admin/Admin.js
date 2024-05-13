@@ -11,14 +11,14 @@ const Admin = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const { profile } = useContext(AuthContext); 
+  const { profile } = useContext(AuthContext);
 
   useEffect(() => {
     if (!profile || !profile.role || !profile.role.includes("Admin")) {
       setLoading(false);
       return;
     }
-    fetchUsersData(setUsers, setLoading); 
+    fetchUsersData(setUsers, setLoading);
   }, [profile]);
 
   const handleEditUserRole = (user) => {
@@ -54,12 +54,14 @@ const Admin = () => {
     );
   }
 
+  const filteredUsers = users.filter((user) => user.id !== profile.id);
+
   return (
     <div>
       <h2 className="h2admin">Admin</h2>
       <h4>Alle brukere</h4>
       <AdminTable
-        users={users}
+        users={filteredUsers}
         loading={loading}
         handleEditUserRole={handleEditUserRole}
         handleDeleteUser={handleDeleteUser}

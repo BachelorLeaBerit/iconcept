@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace iconcept.Domain.Auth;
+namespace iconcept.Domain.Auth.Entities;
 
 public class User : IdentityUser
 {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Security.Claims;
+using iconcept.Domain.Auth.Entities;
 
 
 namespace iconcept.Domain.Auth.Pipelines.Commands;

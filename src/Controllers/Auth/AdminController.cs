@@ -4,6 +4,7 @@ using iconcept.Domain.Auth;
 using Microsoft.AspNetCore.Authorization;
 using iconcept.Domain.Auth.Pipelines.Commands;
 using iconcept.Domain.Auth.Pipelines.Queries;
+using iconcept.Domain.Auth.Entities;
 using MediatR;
 using System.Security.Claims;
 

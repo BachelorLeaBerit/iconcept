@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     lastName: '',
     email: '',
     role: '',
+    userId: '',
   });
 
   const login = (userData) => {

@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using iconcept.Domain.Auth.Entities;
+
 
 namespace iconcept.Domain.Auth.Pipelines.Queries;
 public class GetUsers

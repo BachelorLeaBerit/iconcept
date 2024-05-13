@@ -2,6 +2,7 @@ using iconcept.Domain.Term;
 using iconcept.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using iconcept.Domain.Auth.Entities;
 using MediatR;
 
 namespace iconcept.Infrastructure;

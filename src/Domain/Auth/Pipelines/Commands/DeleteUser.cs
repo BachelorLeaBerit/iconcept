@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using iconcept.Domain.Auth.Entities;
 
 namespace iconcept.Domain.Auth.Pipelines.Commands;
 

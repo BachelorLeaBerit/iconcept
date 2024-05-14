@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useMemo, useState, createElement, Fragment } from "react";
-import { render } from "react-dom";
 
 import { usePagination, useSearchBox } from "react-instantsearch";
 import { autocomplete } from "@algolia/autocomplete-js";
@@ -66,10 +65,11 @@ export function Autocomplete({
         }
       },
       plugins,
-      renderer: { createElement, Fragment, render }
+      renderer: { createElement, Fragment }
     });
 
     return () => autocompleteInstance.destroy();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className={className} ref={autocompleteContainer} />;

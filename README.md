@@ -24,10 +24,6 @@ Database: Azure SQL is used to store user data, concept suggestions, and other i
 
 Styling: The website's styling is done using CSS and Bootstrap for a modern and visually appealing look.
 
-## To access the website follow this link:
-
-https://iconsept.azurewebsites.net
-
 # To run the tests, follow these steps:
 
 1. Navigate to the "tests"-folder

@@ -34,6 +34,7 @@ function EditTranslation() {
         method: "PUT",
         data: formData,
       });
+      console.log(response.data);
     } catch (error) {
       console.error("Error adding translation suggestion:", error);
     }

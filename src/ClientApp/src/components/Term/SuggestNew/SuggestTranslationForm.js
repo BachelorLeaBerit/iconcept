@@ -46,7 +46,6 @@ const SuggestTranslationForm = ({ data, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = ValidateForm(formData);
-    console.log(formData);
     if (Object.keys(validationErrors).length === 0) {
       onSubmit(formData);
       setFormData(defaultForm);

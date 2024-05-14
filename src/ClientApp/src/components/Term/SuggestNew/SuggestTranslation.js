@@ -13,7 +13,6 @@ function SuggestTranslation() {
       try {
         const response = await axios.get(`api/suggestions`);
         if (response.status === 200) {
-          //const data = await response.json();
           setTranslationData(response.data);
           setLoading(false);
         } else {

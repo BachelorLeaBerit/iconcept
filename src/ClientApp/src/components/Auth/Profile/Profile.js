@@ -11,7 +11,6 @@ const Profile = () => {
     const confirmed = window.confirm("Er du sikker på at du vil slette brukeren din?");
     if (confirmed) {
       try {
-        console.log(profile);
         const userId = profile.id;
         await axios.delete(`/api/profile/${userId}`, {
           headers: {

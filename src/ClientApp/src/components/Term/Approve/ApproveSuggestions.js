@@ -6,7 +6,7 @@ const ApproveSuggestions = () => {
   const [translations, setTranslation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateTrigger, setUpdateTrigger] = useState(false);
-  const [loggedIn] = useState(true); // Track user authentication status
+  const [loggedIn] = useState(true);
   const role = localStorage.getItem("role");
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const ApproveSuggestions = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          console.log("Token not found. User not authenticated.");
+          console.error("Token not found. User not authenticated.");
           return;
         }
 
@@ -25,13 +25,11 @@ const ApproveSuggestions = () => {
         setLoading(false);
       } catch (error) {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          console.error(error.response.data);
         } else if (error.request) {
-          console.log(error.request);
+          console.error(error.request);
         } else {
-          console.log("Error", error.message);
+          console.error("Error", error.message);
         }
       }
     };

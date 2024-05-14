@@ -15,7 +15,6 @@ function EditTranslation() {
         .then(response => {
           setTranslation(response.data);
           setLoading(false);
-          console.log("Fetched translation data:", response.data);
         })
         .catch(error => {
           console.error(    
@@ -35,7 +34,6 @@ function EditTranslation() {
         method: "PUT",
         data: formData,
       });
-      console.log(response.data);
     } catch (error) {
       console.error("Error adding translation suggestion:", error);
     }

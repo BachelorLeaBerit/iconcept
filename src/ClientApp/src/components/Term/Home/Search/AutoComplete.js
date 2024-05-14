@@ -70,7 +70,6 @@ export function Autocomplete({
     });
 
     return () => autocompleteInstance.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className={className} ref={autocompleteContainer} />;

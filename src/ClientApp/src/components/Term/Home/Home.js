@@ -41,20 +41,20 @@ const Home = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          console.log("Token not found. User not authenticated.");
+          console.error("Token not found. User not authenticated.");
           return;
         }
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       } catch (error) {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          console.error(error.response.data);
+          console.error(error.response.status);
+          console.error(error.response.headers);
         } else if (error.request) {
-          console.log(error.request);
+          console.error(error.request);
         } else {
-          console.log("Error", error.message);
+          console.error("Error", error.message);
         }
       }
     };

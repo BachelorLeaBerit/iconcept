@@ -23,7 +23,7 @@ function ApproveSuggestionsForm({ translation, onTranslationUpdated }) {
   };
 
   const handleApprove = async () => {
-    const confirmed = window.confirm("Are you sure you want to approve?");
+    const confirmed = window.confirm("Er du sikker på at du vil godkjenne denne oversettelsen?");
     if (confirmed) {
       try {
         await axios(`/api/approvesuggestion/`, {

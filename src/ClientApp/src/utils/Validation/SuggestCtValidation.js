@@ -18,7 +18,6 @@ export const ValidateForm = (formData) => {
     errors.termName = termNameLengthError;
   }
 
-  // Sanitize and validate Konseptoversettelse field
   let translationData = formData.translation.trim();
   let translationLengthError = inputLengthValidation(translationData, 700, 50);
   let translationRegexError = regexValidation(translationData, allowedCharactersRegex)

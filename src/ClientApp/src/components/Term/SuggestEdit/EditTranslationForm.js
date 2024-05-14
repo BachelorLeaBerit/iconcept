@@ -23,7 +23,7 @@ const EditTranslationForm = ({ translation, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = ValidateEditForm(formData);
-    console.log(validationErrors);
+    console.error(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       const isConfirmed = window.confirm(
         "Er du sikker på at du vil legge til disse endringene?"

@@ -1,6 +1,6 @@
 
 export function regexValidation(inputString, allowedCharactersRegex) {
-  console.log(inputString);
+  console.error(inputString);
   if (!allowedCharactersRegex.test(inputString)) {
     return "Inneholder ugyldige tegn!";
   } else {

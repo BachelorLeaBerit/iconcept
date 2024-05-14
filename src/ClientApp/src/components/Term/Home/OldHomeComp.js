@@ -8,7 +8,7 @@ import HomeModal from "./HomeModal";
 import TranslationDetailsPhoneTable from "./Tables/TranslationsDetailsPhoneTable";
 
 const OldHomeComp = () => {
-  const [loggedIn] = useState(true); // Track user authentication status
+  const [loggedIn] = useState(true);
   const role = localStorage.getItem("role");
   let showDeleteBtn = false;
   const [translations, setTranslations] = useState([]);
@@ -25,20 +25,20 @@ const OldHomeComp = () => {
         await handleSearch();
         const token = localStorage.getItem("token");
         if (!token) {
-          console.log("Token not found. User not authenticated.");
+          console.error("Token not found. User not authenticated.");
           return;
         }
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       } catch (error) {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          console.error(error.response.data);
+          console.error(error.response.status);
+          console.error(error.response.headers);
         } else if (error.request) {
-          console.log(error.request);
+          console.error(error.request);
         } else {
-          console.log("Error", error.message);
+          console.error("Error", error.message);
         }
       }
     };
@@ -54,7 +54,7 @@ const OldHomeComp = () => {
       if (response.status === 200) {
         const translationsData = response.data;
         setTranslations(translationsData);
-        console.log("Fetched translation data:", translationsData);
+        console.error("Fetched translation data:", translationsData);
       } else {
         setTranslations([]);
         console.error(

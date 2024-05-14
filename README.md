@@ -28,12 +28,6 @@ Styling: The website's styling is done using CSS and Bootstrap for a modern and 
 
 https://iconsept.azurewebsites.net
 
-To get admin-access:
-
-E-post: admin@admin.com
-
-Passord: Admin1234! (We are aware that this is not a very secure password)
-
 # To run the tests, follow these steps:
 
 1. Navigate to the "tests"-folder
